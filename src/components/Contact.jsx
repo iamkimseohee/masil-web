@@ -38,7 +38,7 @@ const Contact = () => {
     <div>
       <section id="contact">
         <div className="contact__inner">
-          <h1 className="contact__title">문의</h1>
+          <h1 className="contact__title">문의 수정 완료?</h1>
           <div className="contact__text">
             <form onSubmit={handleSubmit(onSubmit)}>
               {/* 이름 */}
