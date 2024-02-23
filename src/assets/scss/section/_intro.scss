@@ -1,0 +1,123 @@
+#intro {
+  margin-top: 121px;
+  margin-bottom: 181px;
+
+  // width: 100%;
+  @media (max-width: 1024px) {
+    margin-top: 91px;
+  }
+  @media (max-width: 768px) {
+    margin-top: 60px;
+
+    margin-bottom: 131px;
+  }
+}
+.intro__inner {
+  // width: 100%;
+  max-width: 1232px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  flex-direction: column;
+  transition: 3s;
+
+  @media (max-width: 1024px) {
+    transition: 2s;
+    max-width: 532px;
+  }
+  @media (max-width: 768px) {
+    transition: 1s;
+    max-width: 356px;
+  }
+
+  .intrologo {
+    margin-bottom: 81px;
+
+    @media (max-width: 1024px) {
+      width: 169px;
+      height: 85px;
+      margin-bottom: 64px;
+
+      // margin-top: 91px;
+    }
+    @media (max-width: 768px) {
+      width: 112px;
+      height: 56px;
+      margin-bottom: 50px;
+      // margin-top: 91px;
+    }
+  }
+
+  .intro__title {
+    font-family: "Pretendard-Bold";
+    font-size: 34px;
+    color: #03acb4;
+    margin-bottom: 20px;
+
+    @media (max-width: 768px) {
+      // display: none;
+      font-size: 28px;
+    }
+  }
+  .intro__text {
+    // .text {
+    font-family: "Pretendard-Regular";
+    font-size: 19px;
+
+    text-align: left;
+    position: relative;
+    z-index: 100;
+    transition: all 0.3s;
+    cursor: all-scroll;
+    margin-bottom: 83px;
+    @media (max-width: 1024px) {
+      margin-bottom: 60px;
+    }
+
+    @media (max-width: 768px) {
+      font-size: 15px;
+      margin-bottom: 50px;
+    }
+    // }
+    // .img {
+    //     position: absolute;
+    //     left: 50%;
+    //     top: 50%;
+    //     transform: translate(-50%, -50%);
+    //     width: 30vh;
+    //     height: 30vh;
+    //     border-radius: 50%;
+    //     overflow: hidden;
+    //     filter: grayscale(100%);
+    //     transition: all 0.3s;
+
+    //     @media (max-width: 320px) {
+    //         width: 20vh;
+    //         height: 20vh;
+    //     }
+    // }
+
+    // &:hover .text {
+    //     opacity: 0;
+    // }
+    // &:hover .img {
+    //     filter: grayscale(0);
+    // }
+  }
+  .intropic {
+    width: 100%;
+    margin-left: auto;
+    width: 450px;
+    height: 397px;
+    // max-width: 291px;
+    // display: flex;
+    @media (max-width: 1024px) {
+    }
+    @media (max-width: 768px) {
+      width: 296px;
+      height: 261px;
+    }
+  }
+}

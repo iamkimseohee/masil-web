@@ -1,0 +1,49 @@
+.mailsuccess__inner {
+  width: 100%;
+  max-width: 470px;
+  border: 1px solid saddlebrown;
+  //   display: flex;
+  margin-top: 252px;
+  margin-left: auto;
+  margin-right: auto;
+  .mailsuccess__title {
+    display: flex;
+    font-family: "Pretendard-Bold";
+    color: #03acb4;
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  .mailsuccess__text {
+    display: flex;
+    font-family: "Pretendard-Regular";
+    color: #3f3c33;
+    font-size: 15px;
+    margin-bottom: 325px;
+  }
+  button {
+    margin-left: auto;
+    margin-right: auto;
+    width: 126px;
+    height: 47px;
+    font-size: 19px;
+
+    color: #3f3c33;
+    font-family: "Pretendard-Regular";
+    border: 1px solid #c2c4c4;
+    border-radius: 37px;
+    background-color: white;
+
+    display: block;
+    &:hover {
+      border: 1px solid #3445db;
+    }
+  }
+  @media (max-width: 768px) {
+    max-width: 356px;
+    margin-top: 152px;
+
+    .mailsuccess__text {
+      margin-bottom: 303px;
+    }
+  }
+}

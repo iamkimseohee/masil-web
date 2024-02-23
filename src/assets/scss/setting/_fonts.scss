@@ -1,0 +1,26 @@
+@font-face {
+  font-family: "Pretendard-Bold";
+  src: url("./font/Pretendard-Bold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("./font/Pretendard-Regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Pretendard-Medium";
+  src: url("./font/Pretendard-Medium.otf") format("opentype");
+}
+
+.regular {
+  font-family: "Pretendard-Regular";
+}
+
+.bold {
+  font-family: "Pretendard-Bold";
+}
+
+.medium {
+  font-family: "Pretendard-Medium";
+}
