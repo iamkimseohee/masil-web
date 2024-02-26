@@ -39,7 +39,7 @@ const Loginpage = () => {
             <button onClick={cancle}>취소</button>
             <button
               onClick={() => {
-                movePage("/contctnotice");
+                movePage("/userpage");
               }}
             >
               확인

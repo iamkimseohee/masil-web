@@ -1,11 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 function Notice() {
-  const movePage = useNavigate();
+  // const movePage = useNavigate();
 
   const [contactData, setContactData] = useState([]);
   const [checkedItems, setCheckedItems] = useState({});
@@ -62,19 +62,19 @@ function Notice() {
           <li key={contact.id}>
             <input type="checkbox" checked={checkedItems[contact.id] || false} onChange={() => handleCheckboxChange(contact.id)} />
             <a>
-              Name: {contact.name}, Email: {contact.email}, Message: {contact.body}
+              Name: {contact.name}, Email: {contact.email}, Message: {contact.body} ,Time: {contact.created_at}
             </a>
           </li>
         ))}
       </ul>
       <button onClick={handleDelete}>삭제</button>
-      <button
+      {/* <button
         onClick={() => {
           movePage("/addwork");
         }}
       >
         작업물추가
-      </button>
+      </button> */}
     </div>
   );
 }

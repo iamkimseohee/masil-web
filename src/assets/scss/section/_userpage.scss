@@ -1,0 +1,89 @@
+#userpage {
+  max-width: 1232px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.userpage__inner {
+  .userpage__title {
+    margin-top: 81px;
+    margin-bottom: 23px;
+    font-size: 34px;
+    color: #03acb4;
+    font-family: "Pretendard-Bold";
+  }
+  .userpage__btn {
+    display: flex;
+    .menu {
+      height: 50px;
+      width: 192px;
+      border: 1px solid #cbd3d3;
+      display: flex;
+
+      justify-content: center;
+      align-items: center;
+      //   .active {
+      //     background-color: #03acb4;
+      //   }
+      border-bottom: 0;
+      .active {
+        color: white;
+        background-color: #03acb4;
+        height: 50px;
+        width: 192px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+  .userpage__body {
+    border: 1px solid #c2c4c4;
+    margin-bottom: 40px;
+    border-left: 0;
+    border-right: 0;
+    .work_plus {
+      margin-top: 60px;
+      margin-bottom: 60px;
+      width: 196px;
+      height: 47px;
+      background-color: white;
+      border-radius: 37px;
+      font-family: "Pretendard-Regular";
+      font-size: 19px;
+      color: #3f3c33;
+      border: 1px solid #c2c4c4;
+      &:hover {
+        border: 1px solid #3445db;
+      }
+    }
+  }
+  .userpage__btn {
+    .btn {
+      width: 236px;
+      height: 60px;
+      background-color: white;
+      border-radius: 37px;
+      font-family: "Pretendard-Regular";
+      font-size: 24px;
+      color: #3f3c33;
+      border: 1px solid #c2c4c4;
+      &:hover {
+        border: 1px solid #3445db;
+      }
+    }
+    .page_up {
+      width: 60px;
+      height: 60px;
+      background-color: white;
+      border-radius: 37px;
+      font-family: "Pretendard-Regular";
+      font-size: 24px;
+      color: #3f3c33;
+      border: 1px solid #c2c4c4;
+      &:hover {
+        border: 1px solid #3445db;
+      }
+    }
+  }
+}

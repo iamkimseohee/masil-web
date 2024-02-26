@@ -1,5 +1,5 @@
 import React from "react";
-import aboutservice from "../assets/img/img2.png";
+// import aboutservice from "../assets/img/img2.png";
 import aboutservice2 from "../assets/img/serviceimg.json";
 import Lottie from "lottie-react";
 
@@ -29,7 +29,7 @@ const Service = () => {
           </div>
           <Lottie animationData={aboutservice2} className="servicepic"></Lottie>
 
-          <img src={aboutservice} alt="서비스그림" className="servicepic" />
+          {/* <img src={aboutservice} alt="서비스그림" className="servicepic" /> */}
         </div>
       </section>
     </div>
