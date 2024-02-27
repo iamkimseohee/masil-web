@@ -8,7 +8,7 @@
 }
 .port__inner {
   width: 100%;
-  max-width: 1245px;
+  max-width: 1232px;
   // height: 100%;
   margin-left: auto;
   margin-right: auto;
@@ -61,15 +61,17 @@
     margin: 0;
     flex-wrap: wrap; //줄바꿈
     // justify-content: space-between;
+    //스크롤
     overflow: auto;
     height: 500px;
-    div {
+
+    li {
       width: 296px;
       height: 223px;
       display: flex;
       flex-direction: column;
       margin-bottom: 30px;
-      // border: 1px solid brown;
+      border: 1px solid brown;
       // background-color: aquamarine;
       img {
         //칸에 꽉 차게 이미지 맞추기
@@ -84,4 +86,7 @@
       }
     }
   }
+}
+.port__wrap::-webkit-scrollbar {
+  display: none;
 }

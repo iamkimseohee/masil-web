@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import HomeView from "./views/HomeView";
 
 import Mailsuccess from "./components/Mailsuccess";

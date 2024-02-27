@@ -1,0 +1,35 @@
+.workpage {
+  ul {
+    width: 100%;
+    display: inline-flex;
+    // justify-content: space-between;
+    gap: 12px;
+    // float: left;
+    margin: 0;
+    flex-wrap: wrap; //줄바꿈
+    // justify-content: space-between;
+    //스크롤
+    //   overflow: auto;
+    // height: 500px;
+    li {
+      width: 296px;
+      height: 223px;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 30px;
+      border: 1px solid brown;
+      // background-color: aquamarine;
+      img {
+        //칸에 꽉 차게 이미지 맞추기
+        height: 100%;
+        width: 100%;
+      }
+      @media (max-width: 1024px) {
+        width: 256px;
+      }
+      @media (max-width: 768px) {
+        width: 172px;
+      }
+    }
+  }
+}
