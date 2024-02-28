@@ -11,21 +11,33 @@ const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhb
 function Addwork() {
   const movePage = useNavigate();
 
-  // 글자 감지
+  //~ 글자 감지
   const [titleLength, setTitleLength] = useState(0);
   const handleTitleChange = (e) => {
     setTitleLength(e.target.value.length);
     console.log(e.target.value);
   };
 
-  //파일 이름 추출
+  //~ 파일 이름 추출
   const [fileName, setFileName] = useState("");
   const handleFileChange = (e) => {
     const fileName = e.target.value.split("\\").pop(); // 파일 경로에서 파일 이름만 추출
+    const selectedFile = e.target.files[0];
+    console.log(fileName);
+    console.log(selectedFile.name);
     setFileName(fileName); // 파일 이름 상태 업데이트
   };
 
-  // 채크박스
+  //~ 사진 추출
+  const [fileName2, setFileName2] = useState("");
+  const handleFileChange2 = (e) => {
+    const selectedFile = e.target.files[0];
+
+    console.log(selectedFile);
+    setFileName2(selectedFile); // 파일 이름 상태 업데이트
+  };
+
+  //~ 체크박스
   const [isChecked, setIsChecked] = useState(true);
   const [isChecked2, setIsChecked2] = useState(true);
 
@@ -54,8 +66,16 @@ function Addwork() {
   const [formData, setFormData] = useState({});
   console.log(formData);
 
+  const [file, setFile] = useState({});
+
   const handleChange = (e) => {
+    const fileName = e.target.value.split("\\").pop(); // 파일 경로에서 파일 이름만 추출
+    setFileName(fileName); // 파일 이름 상태 업데이트
     const { name, value } = e.target;
+    // setFile({
+    //   ...file,
+    //   [name]: value,
+    // });
     setFormData({
       ...formData,
       [name]: value,
@@ -68,6 +88,8 @@ function Addwork() {
     console.log(data);
     try {
       const { data: responseData, error } = await supabase.from("work").insert([formData]);
+      const { data: responseData2, error2 } = await supabase.storage.from("images").upload(`images/${fileName2.name}`, fileName2);
+
       console.log(responseData);
       if (error) {
         throw error;
@@ -87,12 +109,10 @@ function Addwork() {
             <form onSubmit={handleSubmit(onSubmit)}>
               {/* 제목 */}
               <div>큰 제목</div>
-              <input type="text" name="title" value={formData.title || ""} maxLength={15} onChange={handleChange} />
-
+              <input type="text" name="title" maxLength={15} onChange={handleChange} />
               {/* 본문 내용 */}
               <div>본문 내용</div>
               <input type="text" name="body" maxLength={23} onChange={handleChange} />
-
               {/* 분야 */}
               <div className="checkboxline">
                 {" "}
@@ -101,25 +121,32 @@ function Addwork() {
                   <div>
                     <input type="checkbox" id="code" value={isChecked ? "true" : "false"} name="code" onClick={handleCheckboxChange1} onChange={handleChange} />
                     <label htmlFor="code">개발</label>
-                    <p>체크 상태: {isChecked ? "체크됨" : "체크 안 됨"}</p>
                   </div>
                   <div>
                     <input type="checkbox" id="design" name="design" value={isChecked2 ? "true" : "false"} onClick={handleCheckboxChange2} onChange={handleChange} />
                     <label htmlFor="design">디자인</label>
-                    {/* <p>체크 상태: {isChecked ? "체크됨" : "체크 안 됨"}</p> */}
                   </div>
                 </div>
               </div>
-
               {/* 이미지 */}
               <div>이미지</div>
               <div className="filebox">
                 {" "}
-                <input type="text" className="upload-name" value={fileName} readOnly />
+                <input type="text" className="upload-name" value={fileName2.name || ""} readOnly />
                 <label htmlFor="file" className="btn-upload">
                   찾기
                 </label>
-                <input className="btn" type="file" name="file" id="file" onChange={handleFileChange} />
+                <input
+                  className="btn"
+                  type="file"
+                  name="file"
+                  id="file"
+                  onChange={(e) => {
+                    // handleFileChange(e);
+                    handleFileChange2(e);
+                    handleChange(e);
+                  }}
+                />
               </div>
               <button type="submit">보내기</button>
             </form>

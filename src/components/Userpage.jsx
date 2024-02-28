@@ -38,7 +38,7 @@ function Userpage() {
             </div>
             <div className="menu">
               {/* <NavLink style={({ isActive }) => (isActive ? activeStyle : {})} to="contctnotice"> */}
-              <NavLink onClick={handleClick} to="contctnotice">
+              <NavLink className="inquire" onClick={handleClick} to="contctnotice">
                 문의 관리
               </NavLink>
             </div>
@@ -53,6 +53,7 @@ function Userpage() {
             >
               작업물 추가 +
             </button>
+            {/* <Workpage cla/> */}
             <Routes>
               <Route path="/hello" element={<Workpage />}></Route>
               <Route path="/contctnotice" element={<Notice />}></Route>
