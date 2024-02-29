@@ -52,6 +52,68 @@ function Workpage() {
     }));
   };
 
+  //~ 이미지 출력
+
+  // const [imageUrl, setImageUrl] = useState(null);
+
+  // useEffect(() => {
+  //   async function fetchImage() {
+  //     try {
+  //       const imagesPromises = workData.map(async (work) => {
+  //         const { data, error } = await supabase.storage.from("images").download(`images/${work.file}`);
+  //         if (error) {
+  //           throw error;
+  //         }
+  //         // 데이터는 ArrayBuffer 형태로 반환되므로 Blob 객체로 변환하여 URL 생성
+  //         console.log(data);
+  //         const blob = new Blob([data]);
+  //         console.log(blob);
+  //         const imageUrl = URL.createObjectURL(blob);
+  //         console.log(imageUrl);
+  //         return { imageUrl };
+  //       });
+
+  //       setImageUrl(imageUrl);
+  //       console.log(imageUrl);
+  //     } catch (error) {
+  //       console.error("Error fetching image:", error.message);
+  //     }
+  //   }
+
+  //   fetchImage();
+  // }, []);
+  const [imageUrls, setImageUrls] = useState([]);
+
+  useEffect(() => {
+    async function fetchImages() {
+      try {
+        const imagesPromises = workData.map(async (work) => {
+          if (work.file) {
+            const { data, error } = await supabase.storage.from("images").download(`images/${work.file}`);
+            if (error) {
+              throw error;
+            }
+            const blob = new Blob([data]);
+            const imageUrl = URL.createObjectURL(blob);
+            return { id: work.id, imageUrl };
+          } else {
+            return null; // 파일 이름이 없는 경우 이미지 가져오지 않음
+          }
+        });
+
+        const images = await Promise.all(imagesPromises);
+        setImageUrls(images);
+        console.log(images);
+      } catch (error) {
+        console.error("Error fetching images:", error.message);
+      }
+    }
+
+    fetchImages();
+  }, [workData]);
+
+  const im = "c4970a82-5181-43bd-bea7-c3bc23e11d58";
+
   return (
     <div className="workpage">
       <h1>작업물이 보이는 공간입니다</h1>
@@ -61,6 +123,7 @@ function Workpage() {
             <input type="checkbox" checked={checkedItems[work.id] || false} onChange={() => handleCheckboxChange(work.id)} />
             <a>
               Title: {work.title}, Body: {work.body}, {work.code ? "개발" : ""} {work.design ? "디자인" : ""}
+              {work.file && <img src={im} />}
             </a>
           </li>
         ))}

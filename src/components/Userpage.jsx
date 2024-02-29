@@ -45,15 +45,12 @@ function Userpage() {
           </div>
 
           <div className="userpage__body">
+            {/* prettier-ignore */}
             <button
-              className="work_plus"
-              onClick={() => {
-                movePage("/addwork");
-              }}
-            >
-              작업물 추가 +
-            </button>
-            {/* <Workpage cla/> */}
+              className="work_plus"onClick={() => { movePage("/addwork");}}>작업물 추가 +</button>
+            {/* <div className="workpage__inner">
+              <Workpage />
+            </div> */}
             <Routes>
               <Route path="/hello" element={<Workpage />}></Route>
               <Route path="/contctnotice" element={<Notice />}></Route>

@@ -18,23 +18,15 @@ function Addwork() {
     console.log(e.target.value);
   };
 
-  //~ 파일 이름 추출
-  const [fileName, setFileName] = useState("");
-  const handleFileChange = (e) => {
-    const fileName = e.target.value.split("\\").pop(); // 파일 경로에서 파일 이름만 추출
-    const selectedFile = e.target.files[0];
-    console.log(fileName);
-    console.log(selectedFile.name);
-    setFileName(fileName); // 파일 이름 상태 업데이트
-  };
-
   //~ 사진 추출
-  const [fileName2, setFileName2] = useState("");
+  const [fileName, setFileName] = useState("");
   const handleFileChange2 = (e) => {
-    const selectedFile = e.target.files[0];
+    const fileName = e.target.value.split("\\").pop(); // 파일 경로에서 파일 이름만 추출
 
+    const selectedFile = e.target.files[0];
     console.log(selectedFile);
-    setFileName2(selectedFile); // 파일 이름 상태 업데이트
+
+    setFileName(selectedFile); // 파일 이름 상태 업데이트
   };
 
   //~ 체크박스
@@ -64,31 +56,61 @@ function Addwork() {
   } = useForm();
 
   const [formData, setFormData] = useState({});
-  console.log(formData);
+  console.log("supabase에 입력될 값", formData);
 
   const [file, setFile] = useState({});
-
+  //~ form에 적은 값들 업데이트
   const handleChange = (e) => {
-    const fileName = e.target.value.split("\\").pop(); // 파일 경로에서 파일 이름만 추출
-    setFileName(fileName); // 파일 이름 상태 업데이트
+    // setFileName(fileName); // 파일 이름 상태 업데이트
+    // console.log(fileName);
+    // console.log(e.target.files[0]);
+
     const { name, value } = e.target;
     // setFile({
     //   ...file,
     //   [name]: value,
     // });
+    // const fileName = e.target.value.split("\\").pop(); // 파일 경로에서 파일 이름만 추출
+    const fileValue = name === "file" ? e.target.files[0] : value;
     setFormData({
       ...formData,
       [name]: value,
+
+      // file: e.target.files[0] || "",
+      // [name]: value.split("\\").pop(),
+      // [file]: value.split("\\").pop(),
       // isChecked,
     });
     // console.log(e);
+  };
+
+  //~ supabase로 보내요
+
+  const onSubmit2 = async (data) => {
+    console.log(data);
+    try {
+      // const { data: responseData, error } = await supabase.from("work").insert([formData]);
+      const { data, error2 } = await supabase.storage.from("images").upload(`images/${fileName.name}`, fileName);
+      console.log(fileName);
+      console.log(data);
+      // console.log(responseData);
+      if (error2) {
+        throw error2;
+      }
+      const { imageUrl } = supabase.storage.from("images").getPublicUrl(`images/${fileName.name}`);
+      console.log(imageUrl.path);
+      onSubmit();
+      console.log("Data inserted successfully:", data);
+    } catch (error2) {
+      console.error("Error inserting data:", error2.message);
+    }
   };
 
   const onSubmit = async (data) => {
     console.log(data);
     try {
       const { data: responseData, error } = await supabase.from("work").insert([formData]);
-      const { data: responseData2, error2 } = await supabase.storage.from("images").upload(`images/${fileName2.name}`, fileName2);
+      // const { data: responseData2, error2 } = await supabase.storage.from("images").upload(`images/${fileName.name}`, fileName);
 
       console.log(responseData);
       if (error) {
@@ -106,7 +128,7 @@ function Addwork() {
         <div className="addwork__inner">
           <h1 className="addwork__title">작업물 추가</h1>
           <div className="addwork__text">
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit2)}>
               {/* 제목 */}
               <div>큰 제목</div>
               <input type="text" name="title" maxLength={15} onChange={handleChange} />
@@ -131,8 +153,9 @@ function Addwork() {
               {/* 이미지 */}
               <div>이미지</div>
               <div className="filebox">
-                {" "}
-                <input type="text" className="upload-name" value={fileName2.name || ""} readOnly />
+                {/* prettier-ignoer */}
+
+                <input type="text" className="upload-name" value={fileName.name || ""} readOnly />
                 <label htmlFor="file" className="btn-upload">
                   찾기
                 </label>
