@@ -2,9 +2,10 @@ import React, { useState } from "react";
 
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Workpage from "./Workpage";
-import Notice from "./Notice";
+// import Notice from "./Notice";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import Mailpage from "./Mailpage";
 
 function Userpage() {
   const [isActive, setIsActive] = useState(false);
@@ -32,13 +33,13 @@ function Userpage() {
           <h1 className="userpage__title">마실 관리자</h1>
           <div className="userpage__btn">
             <div className="menu">
-              <NavLink onClick={handleClick} to="hello">
+              <NavLink onClick={handleClick} to="workpage">
                 작업물 리스트 관리
               </NavLink>
             </div>
             <div className="menu">
               {/* <NavLink style={({ isActive }) => (isActive ? activeStyle : {})} to="contctnotice"> */}
-              <NavLink className="inquire" onClick={handleClick} to="contctnotice">
+              <NavLink className="inquire" onClick={handleClick} to="mailpage">
                 문의 관리
               </NavLink>
             </div>
@@ -46,32 +47,25 @@ function Userpage() {
 
           <div className="userpage__body">
             {/* prettier-ignore */}
-            <button
-              className="work_plus"onClick={() => { movePage("/addwork");}}>작업물 추가 +</button>
+
             {/* <div className="workpage__inner">
               <Workpage />
             </div> */}
             <Routes>
               <Route path="/hello" element={<Workpage />}></Route>
-              <Route path="/contctnotice" element={<Notice />}></Route>
+              <Route path="/workpage" element={<Workpage />}></Route>
+              {/* <Route path="/contctnotice" element={<Notice />}></Route> */}
+              <Route path="/mailpage" element={<Mailpage />}></Route>
             </Routes>
-            <button
-              className="work_plus"
-              onClick={() => {
-                movePage("/addwork");
-              }}
-            >
-              작업물 추가 +
-            </button>
           </div>
-          <div className="userpage__btn">
+          {/* <div className="userpage__btn">
             <button className="btn btn_del">삭제</button>
             <button className="btn btn_can">취소</button>
             <button className="btn btn_ok">확인</button>
             <button onClick={scroll} className="page_up">
               ↑
             </button>
-          </div>
+          </div> */}
         </div>
       </section>
     </div>

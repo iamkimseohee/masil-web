@@ -3,10 +3,11 @@ import { createClient } from "@supabase/supabase-js";
 
 import { dummy } from "../movieDummy";
 import { useState, useEffect } from "react";
+
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 const Port = () => {
-  const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280/";
+  // const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280/";
   const [workData, setworkData] = useState([]);
   useEffect(() => {
     fetchWorkData();
@@ -33,10 +34,11 @@ const Port = () => {
             {workData.map((work) => (
               <li key={work.id}>
                 {/* <input type="checkbox" checked={checkedItems[work.id] || false} onChange={() => handleCheckboxChange(work.id)} /> */}
-                <a href="/userpage">
-                  Title: {work.title}
-                  <br />
-                  Body: {work.body}
+                <a>
+                  Title: {work.title}, Body: {work.body}, {work.code ? "개발" : ""} {work.design ? "디자인" : ""}
+                  {/* {work.file && <img src={`images/${work.imageUrl}`} />} */}
+                  {work.imageUrl && <img src={work.imageUrl} />}
+                  {/* {work.imageUrl && <img src={im} />} */}
                 </a>
               </li>
             ))}
@@ -45,7 +47,7 @@ const Port = () => {
                 <div key={key}>
                   {" "}
                   {/* <h4>{item.title}</h4> */}
-                  <img src={IMG_BASE_URL + item.poster_path} alt="영화포스터" />
+                  {/* <img src={IMG_BASE_URL + item.poster_path} alt="영화포스터" /> */}
                 </div>
               );
             })}

@@ -32,4 +32,42 @@
       }
     }
   }
+  hr {
+    margin-bottom: 40px;
+    background-color: #c2c4c4;
+    border: 0px;
+    height: 1px;
+  }
+  .workpage__btn {
+    .btn {
+      width: 236px;
+      height: 60px;
+      background-color: white;
+      border-radius: 37px;
+      font-family: "Pretendard-Regular";
+      font-size: 24px;
+      color: #3f3c33;
+      border: 1px solid #c2c4c4;
+      margin-right: 20px;
+      &:hover {
+        border: 1px solid #3445db;
+      }
+    }
+    .btn_del {
+      margin-right: 424px;
+    }
+    .page_up {
+      width: 60px;
+      height: 60px;
+      background-color: white;
+      border-radius: 37px;
+      font-family: "Pretendard-Regular";
+      font-size: 24px;
+      color: #3f3c33;
+      border: 1px solid #c2c4c4;
+      &:hover {
+        border: 1px solid #3445db;
+      }
+    }
+  }
 }

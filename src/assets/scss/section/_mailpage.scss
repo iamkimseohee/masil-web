@@ -1,0 +1,38 @@
+#mailpage {
+}
+.titlelist {
+  display: flex;
+}
+input {
+  margin-right: 30px;
+}
+.num {
+  width: 48px;
+  text-align: center;
+  margin-right: 30px;
+}
+.name {
+  width: 148px;
+  margin-right: 40px;
+  text-align: center;
+}
+.title {
+  width: 758px;
+  //   margin-right: 40px;
+  text-align: center;
+}
+.time {
+  width: 158px;
+  text-align: center;
+}
+.maintitle {
+  text-align: left;
+}
+ul {
+  li {
+    display: flex;
+  }
+  .datalist {
+    display: flex;
+  }
+}

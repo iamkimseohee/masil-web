@@ -1,12 +1,20 @@
 import React from "react";
 import { createClient } from "@supabase/supabase-js";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 function Workpage() {
   const [workData, setworkData] = useState([]);
   const [checkedItems, setCheckedItems] = useState({});
+  const movePage = useNavigate();
+  const scroll = () => {
+    window.scroll({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   useEffect(() => {
     fetchWorkData();
@@ -52,83 +60,48 @@ function Workpage() {
     }));
   };
 
-  //~ 이미지 출력
-
-  // const [imageUrl, setImageUrl] = useState(null);
-
-  // useEffect(() => {
-  //   async function fetchImage() {
-  //     try {
-  //       const imagesPromises = workData.map(async (work) => {
-  //         const { data, error } = await supabase.storage.from("images").download(`images/${work.file}`);
-  //         if (error) {
-  //           throw error;
-  //         }
-  //         // 데이터는 ArrayBuffer 형태로 반환되므로 Blob 객체로 변환하여 URL 생성
-  //         console.log(data);
-  //         const blob = new Blob([data]);
-  //         console.log(blob);
-  //         const imageUrl = URL.createObjectURL(blob);
-  //         console.log(imageUrl);
-  //         return { imageUrl };
-  //       });
-
-  //       setImageUrl(imageUrl);
-  //       console.log(imageUrl);
-  //     } catch (error) {
-  //       console.error("Error fetching image:", error.message);
-  //     }
-  //   }
-
-  //   fetchImage();
-  // }, []);
-  const [imageUrls, setImageUrls] = useState([]);
-
-  useEffect(() => {
-    async function fetchImages() {
-      try {
-        const imagesPromises = workData.map(async (work) => {
-          if (work.file) {
-            const { data, error } = await supabase.storage.from("images").download(`images/${work.file}`);
-            if (error) {
-              throw error;
-            }
-            const blob = new Blob([data]);
-            const imageUrl = URL.createObjectURL(blob);
-            return { id: work.id, imageUrl };
-          } else {
-            return null; // 파일 이름이 없는 경우 이미지 가져오지 않음
-          }
-        });
-
-        const images = await Promise.all(imagesPromises);
-        setImageUrls(images);
-        console.log(images);
-      } catch (error) {
-        console.error("Error fetching images:", error.message);
-      }
-    }
-
-    fetchImages();
-  }, [workData]);
-
-  const im = "c4970a82-5181-43bd-bea7-c3bc23e11d58";
-
   return (
     <div className="workpage">
-      <h1>작업물이 보이는 공간입니다</h1>
+      <button
+        className="work_plus"
+        onClick={() => {
+          movePage("/addwork");
+        }}
+      >
+        작업물 추가 +
+      </button>
       <ul>
         {workData.map((work) => (
           <li key={work.id}>
             <input type="checkbox" checked={checkedItems[work.id] || false} onChange={() => handleCheckboxChange(work.id)} />
             <a>
+              {work.imageUrl && <img src={work.imageUrl} />}
               Title: {work.title}, Body: {work.body}, {work.code ? "개발" : ""} {work.design ? "디자인" : ""}
-              {work.file && <img src={im} />}
+              {/* {work.file && <img src={`images/${work.imageUrl}`} />} */}
+              {/* {work.imageUrl && <img src={im} />} */}
             </a>
           </li>
         ))}
       </ul>
-      <button onClick={handleDelete}>삭제</button>
+      <button
+        className="work_plus"
+        onClick={() => {
+          movePage("/addwork");
+        }}
+      >
+        작업물 추가 +
+      </button>
+      <hr />
+      <div className="workpage__btn">
+        <button onClick={handleDelete} className="btn btn_del">
+          삭제
+        </button>
+        <button className="btn btn_can">취소</button>
+        <button className="btn btn_ok">확인</button>
+        <button onClick={scroll} className="page_up">
+          ↑
+        </button>
+      </div>
     </div>
   );
 }

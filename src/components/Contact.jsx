@@ -3,10 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { isMobile } from "react-device-detect";
 import { createClient } from "@supabase/supabase-js";
+import moment from "moment";
 
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 const Contact = () => {
+  const currentTime = moment().format("YYYY.MM.DD HH:mm");
+
   const movePage = useNavigate();
   const {
     register,
@@ -42,7 +45,7 @@ const Contact = () => {
           <div className="contact__text">
             <form onSubmit={handleSubmit(onSubmit)}>
               {/* 이름 */}
-              <div>담당자 이름</div>
+              <div>담당자 이름 {currentTime}</div>
               <input type="text" name="name" {...register("name", { required: "이름을 입력하세요" })} />
               {errors.name && <p>{errors.name.message}</p>}
               {/* 메일 */}
@@ -59,6 +62,9 @@ const Contact = () => {
                 })}
               />
               {errors.email && <p>{errors.email.message}</p>}
+              <div>제목</div>
+              <input type="text" name="title" {...register("title", { required: "제목을 입력하세요" })} />
+              {errors.title && <p>{errors.title.message}</p>}
               {/* 내용 */}
               <div className="bodycontent">내용</div>
               <textarea name="body" {...register("body", { required: "내용을 입력하세요" })}></textarea>
