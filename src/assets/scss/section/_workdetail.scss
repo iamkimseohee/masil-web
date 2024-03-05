@@ -1,0 +1,33 @@
+#maildetail {
+  max-width: 1232px;
+  border: 1px solid black;
+  margin: 80px auto;
+}
+.maildetail__inner {
+  width: 100%;
+
+  .maildetail__top {
+    border: 1px solid rebeccapurple;
+    display: flex;
+    // margin-bottom: 50px;
+    .intrologo {
+      width: 128px;
+      height: 64px;
+      margin-right: 1049px;
+    }
+    .canclebtn {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      margin-top: 10px;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .bar1 {
+    margin: 50px 0;
+    background: #cbd3d3;
+    height: 1px;
+    border: 0;
+  }
+}

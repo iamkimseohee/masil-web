@@ -8,6 +8,8 @@ import Addwork from "./components/Addwork";
 import Loginpage from "./components/Loginpage";
 import Userpage from "./components/Userpage";
 import Mailpage from "./components/Mailpage";
+import Maildetail from "./components/Maildetail";
+import Workdetail from "./components/Workdetail";
 
 const App = () => {
   return (
@@ -17,6 +19,7 @@ const App = () => {
         <Route path="/login" element={<Loginpage />} />
         <Route path="/success" element={<Mailsuccess />} />
         <Route path="/addwork" element={<Addwork />} />
+        <Route path="/workdetail/:id" element={<Workdetail />} />
         <Route path="/userpage/*" element={<Userpage />}></Route>
       </Routes>
 

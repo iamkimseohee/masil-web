@@ -4,12 +4,11 @@ import { useForm } from "react-hook-form";
 import { isMobile } from "react-device-detect";
 import { createClient } from "@supabase/supabase-js";
 import moment from "moment";
+import { useState } from "react";
 
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 const Contact = () => {
-  const currentTime = moment().format("YYYY.MM.DD HH:mm");
-
   const movePage = useNavigate();
   const {
     register,
@@ -21,7 +20,10 @@ const Contact = () => {
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const { data: responseData, error } = await supabase.from("contact").insert([data]);
+      const now = moment().format("YYYY.MM.DD HH:mm"); //현재 시간
+      const newData = { ...data, time: now };
+      console.log(newData);
+      const { data: responseData, error } = await supabase.from("contact").insert([newData]);
       if (error) {
         throw error;
       }
@@ -45,7 +47,7 @@ const Contact = () => {
           <div className="contact__text">
             <form onSubmit={handleSubmit(onSubmit)}>
               {/* 이름 */}
-              <div>담당자 이름 {currentTime}</div>
+              <div>담당자 이름</div>
               <input type="text" name="name" {...register("name", { required: "이름을 입력하세요" })} />
               {errors.name && <p>{errors.name.message}</p>}
               {/* 메일 */}

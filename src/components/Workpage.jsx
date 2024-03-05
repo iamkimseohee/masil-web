@@ -1,7 +1,7 @@
 import React from "react";
 import { createClient } from "@supabase/supabase-js";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
@@ -74,12 +74,10 @@ function Workpage() {
         {workData.map((work) => (
           <li key={work.id}>
             <input type="checkbox" checked={checkedItems[work.id] || false} onChange={() => handleCheckboxChange(work.id)} />
-            <a>
-              {work.imageUrl && <img src={work.imageUrl} />}
-              Title: {work.title}, Body: {work.body}, {work.code ? "개발" : ""} {work.design ? "디자인" : ""}
-              {/* {work.file && <img src={`images/${work.imageUrl}`} />} */}
-              {/* {work.imageUrl && <img src={im} />} */}
-            </a>
+            {work.imageUrl && <img src={work.imageUrl} />}
+            Title: {work.title}, Body: {work.body}, {work.code ? "개발" : ""} {work.design ? "디자인" : ""}
+            {/* {work.file && <img src={`images/${work.imageUrl}`} />} */}
+            {/* {work.imageUrl && <img src={im} />} */}
           </li>
         ))}
       </ul>

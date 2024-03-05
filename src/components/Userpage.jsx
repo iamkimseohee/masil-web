@@ -6,6 +6,7 @@ import Workpage from "./Workpage";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import Mailpage from "./Mailpage";
+import Maildetail from "./Maildetail";
 
 function Userpage() {
   const [isActive, setIsActive] = useState(false);
@@ -52,10 +53,10 @@ function Userpage() {
               <Workpage />
             </div> */}
             <Routes>
-              <Route path="/hello" element={<Workpage />}></Route>
+              {/* <Route path="/hello" element={<Workpage />}></Route> */}
               <Route path="/workpage" element={<Workpage />}></Route>
               {/* <Route path="/contctnotice" element={<Notice />}></Route> */}
-              <Route path="/mailpage" element={<Mailpage />}></Route>
+              <Route path="/mailpage/*" element={<Mailpage />}></Route>
             </Routes>
           </div>
           {/* <div className="userpage__btn">

@@ -1,6 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
+import { NavLink, Routes, Route } from "react-router-dom";
+import Workpage from "./Workpage";
+import Maildetail from "./Maildetail";
 // import { useNavigate } from "react-router-dom";
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
@@ -141,16 +144,19 @@ function Mailpage() {
           {contactData.map((contact) => (
             <li key={contact.id}>
               <input type="checkbox" checked={checkedItems[contact.id] || false} onChange={() => handleCheckboxChange(contact.id)} />
-              <a className="datalist">
+              <NavLink to={"maildetail/" + contact.id} className="datalist">
                 {/* Number: {contact.id}, Name: {contact.name}, Email: {contact.email}, Message: {contact.body} ,Time: {contact.created_at} */}
                 <div className="num"> {contact.id}</div>
                 <div className="name">{contact.name}</div>
                 <div className="title maintitle">{contact.title}</div>
                 <div className="time"> {contact.time}</div>
-              </a>
+              </NavLink>
             </li>
           ))}
         </ul>
+        <Routes>
+          <Route path="/maildetail/:id" element={<Maildetail />}></Route>
+        </Routes>
         <hr className="bar4" />
         <div className="btnlist">
           <button onClick={handleDelete}>삭제</button>
