@@ -27,6 +27,7 @@ function Workdetail() {
         throw error;
       }
       setWorkDetail(data);
+      console.log(workDetail);
     } catch (error) {
       console.error("Error fetching mail detail:", error.message);
     }
@@ -49,7 +50,7 @@ function Workdetail() {
             {workDetail && (workDetail.code ? "개발" : "")}
             {workDetail && workDetail.design ? "디자인" : ""}
           </div>
-          <div> {workDetail.imageUrl && <img src={workDetail.imageUrl} />}</div>
+          <div> {workDetail && <img src={workDetail.imageUrl} />}</div>
         </div>
       </section>
     </div>
