@@ -9,12 +9,15 @@ import { createClient } from "@supabase/supabase-js";
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 function Addwork() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm();
   const movePage = useNavigate();
-
-  const [forms, setForms] = useState([]);
-
-  const addForm = () => {
-    setForms([...forms, {}]); // Add a new form object to the forms array
+  const gouserpage = () => {
+    movePage("/userpage");
   };
 
   //~ 글자 감지
@@ -27,7 +30,7 @@ function Addwork() {
   //~ 사진 추출
   const [fileName, setFileName] = useState("");
   const handleFileChange2 = (e) => {
-    const fileName = e.target.value.split("\\").pop(); // 파일 경로에서 파일 이름만 추출
+    // const fileName = e.target.value.split("\\").pop(); // 파일 경로에서 파일 이름만 추출
     const selectedFile = e.target.files[0];
     console.log(selectedFile);
     setFileName(selectedFile); // 파일 이름 상태 업데이트
@@ -48,17 +51,9 @@ function Addwork() {
     });
   };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm();
-
+  //~ form에 적은 값들 업데이트
   const [formData, setFormData] = useState({});
   console.log("supabase에 입력될 값", formData);
-
-  //~ form에 적은 값들 업데이트
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -68,8 +63,71 @@ function Addwork() {
     });
   };
 
-  //~ supabase로 보내요
+  const [imageInputs, setImageInputs] = useState([{ fileName: "", file: null }]);
 
+  //~ 이미지 입력칸 클릭 시 새로운 이미지 입력칸 추가
+  const handleImageInputClick = () => {
+    setImageInputs([...imageInputs, { fileName: "", file: null }]); // 새로운 이미지 입력칸 추가
+    // console.log("setImageInputs 🚨", setImageInputs);
+  };
+
+  //file경로 담아둘 list
+  const [fileUrlList, setFileUrlList] = useState([]);
+  const handleFileChange = async (index, e) => {
+    const fileName = e.target.value.split("\\").pop(); // 파일 경로에서 파일 이름만 추출
+    const selectedFile = e.target.files[0];
+
+    console.log("fileName 파일이름 🚨", fileName); // 파일 이름
+    console.log("selectedFile 선택한 파일 🚨", selectedFile); //선택한 파일
+    try {
+      // 스토리지에 파일 업로드
+      const { data, error } = await supabase.storage.from("images").upload(selectedFile.name, selectedFile);
+
+      if (error) {
+        throw error;
+      }
+
+      // 업로드한 파일의 공개 URL 가져오기
+      const imageUrl2 = supabase.storage.from("images").getPublicUrl(selectedFile.name);
+      const imageUrl = imageUrl2.data.publicUrl;
+
+      // 상태 업데이트
+      const updatedInputs = [...imageInputs];
+
+      updatedInputs[index] = { fileName: selectedFile.name, file: imageUrl };
+      console.log("내가 원하는거(각 파일의 유알엘만", updatedInputs[index].file);
+
+      setImageInputs(updatedInputs); // 칸에 이름 넣어주기 위한것
+      console.log(imageInputs);
+
+      // setFileUrlList([...fileUrlList], updatedInputs[index].file);
+      // console.log(imageInputs[index - 1].file);
+      // const imgUrl = imageInputs[index - 1].file
+
+      // console.log(imageInputs[index].file);
+      setFileUrlList((prevFileUrlList) => [...prevFileUrlList, imageUrl]); // 파일 URL 추가
+      console.log(fileUrlList);
+    } catch (error) {
+      console.error("Error uploading file:", error.message);
+    }
+
+    setFileName(selectedFile);
+
+    // // 상태 업데이트
+    // const updatedInputs = [...imageInputs]; //
+    // console.log("updatedInputs 🚨", updatedInputs);
+    // updatedInputs[index] = { fileName, file: selectedFile };
+    // console.log(" updatedInputs[index] 🚨", index, updatedInputs[index]);
+
+    // setImageInputs(updatedInputs);
+  };
+  // const [files, setFiles] = useState([]);
+  const handleFiles = async (e) => {
+    const fileList = e.target.files;
+  };
+
+  //~ supabase로 보내요
+  // 이미지 넣기
   const onSubmit2 = async () => {
     try {
       const { data, error } = await supabase.storage.from("images").upload(fileName.name, fileName);
@@ -81,24 +139,20 @@ function Addwork() {
       const imageUrl2 = supabase.storage.from("images").getPublicUrl(fileName.name, fileName);
       const imageUrl = imageUrl2.data.publicUrl;
       // 이미지의 공개 URL을 가져온 후 데이터를 데이터베이스에 삽입합니다.
-      console.log(imageUrl2);
-      console.log(imageUrl);
+
       await onSubmit(imageUrl);
-      console.log("데이터 넣기 성공:", data);
-      console.log(data);
     } catch (error) {
       console.error("Error inserting data:", error.message);
     }
   };
-
+  // 글들 넣기
   const onSubmit = async (imageUrl) => {
     try {
       // 이미지 URL을 formData에 추가합니다.
-      const formDataWithImage = { ...formData, imageUrl };
-      console.log(formDataWithImage);
+      const formDataWithImage = { ...formData, fileUrlList };
 
       const { data2, error } = await supabase.from("work").insert([formDataWithImage]);
-      console.log(data2);
+
       if (error) {
         throw error;
       }
@@ -138,42 +192,30 @@ function Addwork() {
               </div>
               {/* 이미지 */}
 
-              <div>이미지</div>
-              <div className="filebox">
-                <input type="text" className="upload-name" value={fileName.name || ""} readOnly />
-                <label htmlFor="file" className="btn-upload">
-                  찾기
-                </label>
-                <input
-                  className="btn"
-                  type="file"
-                  name="file"
-                  id="file"
-                  onChange={(e) => {
-                    handleFileChange2(e);
-                  }}
-                />
-              </div>
-              {/* <button type="submit">보내기</button> */}
+              {imageInputs.map((input, index) => (
+                <div key={index}>
+                  <div>이미지{index + 1}</div>
+                  <div className="filebox">
+                    <input type="text" className="upload-name" value={input.fileName || ""} readOnly />
+                    <label htmlFor={`file-${index}`} className="btn-upload">
+                      찾기
+                    </label>
+                    <input className="btnaddimg" type="file" name={`file-${index}`} id={`file-${index}`} onChange={(e) => handleFileChange(index, e)} />
+                  </div>
+                </div>
+              ))}
             </form>
 
             <div className="addimg">
-              {" "}
-              <button onClick={addForm}>이미지 추가</button>
+              <button onClick={handleImageInputClick}>이미지 추가</button>
             </div>
           </div>
 
           <div className="line"></div>
 
           <div className="addwork__btn">
-            <button
-              onClick={() => {
-                movePage("/userpage");
-              }}
-            >
-              취소
-            </button>
-            <button onClick={handleSubmit(onSubmit2)}>확인</button>
+            <button onClick={gouserpage}>취소</button>
+            <button onClick={handleSubmit(onSubmit)}>확인</button>
           </div>
         </div>
       </section>

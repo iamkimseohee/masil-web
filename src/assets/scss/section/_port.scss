@@ -54,13 +54,13 @@
 
   .port__wrap {
     width: 100%;
-    display: inline-flex;
+    display: flex;
     // justify-content: space-between;
     gap: 12px;
     // float: left;
     margin: 0;
     flex-wrap: wrap; //줄바꿈
-    // justify-content: space-between;
+    justify-content: space-between;
     //스크롤
     overflow: auto;
     height: 500px;
