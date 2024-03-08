@@ -54,13 +54,13 @@
 
   .port__wrap {
     width: 100%;
-    display: flex;
+    display: inline-flex;
     // justify-content: space-between;
     gap: 12px;
     // float: left;
     margin: 0;
     flex-wrap: wrap; //줄바꿈
-    justify-content: space-between;
+    // justify-content: space-between;
     //스크롤
     overflow: auto;
     height: 500px;
@@ -72,6 +72,7 @@
       flex-direction: column;
       margin-bottom: 30px;
       border: 1px solid #c2c4c433;
+      // border: 1px solid black;
       border-radius: 10px;
       // background-color: aquamarine
       .port__wrapimgs {

@@ -54,8 +54,12 @@ function Workdetail() {
           <div className="workdetail__title">{workDetail && workDetail.title}</div>
           <div className="workdetail__body">{workDetail && workDetail.body}</div>
           <div className="worketail__icon">
-            <div className="workicon"> {workDetail && (workDetail.code ? "개발" : "")}</div>
-            <div className="workicon">{workDetail && workDetail.design ? "디자인" : ""}</div>
+            {workDetail && (
+              <>
+                {workDetail.code && <div className="workicon">개발</div>}
+                {workDetail.design && <div className="workicon">디자인</div>}
+              </>
+            )}
           </div>
           {/* <div> {workDetail && <img src={workDetail.fileUrlList[1]} />}</div> */}
           <div className="workpic">{workDetail && workDetail.fileUrlList && workDetail.fileUrlList.map((url, index) => <img className="pic" key={index} src={url} alt={`Image ${index}`} />)}</div>

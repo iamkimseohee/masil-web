@@ -48,6 +48,7 @@ function Userpage() {
               <Route path="/" element={<Workpage />} />
               <Route path="/workpage" element={<Workpage />}></Route>
               <Route path="/mailpage/*" element={<Mailpage />}></Route>
+              <Route path="/maildetail/:id" element={<Maildetail />} />
             </Routes>
           </div>
         </div>

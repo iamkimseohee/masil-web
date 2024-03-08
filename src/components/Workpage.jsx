@@ -77,25 +77,28 @@ function Workpage() {
       >
         작업물 추가 +
       </button>
-      <ul>
-        {workData.map((work) => (
-          <li key={work.id}>
-            {/* <input type="checkbox" checked={checkedItems[work.id] || false} onChange={() => handleCheckboxChange(work.id)} />
+      <div>
+        <ul>
+          {workData.map((work) => (
+            <li key={work.id}>
+              {/* <input type="checkbox" checked={checkedItems[work.id] || false} onChange={() => handleCheckboxChange(work.id)} />
             <div className="workpageimgs">{work && work.fileUrlList && work.fileUrlList.length > 0 && <img className="workpageimg" src={work.fileUrlList[0]} />}</div> */}
-            <div className="workpageitem">
-              <input type="checkbox" checked={checkedItems[work.id] || false} onChange={() => handleCheckboxChange(work.id)} />
-              <div className="workpageimgs">{work && work.fileUrlList && work.fileUrlList.length > 0 && <img className="workpageimg" src={work.fileUrlList[0]} />}</div>
-            </div>
-            <div className="workpagetitle">{work.title}</div>
-            <div className="workpagebody">{work.body}</div>
-            {/* {work && <img src={work.fileUrlList[0]} />} */}
-            {/* {work && work.fileUrlList && work.fileUrlList.length > 0 && <img src={work.fileUrlList[0]} />} */}
-            {/* Title: {work.title}, Body: {work.body}, {work.code ? "개발" : ""} {work.design ? "디자인" : ""} */}
-            {/* {work.file && <img src={`images/${work.imageUrl}`} />} */}
-            {/* {work.imageUrl && <img src={im} />} */}
-          </li>
-        ))}
-      </ul>
+              <div className="workpageitem">
+                <input type="checkbox" checked={checkedItems[work.id] || false} onChange={() => handleCheckboxChange(work.id)} />
+                <div className="workpageimgs">{work && work.fileUrlList && work.fileUrlList.length > 0 && <img className="workpageimg" src={work.fileUrlList[0]} />}</div>
+              </div>
+              <div className="workpagetitle">{work.title}</div>
+              <div className="workpagebody">{work.body}</div>
+              {/* {work && <img src={work.fileUrlList[0]} />} */}
+              {/* {work && work.fileUrlList && work.fileUrlList.length > 0 && <img src={work.fileUrlList[0]} />} */}
+              {/* Title: {work.title}, Body: {work.body}, {work.code ? "개발" : ""} {work.design ? "디자인" : ""} */}
+              {/* {work.file && <img src={`images/${work.imageUrl}`} />} */}
+              {/* {work.imageUrl && <img src={im} />} */}
+            </li>
+          ))}
+        </ul>
+      </div>
+
       <button
         className="work_plus"
         onClick={() => {

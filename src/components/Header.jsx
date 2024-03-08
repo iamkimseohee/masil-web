@@ -44,7 +44,7 @@ const Header = () => {
           </ul>
         </nav>
         <div className="header__nav__mobile" id="headerToggle" aria-controls="primary-menu" aria-expanded={show ? "true" : "false"} tabIndex="0" onClick={toggleMenu}>
-          <div></div>
+          <div className="bluecir"></div>
         </div>
       </div>
     </header>

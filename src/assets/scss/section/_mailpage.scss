@@ -1,154 +1,170 @@
 #mailpage {
   max-width: 1232px;
   margin-top: 60px;
-  border: 1px solid rebeccapurple;
 }
-.btnspace {
-  // width: 100%;
-  height: 60px;
-  display: flex;
-  border: 1px solid #c2c4c4;
-  border-left: 0;
-  border-right: 0;
-  border-bottom: 1.8px solid #b6b9bf;
-  .btnlist {
-    border: none;
-    outline: none;
-    background-color: inherit;
-    font-size: 19px;
-    font-family: "Pretendard-Regular";
-    cursor: pointer;
-  }
-  .btndel {
-    margin-right: 60px;
-    width: 48px;
-  }
-  .btnblock {
-    width: 74px;
-  }
-  .btnre {
-    width: 48px;
-  }
-  .btnlistnum {
-    width: 23px;
-  }
-  .header__nav {
-    display: none;
-    //클릭 했을때
-    position: fixed;
-    &.show {
-      display: block;
-      ul {
-        display: block;
-        position: absolute;
-        left: 1135px;
-        top: 40px;
-        width: 96px;
-        height: 105px;
-        border: 1px solid #c2c4c4;
-        border-top-left-radius: 12px;
-        border-bottom-left-radius: 12px;
-        border-bottom-right-radius: 12px;
-        background-color: #ffffff;
+.mailpage__inner {
+  border: 1px solid rebeccapurple;
+  .btnspace {
+    // width: 100%;
+    height: 60px;
+    display: flex;
+    border: 1px solid #c2c4c4;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1.8px solid #b6b9bf;
+    .btnlist {
+      border: none;
+      outline: none;
+      background-color: inherit;
+      font-size: 19px;
+      font-family: "Pretendard-Regular";
+      cursor: pointer;
+      &:hover {
+        color: #03acb4;
+      }
+    }
+    .btndel {
+      margin-right: 60px;
+      width: 48px;
+    }
+    .btnblock {
+      width: 74px;
+      margin-right: 916px;
+    }
+    .btnre {
+      width: 48px;
+      margin-right: 60px;
+    }
+    .btnlistnum {
+      width: 23px;
+    }
 
-        li {
+    .header__nav {
+      display: none;
+      //클릭 했을때
+      &.show {
+        display: block;
+        ul {
+          // position: fixed;
           display: block;
-          text-align: center;
-          button {
-            align-content: space-around;
-            margin-top: 13px;
-            display: inline-block;
-            font-size: 13px;
-            color: #7b808d;
-            font-family: "Pretendard-Regular";
-            cursor: pointer;
-            border: none;
-            outline: none;
-            background-color: inherit;
+          position: absolute;
+          // left: 1135px;
+          // top: 40px;
+          margin-top: 40px;
+          margin-left: -72px;
+          width: 96px;
+          height: 105px;
+          border: 1px solid #c2c4c4;
+          border-top-left-radius: 12px;
+          border-bottom-left-radius: 12px;
+          border-bottom-right-radius: 12px;
+          background-color: #ffffff;
+
+          li {
+            display: block;
+            text-align: center;
+            button {
+              align-content: space-around;
+              margin-top: 13px;
+              display: inline-block;
+              font-size: 13px;
+              color: #7b808d;
+              font-family: "Pretendard-Regular";
+              cursor: pointer;
+              border: none;
+              outline: none;
+              background-color: inherit;
+            }
           }
         }
       }
     }
-    // &.show + .header__nav__mobile span::before {
-    //   width: 20px;
-    // }
-    &.show + .header__nav__mobile {
-      box-shadow: none;
-    }
-    // }
   }
-}
-.titlelist {
-  // border: 1.5px solid #707070;
-  // border-left: 0;
-  // border-right: 0;
-  // border-bottom: 0;
-
-  display: flex;
-  font-size: 13px;
-  color: #7b808d;
-  font-family: "Pretendard-Regular";
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 62px;
-}
-.maillist {
-  border: 1.5px solid #c2c4c4;
-  border-left: 0;
-  border-right: 0;
-  border-bottom: 0;
-  // height: 662px;
-  padding-top: 20px;
-  padding-bottom: 33px;
-
-  .maillistli {
-    input {
-      // margin-right: 30px;
-      width: 26px;
-      height: 26px;
-      // text-align: center;
-    }
-    height: 23px;
+  .titlelist {
     display: flex;
+    font-size: 13px;
+    color: #7b808d;
+    font-family: "Pretendard-Regular";
+    // display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 42px;
-    // border: 1px solid royalblue;
-    font-size: 19px;
-    font-family: "Pretendard-Regular";
-    color: #3f3c33;
-  }
-  .datalist {
-    display: flex;
-  }
-}
+    height: 62px;
+    text-align: center;
 
-input {
-  // margin-right: 30px;
-  width: 26px;
-  height: 26px;
-  // text-align: center;
-}
-.num {
-  width: 48px;
-  text-align: center;
-  margin-right: 30px;
-}
-.name {
-  width: 148px;
-  margin-right: 40px;
-  text-align: center;
-}
-.title {
-  width: 758px;
-  //   margin-right: 40px;
-  text-align: center;
-}
-.time {
-  width: 158px;
-  text-align: center;
-}
-.maintitle {
-  text-align: left;
+    .checkboz {
+      margin-right: 30px;
+      width: 26px;
+      height: 26px;
+    }
+    .num {
+      width: 48px;
+      margin-right: 30px;
+    }
+    .name {
+      width: 148px;
+      margin-right: 40px;
+    }
+    .title {
+      width: 758px;
+    }
+    .time {
+      width: 158px;
+    }
+    .maintitle {
+      text-align: left;
+    }
+  }
+  .maillist {
+    border: 1.5px solid #c2c4c4;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    // height: 662px;
+    padding-top: 20px;
+    padding-bottom: 0px;
+
+    // display: flex;
+    .maillistli {
+      &:hover {
+        color: #03acb4;
+      }
+      .checkboxs {
+        margin-right: 22px;
+        // width: 50px;
+        width: 26px;
+        height: 26px;
+        // height: 50px;
+      }
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 42px;
+      // border: 1px solid royalblue;
+      // height: 50px;
+      font-size: 19px;
+      font-family: "Pretendard-Regular";
+      color: #3f3c33;
+    }
+    .datalist {
+      display: flex;
+      text-align: center;
+      .num {
+        width: 48px;
+        margin-right: 30px;
+      }
+      .name {
+        width: 148px;
+        margin-right: 40px;
+      }
+      .title {
+        width: 758px;
+      }
+      .time {
+        width: 158px;
+      }
+      .maintitle {
+        text-align: left;
+      }
+    }
+  }
 }
