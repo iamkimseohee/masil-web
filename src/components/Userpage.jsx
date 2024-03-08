@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Workpage from "./Workpage";
@@ -9,11 +9,12 @@ import Mailpage from "./Mailpage";
 import Maildetail from "./Maildetail";
 
 function Userpage() {
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(true);
 
   const handleClick = () => {
     setIsActive(!isActive);
   };
+  console.log(isActive);
 
   const scroll = () => {
     window.scroll({
@@ -23,10 +24,7 @@ function Userpage() {
   };
 
   const movePage = useNavigate();
-  // const activeStyle = {
-  //   color: "#FFFFFF",
-  //   backgroundColor: "#03ACB4",
-  // };
+
   return (
     <div>
       <section id="userpage">
@@ -34,39 +32,24 @@ function Userpage() {
           <h1 className="userpage__title">마실 관리자</h1>
           <div className="userpage__btn">
             <div className="menu">
-              <NavLink onClick={handleClick} to="workpage">
+              <NavLink to="workpage" onClick={handleClick} className={isActive ? "active" : ""}>
                 작업물 리스트 관리
               </NavLink>
             </div>
             <div className="menu">
-              {/* <NavLink style={({ isActive }) => (isActive ? activeStyle : {})} to="contctnotice"> */}
-              <NavLink className="inquire" onClick={handleClick} to="mailpage">
+              <NavLink to="mailpage" onClick={handleClick}>
                 문의 관리
               </NavLink>
             </div>
           </div>
 
           <div className="userpage__body">
-            {/* prettier-ignore */}
-
-            {/* <div className="workpage__inner">
-              <Workpage />
-            </div> */}
             <Routes>
-              {/* <Route path="/hello" element={<Workpage />}></Route> */}
+              <Route path="/" element={<Workpage />} />
               <Route path="/workpage" element={<Workpage />}></Route>
-              {/* <Route path="/contctnotice" element={<Notice />}></Route> */}
               <Route path="/mailpage/*" element={<Mailpage />}></Route>
             </Routes>
           </div>
-          {/* <div className="userpage__btn">
-            <button className="btn btn_del">삭제</button>
-            <button className="btn btn_can">취소</button>
-            <button className="btn btn_ok">확인</button>
-            <button onClick={scroll} className="page_up">
-              ↑
-            </button>
-          </div> */}
         </div>
       </section>
     </div>

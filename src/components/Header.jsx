@@ -28,15 +28,13 @@ const headerNav = [
 const Header = () => {
   const [show, setshow] = useState(false);
   const toggleMenu = () => {
-    setshow((preShow) => {
-      return !preShow;
-    });
+    setshow(!show);
   };
   return (
     <header id="header" role="banner">
       <div className="header__inner">
         <div className="header__logo"></div>
-        <nav className={`header__nav ${show ? "show" : ""}`} role="navigation" aria-label="메인메뉴">
+        <nav className={`header__nav ${show ? "show" : ""}`} aria-label="메인메뉴">
           <ul>
             {headerNav.map((nav, key) => (
               <li key={key}>
@@ -45,7 +43,7 @@ const Header = () => {
             ))}
           </ul>
         </nav>
-        <div className="header__nav__mobile" id="headerToggle" aria-controls="primary-menu" aria-expanded={show ? "true" : "false"} role="button" tabIndex="0" onClick={toggleMenu}>
+        <div className="header__nav__mobile" id="headerToggle" aria-controls="primary-menu" aria-expanded={show ? "true" : "false"} tabIndex="0" onClick={toggleMenu}>
           <div></div>
         </div>
       </div>

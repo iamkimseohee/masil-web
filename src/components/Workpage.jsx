@@ -9,11 +9,17 @@ function Workpage() {
   const [workData, setworkData] = useState([]);
   const [checkedItems, setCheckedItems] = useState({});
   const movePage = useNavigate();
+
+  //맨 위로 가기
   const scroll = () => {
     window.scroll({
       top: 0,
       behavior: "smooth",
     });
+  };
+
+  const goHome2 = () => {
+    movePage("/");
   };
 
   useEffect(() => {
@@ -74,10 +80,17 @@ function Workpage() {
       <ul>
         {workData.map((work) => (
           <li key={work.id}>
-            <input type="checkbox" checked={checkedItems[work.id] || false} onChange={() => handleCheckboxChange(work.id)} />
+            {/* <input type="checkbox" checked={checkedItems[work.id] || false} onChange={() => handleCheckboxChange(work.id)} />
+            <div className="workpageimgs">{work && work.fileUrlList && work.fileUrlList.length > 0 && <img className="workpageimg" src={work.fileUrlList[0]} />}</div> */}
+            <div className="workpageitem">
+              <input type="checkbox" checked={checkedItems[work.id] || false} onChange={() => handleCheckboxChange(work.id)} />
+              <div className="workpageimgs">{work && work.fileUrlList && work.fileUrlList.length > 0 && <img className="workpageimg" src={work.fileUrlList[0]} />}</div>
+            </div>
+            <div className="workpagetitle">{work.title}</div>
+            <div className="workpagebody">{work.body}</div>
             {/* {work && <img src={work.fileUrlList[0]} />} */}
-            {work && work.fileUrlList && work.fileUrlList.length > 0 && <img src={work.fileUrlList[0]} />}
-            Title: {work.title}, Body: {work.body}, {work.code ? "개발" : ""} {work.design ? "디자인" : ""}
+            {/* {work && work.fileUrlList && work.fileUrlList.length > 0 && <img src={work.fileUrlList[0]} />} */}
+            {/* Title: {work.title}, Body: {work.body}, {work.code ? "개발" : ""} {work.design ? "디자인" : ""} */}
             {/* {work.file && <img src={`images/${work.imageUrl}`} />} */}
             {/* {work.imageUrl && <img src={im} />} */}
           </li>
@@ -96,7 +109,9 @@ function Workpage() {
         <button onClick={handleDelete} className="btn btn_del">
           삭제
         </button>
-        <button className="btn btn_can">취소</button>
+        <button className="btn btn_can" onClick={goHome2}>
+          취소
+        </button>
         <button className="btn btn_ok">확인</button>
         <button onClick={scroll} className="page_up">
           ↑

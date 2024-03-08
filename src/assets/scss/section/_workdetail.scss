@@ -28,6 +28,7 @@
       .workdetail__top2__innertext {
         margin-left: 142px;
         margin-top: 20px;
+        font-family: "Pretendard-Regular";
       }
     }
   }
@@ -137,6 +138,9 @@
     background: #cbd3d3;
     height: 1px;
     border: 0;
+    @media (max-width: 768px) {
+      margin-bottom: 30px;
+    }
   }
   .btngolist {
     display: block;
@@ -160,6 +164,9 @@
     }
     @media (max-width: 768px) {
       margin-bottom: 60px;
+      width: 126px;
+      height: 47px;
+      font-size: 19px;
     }
   }
 }

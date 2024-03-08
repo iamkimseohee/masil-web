@@ -17,19 +17,56 @@
       display: flex;
       flex-direction: column;
       margin-bottom: 30px;
-      border: 1px solid brown;
+      border: 1px solid #c2c4c433;
+      border-radius: 10px;
+
       // background-color: aquamarine;
-      img {
-        //칸에 꽉 차게 이미지 맞추기
-        height: 100%;
-        width: 100%;
+      .workpageitem {
+        position: relative;
       }
-      @media (max-width: 1024px) {
-        width: 256px;
+
+      .workpageitem input[type="checkbox"] {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        top: 10px; /* 원하는 위치로 조정 */
+        left: 10px; /* 원하는 위치로 조정 */
       }
-      @media (max-width: 768px) {
-        width: 172px;
+      .workpageimgs {
+        height: 142px;
+
+        .workpageimg {
+          //칸에 꽉 차게 이미지 맞추기
+          width: 100%;
+          height: 142px;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+        }
       }
+      .workpagetitle {
+        font-size: 24px;
+        text-align: left;
+        font-family: "Pretendard-Medium";
+        width: 251px;
+        margin-left: 18px;
+        margin-bottom: 5px;
+        margin-top: 15px;
+      }
+      .workpagebody {
+        font-size: 15px;
+        text-align: left;
+        font-family: "Pretendard-Regular";
+        width: 251px;
+        margin-left: 18px;
+        color: #c2c4c4;
+      }
+
+      // @media (max-width: 1024px) {
+      //   width: 256px;
+      // }
+      // @media (max-width: 768px) {
+      //   width: 172px;
+      // }
     }
   }
   hr {

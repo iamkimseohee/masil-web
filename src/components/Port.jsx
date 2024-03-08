@@ -37,11 +37,11 @@ const Port = () => {
                 {/* <input type="checkbox" checked={checkedItems[work.id] || false} onChange={() => handleCheckboxChange(work.id)} /> */}
                 <NavLink to={"/workdetail/" + work.id}>
                   {/* {work.imageUrl && <img style={{ width: "100%", height: "142px" }} src={work.imageUrl} />} */}
-                  {work && work.fileUrlList && work.fileUrlList.length > 0 && <img style={{ width: "100%", height: "142px" }} src={work.fileUrlList[0]} />}
-                  <div className="title" style={{ fontSize: "24px", textAlign: "left", fontFamily: "Pretendard-Medium", width: "251px", marginLeft: "18px" }}>
-                    {work.title}
-                  </div>
-                  <br /> {work.body}
+                  <div className="port__wrapimgs">{work && work.fileUrlList && work.fileUrlList.length > 0 && <img className="port__wrapimg" src={work.fileUrlList[0]} />}</div>
+
+                  <div className="port__wraptitle">{work.title}</div>
+                  <div className="port__wrapbody">{work.body}</div>
+                  {/* <br /> */}
                   {/* {work.file && <img src={`images/${work.imageUrl}`} />} */}
                   {/* {work.imageUrl && <img src={im} />} */}
                 </NavLink>
