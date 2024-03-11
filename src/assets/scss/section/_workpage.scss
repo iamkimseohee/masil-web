@@ -29,9 +29,22 @@
         position: absolute;
         width: 30px;
         height: 30px;
-        top: 10px; /* 원하는 위치로 조정 */
-        left: 10px; /* 원하는 위치로 조정 */
+        top: 14px; /* 원하는 위치로 조정 */
+        left: 14px; /* 원하는 위치로 조정 */
       }
+      .move-btn {
+        position: absolute; /* 절대 위치 설정 */
+        top: 9px; /* 부모 요소 상단에 위치 */
+        right: 14px; /* 부모 요소 왼쪽에 위치 */
+        z-index: 2; /* 이미지 위에 표시 */
+      }
+      .retouch-btn {
+        position: absolute; /* 절대 위치 설정 */
+        top: 9px; /* 부모 요소 상단에 위치 */
+        right: 60px; /* 부모 요소 왼쪽에 위치 */
+        z-index: 2; /* 이미지 위에 표시 */
+      }
+
       .workpageimgs {
         height: 142px;
 

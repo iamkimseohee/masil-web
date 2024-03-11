@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import Mailpage from "./Mailpage";
 import Maildetail from "./Maildetail";
+import Blockmail from "./Blockmail";
+import Remail from "./Remail";
 
 function Userpage() {
   const [isActive, setIsActive] = useState(true);
@@ -41,14 +43,22 @@ function Userpage() {
                 문의 관리
               </NavLink>
             </div>
+            <div className="menu">
+              <NavLink to="blockmail" onClick={handleClick}>
+                스팸 리스트
+              </NavLink>
+            </div>
           </div>
 
           <div className="userpage__body">
             <Routes>
               <Route path="/" element={<Workpage />} />
+
               <Route path="/workpage" element={<Workpage />}></Route>
+              <Route path="/blockmail" element={<Blockmail />}></Route>
               <Route path="/mailpage/*" element={<Mailpage />}></Route>
               <Route path="/maildetail/:id" element={<Maildetail />} />
+              <Route path="/remail/:id" element={<Remail />} />
             </Routes>
           </div>
         </div>

@@ -10,6 +10,7 @@ import Userpage from "./components/Userpage";
 import Mailpage from "./components/Mailpage";
 import Maildetail from "./components/Maildetail";
 import Workdetail from "./components/Workdetail";
+import Retouchwork from "./components/Retouchwork";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/success" element={<Mailsuccess />} />
         <Route path="/addwork" element={<Addwork />} />
         <Route path="/workdetail/:id" element={<Workdetail />} />
+        <Route path="/retouchwork/:id" element={<Retouchwork />} />
         <Route path="/userpage/*" element={<Userpage />}></Route>
       </Routes>
 

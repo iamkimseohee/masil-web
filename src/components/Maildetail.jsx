@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Link, NavLink, useParams } from "react-router-dom";
+import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js";
+import upicon from "../assets/img/upicon.png";
+import downicon from "../assets/img/downicon.png";
 
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 function Maildetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [mailDetail, setMailDetail] = useState(null);
   const [prevId, setPrevId] = useState(null);
   const [nextId, setNextId] = useState(null);
@@ -49,6 +52,17 @@ function Maildetail() {
       console.error("Error fetching previous id:", error.message);
     }
   };
+  const handleDeleteMail = async () => {
+    try {
+      const { error } = await supabase.from("contact").delete().eq("id", id);
+      if (error) {
+        throw error;
+      }
+      navigate("/userpage/mailpage"); // 메일 삭제 후 메일 목록 페이지로 리다이렉트
+    } catch (error) {
+      console.error("Error deleting mail:", error.message);
+    }
+  };
 
   useEffect(() => {
     fetchMailDetail(id);
@@ -59,50 +73,63 @@ function Maildetail() {
     <div>
       <div className="maildetail__inner">
         <div className="btnspace">
-          <button>삭제</button>
-          <button>스팸차단</button>
-          <button>답장</button>
+          <button onClick={handleDeleteMail} className="maildetailbtn maildel">
+            삭제
+          </button>
+          <button className="maildetailbtn mailblock">스팸차단</button>
+          <NavLink to={`/userpage/remail/${id}`} className="maildetailbtn mailre">
+            답장
+          </NavLink>
 
-          <button>목록</button>
+          <NavLink to="/userpage/mailpage" className="maildetailbtn maillist">
+            목록
+          </NavLink>
         </div>
-        <div>
-          {mailDetail && mailDetail.id}
-          {mailDetail && mailDetail.name}
-          {mailDetail && mailDetail.email}
-          {mailDetail && mailDetail.time}
+        <div className="maildetail__bodytop">
+          <div className="maildetail__bodytoplist">
+            <div className="mailbodyid">{mailDetail && mailDetail.id}</div>
+            <div className="mailbodyname">{mailDetail && mailDetail.name}</div>
+            <div className="mailbodyemail">{mailDetail && mailDetail.email}</div>
+            <div className="mailbodytime">{mailDetail && mailDetail.time}</div>
+          </div>
+          <div className="maildetail__bodytitle">{mailDetail && mailDetail.title}</div>
         </div>
-        <div>{mailDetail && mailDetail.title}</div>
-        <div>{mailDetail && mailDetail.body}</div>
+        <div className="maildetail__body">{mailDetail && mailDetail.body}</div>
         <div className="btnspace">
-          <button>삭제</button>
-          <button>스팸차단</button>
-          <button>답장</button>
+          <button onClick={handleDeleteMail} className="maildetailbtn maildel">
+            삭제
+          </button>
+          <button className="maildetailbtn mailblock">스팸차단</button>
+          <button className="maildetailbtn mailre">답장</button>
 
-          <button>목록</button>
-        </div>
-        <div className="prevmail">
-          {/* prevId가 null 또는 undefined인 경우에도 프로퍼티 접근을 시도하지만 그런 경우에는 undefined를 반환 */}
-          <NavLink to={`/userpage/maildetail/${prevId?.id}`}>
-            {prevId && prevId.id}
-            {prevId && prevId.name}
-            {prevId && prevId.title}
-            {prevId && prevId.time}
+          <NavLink to="/userpage/mailpage" className="maildetailbtn maillist">
+            목록
           </NavLink>
         </div>
-        <div className="nextmail">
-          <NavLink to={`/userpage/maildetail/${nextId?.id}`}>
-            {nextId && nextId.id}
-            {nextId && nextId.name}
-            {nextId && nextId.title}
-            {nextId && nextId.time}
-          </NavLink>
-        </div>
-      </div>
-      <div>
-        {/* 메일 상세 정보를 표시하는 UI */}
-        {/* <div>이전 메일 아이디: {prevId}</div> */}
-        <div>현재 메일 아이디: {id}</div>
-        {/* <div>다음 메일 아이디: {nextId}</div> */}
+        {prevId && (
+          <div className="prevmail">
+            <NavLink to={`/userpage/maildetail/${prevId.id}`} className="prevmail__inner">
+              {/* <div>▲</div> */}
+              <img src={upicon} alt="" className="icon" />
+              <div className="mailid">{prevId.id}</div>
+              <div className="mailname">{prevId.name}</div>
+              <div className="mailtitle">{prevId.title}</div>
+              <div className="mailtime">{prevId.time}</div>
+            </NavLink>
+          </div>
+        )}
+        {nextId && (
+          <div className="nextmail">
+            <NavLink to={`/userpage/maildetail/${nextId?.id}`} className="nextmail__inner">
+              {/* <div>▼</div> */}
+              <img src={downicon} alt="" className="icon" />
+              <div className="mailid">{nextId.id}</div>
+              <div className="mailname">{nextId.name}</div>
+              <div className="mailtitle">{nextId.title}</div>
+              <div className="mailtime">{nextId.time}</div>
+            </NavLink>
+          </div>
+        )}
       </div>
     </div>
   );

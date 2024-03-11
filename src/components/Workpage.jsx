@@ -2,6 +2,8 @@ import React from "react";
 import { createClient } from "@supabase/supabase-js";
 import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import movebtn from "../assets/img/move.png";
+import retouch from "../assets/img/retouch.png";
 
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
@@ -85,6 +87,12 @@ function Workpage() {
             <div className="workpageimgs">{work && work.fileUrlList && work.fileUrlList.length > 0 && <img className="workpageimg" src={work.fileUrlList[0]} />}</div> */}
               <div className="workpageitem">
                 <input type="checkbox" checked={checkedItems[work.id] || false} onChange={() => handleCheckboxChange(work.id)} />
+                <img src={movebtn} alt="" className="move-btn" />
+                <NavLink to={"/retouchwork/" + work.id}>
+                  {" "}
+                  <img src={retouch} alt="" className="retouch-btn" />
+                </NavLink>
+
                 <div className="workpageimgs">{work && work.fileUrlList && work.fileUrlList.length > 0 && <img className="workpageimg" src={work.fileUrlList[0]} />}</div>
               </div>
               <div className="workpagetitle">{work.title}</div>

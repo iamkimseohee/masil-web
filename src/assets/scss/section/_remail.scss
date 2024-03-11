@@ -1,0 +1,88 @@
+.remail {
+  //   border: 1px solid red;
+
+  margin-top: 13px;
+  form {
+    // border: 1px solid red;
+    // color: #c2c4c4;
+    .mailinfo {
+      margin-top: 12px;
+      display: flex;
+      border-color: #c2c4c4;
+      .infoname1 {
+        // border: 1px solid salmon;
+        width: 150px;
+        margin-right: 15px;
+        font-size: 19px;
+        color: #c2c4c4;
+      }
+      .infomail1 {
+        font-size: 19px;
+        color: #c2c4c4;
+      }
+      .infoname2 {
+        // border: 1px solid salmon;
+        width: 150px;
+        margin-right: 15px;
+        font-size: 19px;
+        color: #3f3c33;
+      }
+      .infomail2 {
+        font-size: 19px;
+        color: #3f3c33;
+      }
+    }
+    .titletext {
+      color: #c2c4c4;
+      font-size: 15px;
+      font-family: "Pretendard-Regular";
+    }
+    div {
+      // border: 1px solid red;c
+
+      margin-bottom: 12px;
+      margin-top: 47px;
+    }
+    .remailbody {
+      margin-top: 57px;
+      color: #c2c4c4;
+      font-size: 15px;
+      font-family: "Pretendard-Regular";
+    }
+    input {
+      width: 100%;
+      height: 51px;
+      border-left-width: 0;
+      border-right-width: 0;
+      border-top-width: 0;
+      // border-color: #707070;
+      background: transparent;
+    }
+    textarea {
+      width: 100%;
+      height: 301px;
+      resize: none;
+    }
+    .remailbutton {
+      text-align: center;
+
+      .remialbtn {
+        background-color: white;
+        border-radius: 37px;
+        width: 236px;
+        height: 60px;
+        font-size: 24px;
+        color: #3f3c33;
+        font-family: "Pretendard-Regular";
+        border: 1px solid #c2c4c4;
+        margin-right: 20px;
+        margin-top: 40px;
+        margin-bottom: 121px;
+
+        &:hover {
+          border: 1px solid #3445db;
+        }
+      }
+    }
+  }
+}

@@ -12,7 +12,7 @@ const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhb
 
 const ITEMS_PER_PAGE = 10;
 
-function Mailpage() {
+function Blockmail() {
   const [contactData, setContactData] = useState([]);
   const [checkedItems, setCheckedItems] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
@@ -29,7 +29,6 @@ function Mailpage() {
       const { data, error } = await supabase
         .from("contact")
         .select("*")
-        .order("id")
         .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
       if (error) {
         throw error;
@@ -101,21 +100,21 @@ function Mailpage() {
 
   return (
     <div>
-      <section id="mailpage">
-        <div className="mailpage__inner">
+      <section id="blockmail">
+        <div className="blockmail_inner">
           {/* 삭제,스팸차단, 답장 구역 */}
           <div className="btnspace">
             <button onClick={handleDelete} className=" btnlist btndel">
-              삭제
+              영구 삭제
             </button>
-            <button className="btnlist btnblock">스팸 차단</button>
+            <button className="btnlist btnblock">스팸 차단 해제</button>
 
             <nav className={`header__nav ${show ? "show" : ""}`}>
               <ul>
                 <li>
                   <button onClick={() => handleItemsPerPageChange(10)}>목록 개수 10개</button>
-                  <button onClick={() => handleItemsPerPageChange(20)}>목록 개수 20개</button>
                   <button onClick={() => handleItemsPerPageChange(30)}>목록 개수 30개</button>
+                  <button onClick={() => handleItemsPerPageChange(50)}>목록 개수 50개</button>
                 </li>
               </ul>
             </nav>
@@ -151,15 +150,15 @@ function Mailpage() {
           {/* 삭제,스팸차단, 답장 구역 */}
           <div className="btnspace">
             <button onClick={handleDelete} className=" btnlist btndel">
-              삭제
+              영구 삭제
             </button>
-            <button className="btnlist btnblock">스팸 차단</button>
+            <button className="btnlist btnblock">스팸 차단 해제</button>
             <nav className={`header__nav ${show2 ? "show2" : ""}`}>
               <ul>
                 <li>
                   <button onClick={() => handleItemsPerPageChange(10)}>목록 개수 10개</button>
-                  <button onClick={() => handleItemsPerPageChange(20)}>목록 개수 20개</button>
                   <button onClick={() => handleItemsPerPageChange(30)}>목록 개수 30개</button>
+                  <button onClick={() => handleItemsPerPageChange(50)}>목록 개수 50개</button>
                 </li>
               </ul>
             </nav>
@@ -182,4 +181,4 @@ function Mailpage() {
   );
 }
 
-export default Mailpage;
+export default Blockmail;
