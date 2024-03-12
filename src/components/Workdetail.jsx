@@ -18,10 +18,10 @@ function Workdetail() {
   };
 
   useEffect(() => {
-    fetchMailDetail(id);
+    fetchWorkDetail(id);
   }, [id]);
 
-  const fetchMailDetail = async (id) => {
+  const fetchWorkDetail = async (id) => {
     try {
       const { data, error } = await supabase.from("work").select("*").eq("id", id).single(); // Fetch only a single record
       if (error) {
@@ -62,7 +62,7 @@ function Workdetail() {
             )}
           </div>
           {/* <div> {workDetail && <img src={workDetail.fileUrlList[1]} />}</div> */}
-          <div className="workpic">{workDetail && workDetail.fileUrlList && workDetail.fileUrlList.map((url, index) => <img className="pic" key={index} src={url} alt={`Image ${index}`} />)}</div>
+          <div className="workpic">{workDetail && workDetail.fileUrlList && workDetail.fileUrlList.map((url, index) => <img className="pic" key={index} src={url} />)}</div>
           <hr className="bar2" />
           <button className="btngolist">목록</button>
         </div>

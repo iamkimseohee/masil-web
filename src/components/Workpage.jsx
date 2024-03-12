@@ -30,7 +30,7 @@ function Workpage() {
 
   const fetchWorkData = async () => {
     try {
-      const { data, error } = await supabase.from("work").select("*");
+      const { data, error } = await supabase.from("work").select("*").order("id");
       if (error) {
         throw error;
       }

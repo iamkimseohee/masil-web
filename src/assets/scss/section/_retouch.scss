@@ -16,8 +16,42 @@
     color: #03acb4;
     font-family: "Pretendard-Bold";
   }
+  .image-container {
+    position: relative;
+    display: inline-block;
+  }
+
   .addwork__text {
     form {
+      .workpic {
+        display: flex;
+        // position: relative;
+        flex-wrap: wrap; //줄바꿈
+        justify-content: space-between; // 이미지 사이에 간격주기
+        @media (max-width: 768px) {
+          justify-content: center;
+        }
+        .del-btn {
+          position: absolute; /* 절대 위치 설정 */
+          top: 20px; /* 부모 요소 상단에 위치 */
+          right: 66px; /* 부모 요소 왼쪽에 위치 */
+          z-index: 2; /* 이미지 위에 표시 */
+        }
+        .move-btn {
+          position: absolute; /* 절대 위치 설정 */
+          top: 20px; /* 부모 요소 상단에 위치 */
+          right: 20px; /* 부모 요소 왼쪽에 위치 */
+          z-index: 2; /* 이미지 위에 표시 */
+        }
+        .pic {
+          // float: left;
+          margin-bottom: 21px;
+          // position: relative; /* 기본 위치 */
+          // z-index: 1; /* move-btn 위에 표시 */
+          width: 608px;
+          height: 365px;
+        }
+      }
       div {
         font-size: 13px;
         color: #c2c4c4;
