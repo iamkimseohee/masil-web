@@ -13,17 +13,43 @@ const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhb
 const ITEMS_PER_PAGE = 10;
 
 function Mailpage() {
-  const [contactData, setContactData] = useState([]);
   const [checkedItems, setCheckedItems] = useState({});
+  const [contactData, setContactData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(ITEMS_PER_PAGE);
+  const [totalItems, setTotalItems] = useState(0); // 데이터의 총 갯수
   const [selectAll, setSelectAll] = useState(false); // 전체 선택 상태 추가
+  const [selectedPage, setSelectedPage] = useState(currentPage); // 현재 선택된 페이지를 나타내는 상태 추가
   const navigate = useNavigate(); // useNavigate 훅 사용
+  const [pagelist, setpagelist] = useState([]);
 
   useEffect(() => {
     fetchContactData();
   }, [currentPage, itemsPerPage]);
 
+  useEffect(() => {
+    //~ 데이터의 총 갯수를 가져오는 함수
+    const fetchTotalItems = async () => {
+      try {
+        const { count, error } = await supabase.from("contact").select("id", { count: "exact" });
+        // console.log(count);
+        if (error) {
+          throw error;
+        }
+        setTotalItems(count);
+      } catch (error) {
+        console.error("Error fetching total items:", error.message);
+      }
+    };
+
+    fetchTotalItems();
+  }, []);
+  // 10,20,30개 선택되면 바꾸기
+  const handleItemsPerPageChange = (perPage) => {
+    setItemsPerPage(perPage);
+    setCurrentPage(1); // 페이지를 처음으로 리셋
+  };
+  //~ 10,20,30개 나타내기
   const fetchContactData = async () => {
     try {
       const { data, error } = await supabase
@@ -31,6 +57,7 @@ function Mailpage() {
         .select("*")
         .order("id")
         .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
+      // console.log(data);
       if (error) {
         throw error;
       }
@@ -40,6 +67,100 @@ function Mailpage() {
     }
   };
 
+  //~ 페이지 수 계산
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  //~ 처음 페이지에 화면 그리기
+
+  // 페이지 번호 렌더링
+  const pageNumbers = []; // 보여줄 페이지 담을 배열
+  const maxPagesToShow = 10; // 한 번에 보여줄 최대 페이지 수
+
+  let startPage = Math.max(currentPage - Math.floor(maxPagesToShow / 2), 1); //시작하는 페이지
+  console.log("startPage🔥", startPage);
+
+  let endPage = startPage + maxPagesToShow - 1; //마지막 페이지
+
+  if (endPage > totalPages) {
+    endPage = totalPages;
+    startPage = Math.max(totalPages - maxPagesToShow + 1, 1);
+  }
+
+  for (let i = startPage; i <= endPage; i++) {
+    pageNumbers.push(i);
+  }
+  console.log(pageNumbers);
+
+  // 페이지 이동 함수
+  const goToPage = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    setSelectedPage(pageNumber); // 선택된 페이지 업데이트
+    console.log(pageNumber);
+  };
+  //~ >>버튼기능
+  const nextSetPage = () => {
+    const newStartPage = endPage + 1;
+    const newEndPage = Math.min(newStartPage + maxPagesToShow - 1, totalPages);
+    console.log(newStartPage, newEndPage); // >> 버튼 누르면
+
+    if (newStartPage <= totalPages) {
+      setCurrentPage(newStartPage);
+      setSelectedPage(newStartPage);
+    }
+  };
+
+  //~ 10,20,30 버튼
+  const [show, setshow] = useState(false);
+  const toggleMenu = () => {
+    setshow(!show);
+    console.log("클릭");
+  };
+  const [show2, setshow2] = useState(false);
+  const toggleMenu2 = () => {
+    setshow2(!show2);
+    console.log("클릭");
+  };
+
+  // 처음 페이지로 이동하는 함수
+  const goToFirstPage = () => {
+    setCurrentPage(1);
+    setSelectedPage(1);
+  };
+
+  // 마지막 페이지로 이동하는 함수
+  const goToLastPage = () => {
+    setCurrentPage(totalPages);
+    setSelectedPage(totalPages);
+  };
+
+  //~ 이전 10개
+  const goToPreviousPageSet = () => {
+    let newStartPage = Math.max(selectedPage - 10, 1);
+    if (selectedPage > 10) {
+      let lastDigit = String(selectedPage).slice(-1);
+
+      if (lastDigit == 0) {
+        lastDigit = 10;
+      }
+
+      newStartPage = Math.max(selectedPage - lastDigit, 1);
+    }
+    setCurrentPage(newStartPage);
+    setSelectedPage(newStartPage);
+  };
+
+  //~ 다음 10개
+  const goToNextPageSet = () => {
+    const lastDigit = String(selectedPage).slice(-1);
+    const pnum = 10 - lastDigit;
+    console.log(10 - lastDigit);
+    const newStartPage = Math.min(selectedPage + pnum + 1, totalPages);
+
+    setCurrentPage(newStartPage);
+    setSelectedPage(newStartPage);
+  };
+
+  //~ 삭제기능
   const handleDelete = async () => {
     const idsToDelete = Object.keys(checkedItems).filter((key) => checkedItems[key]);
     if (idsToDelete.length === 0) return;
@@ -58,6 +179,7 @@ function Mailpage() {
     }
   };
 
+  //~ 체크박스 상태 업데이트
   const handleCheckboxChange = (id) => {
     setCheckedItems((prevState) => ({
       ...prevState,
@@ -65,6 +187,7 @@ function Mailpage() {
     }));
   };
 
+  //~ 전체선택
   const handleSelectAll = () => {
     const newCheckedItems = {};
     if (!selectAll) {
@@ -74,29 +197,6 @@ function Mailpage() {
     }
     setCheckedItems(newCheckedItems);
     setSelectAll(!selectAll);
-  };
-
-  const nextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-  };
-
-  const prevPage = () => {
-    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
-  };
-
-  const [show, setshow] = useState(false);
-  const toggleMenu = () => {
-    setshow(!show);
-    console.log("클릭");
-  };
-  const [show2, setshow2] = useState(false);
-  const toggleMenu2 = () => {
-    setshow2(!show2);
-    console.log("클릭");
-  };
-  const handleItemsPerPageChange = (perPage) => {
-    setItemsPerPage(perPage);
-    setCurrentPage(1); // 페이지를 처음으로 리셋
   };
 
   return (
@@ -169,13 +269,17 @@ function Mailpage() {
             </button>
           </div>
         </div>
-        {/* 페이지 옮기는 버튼  */}
-        <div>
-          <button onClick={prevPage} disabled={currentPage === 1}>
-            〈〈
-          </button>
-          <span>{currentPage}</span>
-          <button onClick={nextPage}> 〉〉 </button>
+
+        <div className="pagination">
+          <button onClick={goToFirstPage}>{"|<"}</button>
+          <button onClick={goToPreviousPageSet}>{"<"}</button>
+          {pageNumbers.map((pageNumber) => (
+            <button key={pageNumber} onClick={() => goToPage(pageNumber)} className={pageNumber === selectedPage ? "selected" : ""}>
+              {pageNumber}
+            </button>
+          ))}
+          {currentPage < totalPages && <button onClick={goToNextPageSet}>{">"}</button>}
+          <button onClick={goToLastPage}>{">|"}</button>
         </div>
       </section>
     </div>
