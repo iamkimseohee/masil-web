@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 import Workpage from "./Workpage";
 // import Notice from "./Notice";
 import { useNavigate } from "react-router-dom";
@@ -9,15 +9,15 @@ import Mailpage from "./Mailpage";
 import Maildetail from "./Maildetail";
 import Blockmail from "./Blockmail";
 import Remail from "./Remail";
-
+import Blockmaildetail from "./Blockmaildetail";
 function Userpage() {
-  const [isActive, setIsActive] = useState(true);
+  // const [isActive, setIsActive] = useState(true);
 
-  const handleClick = () => {
-    setIsActive(!isActive);
-  };
-  console.log(isActive);
-
+  // const handleClick = () => {
+  //   setIsActive(!isActive);
+  // };
+  // console.log(isActive);
+  const locatioin = useLocation();
   const scroll = () => {
     window.scroll({
       top: 0,
@@ -26,6 +26,9 @@ function Userpage() {
   };
 
   const movePage = useNavigate();
+  useEffect(() => {
+    console.log("안녕", locatioin);
+  });
 
   return (
     <div>
@@ -34,17 +37,28 @@ function Userpage() {
           <h1 className="userpage__title">마실 관리자</h1>
           <div className="userpage__btn">
             <div className="menu">
-              <NavLink to="workpage" onClick={handleClick} className={isActive ? "active" : ""}>
+              <NavLink to="workpage" className={locatioin.pathname === "/userpage" ? "active" : ""}>
                 작업물 리스트 관리
               </NavLink>
             </div>
             <div className="menu">
-              <NavLink to="mailpage" onClick={handleClick}>
+              <NavLink
+                to="mailpage"
+                className={
+                  locatioin.pathname.includes("/userpage/maildetail/") ||
+                  locatioin.pathname.includes("/userpage/remail/")
+                    ? "active"
+                    : ""
+                }
+              >
                 문의 관리
               </NavLink>
             </div>
             <div className="menu">
-              <NavLink to="blockmail" onClick={handleClick}>
+              <NavLink
+                to="blockmail"
+                className={locatioin.pathname.includes("/userpage/blockmaildetail/") ? "active" : ""}
+              >
                 스팸 리스트
               </NavLink>
             </div>
@@ -58,6 +72,7 @@ function Userpage() {
               <Route path="/blockmail" element={<Blockmail />}></Route>
               <Route path="/mailpage/*" element={<Mailpage />}></Route>
               <Route path="/maildetail/:id" element={<Maildetail />} />
+              <Route path="/blockmaildetail/:id" element={<Blockmaildetail />} />
               <Route path="/remail/:id" element={<Remail />} />
             </Routes>
           </div>

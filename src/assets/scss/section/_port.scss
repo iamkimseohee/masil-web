@@ -66,6 +66,11 @@
     height: 500px;
 
     li {
+      .nocursor {
+        &:hover {
+          cursor: auto;
+        }
+      }
       width: 296px;
       height: 223px;
       display: flex;
@@ -75,6 +80,7 @@
       // border: 1px solid black;
       border-radius: 10px;
       // background-color: aquamarine
+
       .port__wrapimgs {
         height: 142px;
         .port__wrapimg {
@@ -84,6 +90,7 @@
           border-top-right-radius: 10px;
         }
       }
+
       .port__wraptitle {
         font-size: 24px;
         text-align: left;

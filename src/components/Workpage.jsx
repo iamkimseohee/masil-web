@@ -5,7 +5,10 @@ import { NavLink, useNavigate } from "react-router-dom";
 import movebtn from "../assets/img/move.png";
 import retouch from "../assets/img/retouch.png";
 
-const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
+const supabase = createClient(
+  "https://qiwrlvedwhommigwrmcz.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY"
+);
 
 function Workpage() {
   const [workData, setworkData] = useState([]);
@@ -86,22 +89,31 @@ function Workpage() {
               {/* <input type="checkbox" checked={checkedItems[work.id] || false} onChange={() => handleCheckboxChange(work.id)} />
             <div className="workpageimgs">{work && work.fileUrlList && work.fileUrlList.length > 0 && <img className="workpageimg" src={work.fileUrlList[0]} />}</div> */}
               <div className="workpageitem">
-                <input type="checkbox" checked={checkedItems[work.id] || false} onChange={() => handleCheckboxChange(work.id)} />
+                <input
+                  type="checkbox"
+                  checked={checkedItems[work.id] || false}
+                  onChange={() => handleCheckboxChange(work.id)}
+                />
                 <img src={movebtn} alt="" className="move-btn" />
                 <NavLink to={"/retouchwork/" + work.id}>
                   {" "}
                   <img src={retouch} alt="" className="retouch-btn" />
                 </NavLink>
 
-                <div className="workpageimgs">{work && work.fileUrlList && work.fileUrlList.length > 0 && <img className="workpageimg" src={work.fileUrlList[0]} />}</div>
+                <div className="workpageimgs">
+                  {work && work.fileUrlList && work.fileUrlList.length > 0 ? (
+                    <img className="workpageimg" src={work.fileUrlList[0]} />
+                  ) : (
+                    <img
+                      className="workpageimg"
+                      src="https://qiwrlvedwhommigwrmcz.supabase.co/storage/v1/object/public/images/nopic.png"
+                      alt="Placeholder"
+                    />
+                  )}
+                </div>
               </div>
               <div className="workpagetitle">{work.title}</div>
               <div className="workpagebody">{work.body}</div>
-              {/* {work && <img src={work.fileUrlList[0]} />} */}
-              {/* {work && work.fileUrlList && work.fileUrlList.length > 0 && <img src={work.fileUrlList[0]} />} */}
-              {/* Title: {work.title}, Body: {work.body}, {work.code ? "개발" : ""} {work.design ? "디자인" : ""} */}
-              {/* {work.file && <img src={`images/${work.imageUrl}`} />} */}
-              {/* {work.imageUrl && <img src={im} />} */}
             </li>
           ))}
         </ul>

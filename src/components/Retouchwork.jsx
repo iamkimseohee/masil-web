@@ -6,7 +6,10 @@ import { createClient } from "@supabase/supabase-js";
 import movebtn from "../assets/img/move.png";
 import delbtn from "../assets/img/delbtn.png";
 
-const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
+const supabase = createClient(
+  "https://qiwrlvedwhommigwrmcz.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY"
+);
 
 function Retouchwork() {
   const { id } = useParams();
@@ -120,12 +123,15 @@ function Retouchwork() {
       // 새로 업로드할 이미지 URL들을 업로드합니다.
       const uploadedImages = await Promise.all(
         imageInputs.map(async (input) => {
+          console.log(input);
           if (!input.file) {
             return null; // 이미지가 선택되지 않은 경우 null 반환
           }
           const selectedFile = input.file;
           const imageName = `${Date.now()}_${selectedFile.name}`; // 파일 이름 생성
-          const { data, error } = await supabase.storage.from("images").upload(imageName, selectedFile, { overwrite: true });
+          const { data, error } = await supabase.storage
+            .from("images")
+            .upload(imageName, selectedFile, { overwrite: true });
           if (error) throw error;
           const imageUrl = await supabase.storage.from("images").getPublicUrl(imageName);
           console.log(imageUrl.data.publicUrl);
@@ -178,21 +184,49 @@ function Retouchwork() {
             <form>
               {/* 제목 */}
               <div>큰 제목</div>
-              <input type="text" name="title" defaultValue={workDetail && workDetail.title} maxLength={15} onChange={handleChange} />
+              <input
+                type="text"
+                name="title"
+                defaultValue={workDetail && workDetail.title}
+                maxLength={15}
+                onChange={handleChange}
+              />
               {/* 본문 내용 */}
               <div>본문 내용</div>
-              <input type="text" name="body" defaultValue={workDetail && workDetail.body} maxLength={23} onChange={handleChange} />
+              <input
+                type="text"
+                name="body"
+                defaultValue={workDetail && workDetail.body}
+                maxLength={23}
+                onChange={handleChange}
+              />
               {/* 분야 */}
               <div className="checkboxline">
                 {" "}
                 <div>분야</div>
                 <div className="worktype">
                   <div>
-                    <input type="checkbox" id="code" checked={isChecked} onClick={handleCheckboxChange1} value={isChecked ? "false" : "true"} name="code" onChange={handleChange} />
+                    <input
+                      type="checkbox"
+                      id="code"
+                      checked={isChecked}
+                      onClick={handleCheckboxChange1}
+                      value={isChecked ? "false" : "true"}
+                      name="code"
+                      onChange={handleChange}
+                    />
                     <label htmlFor="code">개발</label>
                   </div>
                   <div>
-                    <input type="checkbox" id="design" name="design" checked={isChecked2} value={isChecked2 ? "false" : "true"} onClick={handleCheckboxChange2} onChange={handleChange} />
+                    <input
+                      type="checkbox"
+                      id="design"
+                      name="design"
+                      checked={isChecked2}
+                      value={isChecked2 ? "false" : "true"}
+                      onClick={handleCheckboxChange2}
+                      onChange={handleChange}
+                    />
                     <label htmlFor="design">디자인</label>
                   </div>
                 </div>
@@ -217,7 +251,13 @@ function Retouchwork() {
                     <label htmlFor={`file-${index}`} className="btn-upload">
                       찾기
                     </label>
-                    <input className="btnaddimg" type="file" name={`file-${index}`} id={`file-${index}`} onChange={(e) => handleFileChange(index, e)} />
+                    <input
+                      className="btnaddimg"
+                      type="file"
+                      name={`file-${index}`}
+                      id={`file-${index}`}
+                      onChange={(e) => handleFileChange(index, e)}
+                    />
                   </div>
                 </div>
               ))}

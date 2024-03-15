@@ -5,7 +5,10 @@ import about from "../assets/img/logo.png";
 import close from "../assets/img/btn-close.png";
 import back from "../assets/img/btn-back.png";
 
-const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
+const supabase = createClient(
+  "https://qiwrlvedwhommigwrmcz.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY"
+);
 
 function Workdetail() {
   const [workDetail, setWorkDetail] = useState(null);
@@ -41,7 +44,14 @@ function Workdetail() {
           <div className="workdetail__top">
             {" "}
             <img src={about} alt="어바웃" onClick={goHome} className="intrologo" />
-            <img src={close} alt="취소" className="canclebtn" />
+            <img
+              src={close}
+              alt="취소"
+              onClick={() => {
+                movePage("/");
+              }}
+              className="canclebtn"
+            />
           </div>
           <div className="workdetail__top2">
             <div className="workdetail__top2__inner">
@@ -62,9 +72,20 @@ function Workdetail() {
             )}
           </div>
           {/* <div> {workDetail && <img src={workDetail.fileUrlList[1]} />}</div> */}
-          <div className="workpic">{workDetail && workDetail.fileUrlList && workDetail.fileUrlList.map((url, index) => <img className="pic" key={index} src={url} />)}</div>
+          <div className="workpic">
+            {workDetail &&
+              workDetail.fileUrlList &&
+              workDetail.fileUrlList.map((url, index) => <img className="pic" key={index} src={url} />)}
+          </div>
           <hr className="bar2" />
-          <button className="btngolist">목록</button>
+          <button
+            className="btngolist"
+            onClick={() => {
+              movePage("/");
+            }}
+          >
+            목록
+          </button>
         </div>
       </section>
     </div>

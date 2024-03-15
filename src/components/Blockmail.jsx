@@ -17,6 +17,8 @@ const ITEMS_PER_PAGE = 10;
 
 function Blockmail() {
   const [checkedItems, setCheckedItems] = useState({});
+  const [checkedMails, setcheckedMails] = useState({});
+
   const [contactData, setContactData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(ITEMS_PER_PAGE);
@@ -27,51 +29,48 @@ function Blockmail() {
   const [blocklist, setblocklist] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    fetchContactData();
+  }, [currentPage, itemsPerPage]);
+
+  useEffect(() => {
+    //~ 데이터의 총 갯수를 가져오는 함수
+    const fetchTotalItems = async () => {
       try {
-        // 메일리스트 가져오기
-        const { data: blockListData, error: blockListError } = await supabase.from("blockmaillist").select("maillist");
-        console.log(blockListData);
-        if (blockListError) {
-          throw blockListError;
+        const { count, error } = await supabase.from("blockmail").select("id", { count: "exact" });
+        // console.log(count);
+        if (error) {
+          throw error;
         }
-
-        if (blockListData) {
-          // blocklist에서 이메일 주소 배열 가져오기
-          const blocklistEmails = blockListData.map((item) => item.maillist);
-
-          // 데이터 가져오기
-          const { data: contactData, error: contactError } = await supabase.from("contact").select("*").order("id");
-          // .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
-
-          if (contactError) {
-            throw contactError;
-          }
-
-          // blocklist에 있는 이메일을 필터링하여 제외
-          const filteredData = contactData.filter((contact) => blocklistEmails.includes(contact.email));
-
-          // 상태 업데이트
-
-          setContactData(filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage));
-          // 페이지에 맞게 데이터 슬라이스
-
-          setTotalItems(filteredData.length);
-        }
+        setTotalItems(count);
       } catch (error) {
-        console.error("Error fetching data:", error.message);
+        console.error("Error fetching total items:", error.message);
       }
     };
 
-    fetchData();
-  }, [currentPage, itemsPerPage]);
-  console.log(contactData);
-  console.log(totalItems);
-
+    fetchTotalItems();
+  }, []);
   // 10,20,30개 선택되면 바꾸기
   const handleItemsPerPageChange = (perPage) => {
     setItemsPerPage(perPage);
     setCurrentPage(1); // 페이지를 처음으로 리셋
+  };
+  //~ 10,20,30개 나타내기
+  const fetchContactData = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("blockmail")
+        .select("*")
+        .order("id")
+        .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
+      // console.log(data);
+      if (error) {
+        throw error;
+      }
+      setContactData(data);
+      console.log(data.length);
+    } catch (error) {
+      console.error("Error fetching contact data:", error.message);
+    }
   };
 
   //~ 페이지 수 계산
@@ -182,7 +181,7 @@ function Blockmail() {
     if (idsToDelete.length === 0) return;
 
     try {
-      const { error } = await supabase.from("contact").delete().in("id", idsToDelete);
+      const { error } = await supabase.from("blockmail").delete().in("id", idsToDelete);
       if (error) {
         throw error;
       }
@@ -195,26 +194,108 @@ function Blockmail() {
     }
   };
 
+  //~ 페이지블럭기능
+  const handleBlockCancle = async () => {
+    console.log(checkedMails);
+    const idsToBlock = Object.keys(checkedMails).filter((key) => checkedMails[key]);
+
+    console.log(idsToBlock);
+
+    if (idsToBlock.length === 0) return;
+
+    try {
+      const { data, error } = await supabase.from("blockmail").select("*").in("id", idsToBlock);
+      console.log(data);
+      // 선택한 메일들 다 뽑아오기
+      const blocklistEmails = [...new Set(data.map((item) => item.email))]; // 중복 합치기
+      console.log(blocklistEmails);
+
+      if (error) {
+        throw error;
+      }
+      //* blocklistEmails에 있는 메일들을 가지고 있는 메일 데이터 가져오기
+      const { data: blockData, error: contactError } = await supabase
+        .from("blockmail")
+        .select("*")
+        .in("email", blocklistEmails); //eq는 단일값, in은 열 안에 포함된 값 중 하나와 일치하는 결과를 반환
+
+      console.log(blockData);
+      if (contactError) {
+        throw contactError;
+      }
+      console.log("Data retrieved from contact:", contactData);
+
+      //* "blockmail" 테이블에  blocklistEmails데이터 삭제
+      // blocklistEmails 배열의 각 이메일 주소를 반복하여 데이터베이스에 삽입
+      for (const email of blocklistEmails) {
+        const { data: blockMailDetailResponse, error: blockMailDetailError } = await supabase
+          .from("blockmaillist")
+          .delete()
+          .eq("maillist", email); // mail 객체에서 이메일 주소를 가져와서 이를 기준으로 삭제
+
+        console.log(blockMailDetailResponse);
+        if (blockMailDetailError) {
+          throw blockMailDetailError;
+        }
+        console.log("Data inserted into blockmail successfully:", blockMailDetailResponse);
+      }
+
+      //* "contact" 테이블에 메일 디테일 데이터 삽입
+
+      const { data: blockMailDetailResponse, error: blockMailDetailError } = await supabase
+        .from("contact")
+        .insert(blockData);
+
+      if (blockMailDetailError) {
+        throw blockMailDetailError;
+      }
+      console.log("Data inserted into blockmail successfully:", blockMailDetailResponse);
+
+      //* "blockmail" 테이블에서 해당 메일 아이디와 일치하는 데이터 삭제
+      const { data: deleteResponse, error: deleteError } = await supabase
+        .from("blockmail")
+        .delete()
+        .in("email", blocklistEmails);
+      console.log(deleteResponse);
+      if (deleteError) {
+        throw deleteError;
+      }
+      console.log("Data deleted from contact successfully:", deleteResponse);
+      window.location.reload(); // 페이지 새로고침
+    } catch (error) {
+      console.error("Error deleting contact data:", error.message);
+    }
+  };
+
   //~ 체크박스 상태 업데이트
-  const handleCheckboxChange = (id) => {
+  const handleCheckboxChange = (id, email) => {
+    console.log(email);
+    setcheckedMails((prevState) => ({
+      ...prevState,
+      [id]: !prevState[id],
+    }));
     setCheckedItems((prevState) => ({
       ...prevState,
       [id]: !prevState[id],
     }));
   };
+  console.log(checkedItems);
+  console.log(checkedMails);
 
   //~ 전체선택
   const handleSelectAll = () => {
     const newCheckedItems = {};
+    const newCheckedMails = {};
     if (!selectAll) {
       contactData.forEach((contact) => {
         newCheckedItems[contact.id] = true;
+        newCheckedMails[contact.id] = true;
       });
     }
     setCheckedItems(newCheckedItems);
+    setcheckedMails(newCheckedItems);
     setSelectAll(!selectAll);
   };
-
   return (
     <div>
       <section id="blockmail">
@@ -222,9 +303,11 @@ function Blockmail() {
           {/* 삭제,스팸차단, 답장 구역 */}
           <div className="btnspace">
             <button onClick={handleDelete} className=" btnlist btndel">
-              영구 삭제
+              삭제
             </button>
-            <button className="btnlist btnblock">스팸 차단 해제</button>
+            <button className="btnlist btnblock" onClick={handleBlockCancle}>
+              스팸 차단 해제
+            </button>
 
             <nav className={`header__nav ${show ? "show" : ""}`}>
               <ul>
@@ -258,7 +341,7 @@ function Blockmail() {
                     checked={checkedItems[contact.id] || false}
                     onChange={() => handleCheckboxChange(contact.id)}
                   />
-                  <NavLink to={`/userpage/maildetail/${contact.id}`} className="datalist">
+                  <NavLink to={`/userpage/blockmaildetail/${contact.id}`} className="datalist">
                     <div className="num">{contact.id}</div>
                     <div className="name">{contact.name}</div>
                     <div className="title maintitle">{contact.title}</div>
@@ -272,7 +355,7 @@ function Blockmail() {
           {/* 삭제,스팸차단, 답장 구역 */}
           <div className="btnspace">
             <button onClick={handleDelete} className=" btnlist btndel">
-              영구 삭제
+              삭제
             </button>
             <button className="btnlist btnblock">스팸 차단 해제</button>
             <nav className={`header__nav ${show2 ? "show2" : ""}`}>
@@ -302,7 +385,7 @@ function Blockmail() {
               {pageNumber}
             </button>
           ))}
-          {currentPage < totalPages && <button onClick={goToNextPageSet}>{">"}</button>}
+          {currentPage > 11 && currentPage < totalPages && <button onClick={goToNextPageSet}>{">"}</button>}
           <button onClick={goToLastPage}>{">|"}</button>
         </div>
       </section>

@@ -6,7 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { createClient } from "@supabase/supabase-js";
 
-const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
+const supabase = createClient(
+  "https://qiwrlvedwhommigwrmcz.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY"
+);
 
 function Addwork() {
   const movePage = useNavigate();
@@ -77,18 +80,27 @@ function Addwork() {
       // 이미지 업로드 및 URL 획득
       const uploadedImages = await Promise.all(
         imageInputs.map(async (input) => {
+          console.log(input);
+          if (!input.file) {
+            return null;
+          }
           const selectedFile = input.file;
           const imageName = `${Date.now()}_${selectedFile.name}`;
-          const { data, error } = await supabase.storage.from("images").upload(imageName, selectedFile, { overwrite: true });
+          const { data, error } = await supabase.storage
+            .from("images")
+            .upload(imageName, selectedFile, { overwrite: true });
           if (error) throw error;
           const imageUrl = await supabase.storage.from("images").getPublicUrl(imageName);
           console.log(imageUrl.data.publicUrl);
           return imageUrl.data.publicUrl;
         })
       );
+      const filteredImages = uploadedImages.filter((url) => url !== null);
+
+      console.log(filteredImages);
 
       // 데이터베이스에 삽입할 데이터 준비
-      const formDataWithImages = { ...formData, fileUrlList: uploadedImages };
+      const formDataWithImages = { ...formData, fileUrlList: filteredImages };
       console.log(formDataWithImages);
 
       // 데이터베이스에 데이터 삽입
@@ -121,11 +133,25 @@ function Addwork() {
                 <div>분야</div>
                 <div className="worktype">
                   <div>
-                    <input type="checkbox" id="code" value={isChecked ? "false" : "true"} name="code" onClick={handleCheckboxChange1} onChange={handleChange} />
+                    <input
+                      type="checkbox"
+                      id="code"
+                      value={isChecked ? "false" : "true"}
+                      name="code"
+                      onClick={handleCheckboxChange1}
+                      onChange={handleChange}
+                    />
                     <label htmlFor="code">개발</label>
                   </div>
                   <div>
-                    <input type="checkbox" id="design" name="design" value={isChecked2 ? "false" : "true"} onClick={handleCheckboxChange2} onChange={handleChange} />
+                    <input
+                      type="checkbox"
+                      id="design"
+                      name="design"
+                      value={isChecked2 ? "false" : "true"}
+                      onClick={handleCheckboxChange2}
+                      onChange={handleChange}
+                    />
                     <label htmlFor="design">디자인</label>
                   </div>
                 </div>
@@ -140,7 +166,13 @@ function Addwork() {
                     <label htmlFor={`file-${index}`} className="btn-upload">
                       찾기
                     </label>
-                    <input className="btnaddimg" type="file" name={`file-${index}`} id={`file-${index}`} onChange={(e) => handleFileChange(index, e)} />
+                    <input
+                      className="btnaddimg"
+                      type="file"
+                      name={`file-${index}`}
+                      id={`file-${index}`}
+                      onChange={(e) => handleFileChange(index, e)}
+                    />
                   </div>
                 </div>
               ))}
