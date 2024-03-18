@@ -7,21 +7,17 @@ import Contact from "../components/Contact";
 // import Site from "../components/Site";
 import Port from "../components/Port";
 import Footer from "../components/Footer";
-import Main from "../components/Main";
+
 import Service from "../components/Service";
 
 const HomeView = () => {
   return (
     <div>
-      {/* <Skip /> */}
       <Header />
-      <Main>
-        <Intro />
-        <Service />
-        <Port />
-        <Contact />
-      </Main>
-
+      <Intro />
+      <Service />
+      <Port />
+      <Contact />
       <Footer />
     </div>
   );

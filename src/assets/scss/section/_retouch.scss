@@ -1,15 +1,15 @@
-#addwork {
+#retouchwork {
   max-width: 1232px;
   margin-left: auto;
   margin-right: auto;
 }
-.addwork__inner {
+.retouchwork__inner {
   // border: 1px solid saddlebrown;
   max-width: 1232px;
   margin-left: auto;
   margin-right: auto;
   display: grid;
-  .addwork__title {
+  .retouchwork__title {
     margin-top: 81px;
     margin-bottom: 83px;
     font-size: 34px;
@@ -21,7 +21,7 @@
     display: inline-block;
   }
 
-  .addwork__text {
+  .retouchwork__body {
     form {
       .workpic {
         display: flex;

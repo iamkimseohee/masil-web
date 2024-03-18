@@ -3,12 +3,11 @@ import { Route, Routes } from "react-router-dom";
 import HomeView from "./views/HomeView";
 
 import Mailsuccess from "./components/Mailsuccess";
-// import Notice from "./components/Notice";
+
 import Addwork from "./components/Addwork";
 import Loginpage from "./components/Loginpage";
 import Userpage from "./components/Userpage";
-import Mailpage from "./components/Mailpage";
-import Maildetail from "./components/Maildetail";
+
 import Workdetail from "./components/Workdetail";
 import Retouchwork from "./components/Retouchwork";
 

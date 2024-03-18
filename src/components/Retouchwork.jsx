@@ -6,12 +6,10 @@ import { createClient } from "@supabase/supabase-js";
 import movebtn from "../assets/img/move.png";
 import delbtn from "../assets/img/delbtn.png";
 
-const supabase = createClient(
-  "https://qiwrlvedwhommigwrmcz.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY"
-);
+const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 function Retouchwork() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const {
     register,
@@ -40,18 +38,19 @@ function Retouchwork() {
       console.error("Error fetching mail detail:", error.message);
     }
   };
-  console.log(workDetail);
+  console.log(workDetail && workDetail.fileUrlList);
   useEffect(() => {
     if (workDetail) {
       setIsChecked(workDetail.code);
       setIsChecked2(workDetail.design);
     }
   }, [workDetail]);
+  // console.log(workDetail);
 
   //~ 체크박스
   const [isChecked, setIsChecked] = useState("");
   const [isChecked2, setIsChecked2] = useState("");
-  console.log(isChecked, isChecked2);
+  // console.log(isChecked, isChecked2);
   const handleCheckboxChange1 = () => {
     setIsChecked((preCheck) => {
       console.log("preCheck🟰🟰🟰🟰🟰🟰🟰🟰", preCheck);
@@ -129,9 +128,7 @@ function Retouchwork() {
           }
           const selectedFile = input.file;
           const imageName = `${Date.now()}_${selectedFile.name}`; // 파일 이름 생성
-          const { data, error } = await supabase.storage
-            .from("images")
-            .upload(imageName, selectedFile, { overwrite: true });
+          const { data, error } = await supabase.storage.from("images").upload(imageName, selectedFile, { overwrite: true });
           if (error) throw error;
           const imageUrl = await supabase.storage.from("images").getPublicUrl(imageName);
           console.log(imageUrl.data.publicUrl);
@@ -157,6 +154,8 @@ function Retouchwork() {
       if (error) throw error;
 
       console.log("Data inserted successfully:", updatedData);
+
+      navigate("/userpage/workpage");
       // 페이지 이동 등 추가 작업이 필요하다면 이곳에 추가
     } catch (error) {
       console.error("Error:", error.message);
@@ -174,75 +173,88 @@ function Retouchwork() {
   useEffect(() => {
     fetchWorkDetail(id);
   }, [id]);
+  //~드래그 기능
+  const [draggedItemId, setDraggedItemId] = useState(null);
+
+  const handleDragStart = (e, id) => {
+    console.log("내가 선택한 id", id);
+    // e.dataTransfer.effectAllowed = "move"; // +버튼 생기는거 맞아주기
+    setDraggedItemId(id);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e, dropZoneId, work) => {
+    e.preventDefault();
+    // console.log(workDetail.fileUrlList);
+    console.log("내가 놓은 id", dropZoneId);
+    // console.log(e);
+
+    // 드래그된 요소를 배열에서 제거합니다.
+    const draggedWork = workDetail.fileUrlList[draggedItemId];
+    const newWorkData = workDetail.fileUrlList.filter((_, index) => index !== draggedItemId);
+    console.log(newWorkData);
+
+    // 드롭된 위치에 드래그된 요소를 삽입합니다.
+    const updatedWorkData = [...newWorkData.slice(0, dropZoneId), draggedWork, ...newWorkData.slice(dropZoneId)];
+
+    // 변경된 배열을 상태에 설정합니다.
+    setWorkDetail({ ...workDetail, fileUrlList: updatedWorkData });
+    setDraggedItemId(null);
+  };
 
   return (
     <div>
-      <section id="addwork">
-        <div className="addwork__inner">
-          <h1 className="addwork__title">작업물 수정</h1>
-          <div className="addwork__text">
+      <section id="retouchwork">
+        <div className="retouchwork__inner">
+          <h1 className="retouchwork__title">작업물 수정</h1>
+          <div className="retouchwork__body">
             <form>
               {/* 제목 */}
               <div>큰 제목</div>
-              <input
-                type="text"
-                name="title"
-                defaultValue={workDetail && workDetail.title}
-                maxLength={15}
-                onChange={handleChange}
-              />
+              <input type="text" name="title" defaultValue={workDetail && workDetail.title} maxLength={15} onChange={handleChange} />
               {/* 본문 내용 */}
               <div>본문 내용</div>
-              <input
-                type="text"
-                name="body"
-                defaultValue={workDetail && workDetail.body}
-                maxLength={23}
-                onChange={handleChange}
-              />
+              <input type="text" name="body" defaultValue={workDetail && workDetail.body} maxLength={23} onChange={handleChange} />
               {/* 분야 */}
               <div className="checkboxline">
                 {" "}
                 <div>분야</div>
                 <div className="worktype">
                   <div>
-                    <input
-                      type="checkbox"
-                      id="code"
-                      checked={isChecked}
-                      onClick={handleCheckboxChange1}
-                      value={isChecked ? "false" : "true"}
-                      name="code"
-                      onChange={handleChange}
-                    />
+                    <input type="checkbox" id="code" checked={isChecked} onClick={handleCheckboxChange1} value={isChecked ? "false" : "true"} name="code" onChange={handleChange} />
                     <label htmlFor="code">개발</label>
                   </div>
                   <div>
-                    <input
-                      type="checkbox"
-                      id="design"
-                      name="design"
-                      checked={isChecked2}
-                      value={isChecked2 ? "false" : "true"}
-                      onClick={handleCheckboxChange2}
-                      onChange={handleChange}
-                    />
+                    <input type="checkbox" id="design" name="design" checked={isChecked2} value={isChecked2 ? "false" : "true"} onClick={handleCheckboxChange2} onChange={handleChange} />
                     <label htmlFor="design">디자인</label>
                   </div>
                 </div>
               </div>
+              {/* //~ 사진 나와주세용 */}
               <div className="workpic">
                 {workDetail &&
                   workDetail.fileUrlList &&
                   workDetail.fileUrlList.map((url, index) => (
-                    <div key={index} className="image-container">
-                      <img onClick={() => handleImageDelete(index)} src={delbtn} alt="" className="del-btn" />
-                      <img src={movebtn} alt="" className="move-btn" />
-                      <img className="pic" src={url} alt={`Image ${index}`} />
+                    <div key={index} className="image-container" onDrop={(e) => handleDrop(e, index)} onDragOver={handleDragOver}>
+                      <img onClick={() => handleImageDelete(index)} draggable="false" src={delbtn} alt="" className="del-btn" />
+                      <img
+                        src={movebtn}
+                        alt=""
+                        className="move-btn"
+                        draggable="true"
+                        onDragStart={(e) => {
+                          handleDragStart(e, index);
+                        }}
+                      />
+                      <img className="pic" src={url} alt={`Image ${index}`} draggable="false" />
                     </div>
                   ))}
               </div>
 
+              {/* //~ 이미지 입력창 */}
               {imageInputs.map((input, index) => (
                 <div key={index}>
                   <div>추가할 이미지{index + 1}</div>
@@ -251,13 +263,7 @@ function Retouchwork() {
                     <label htmlFor={`file-${index}`} className="btn-upload">
                       찾기
                     </label>
-                    <input
-                      className="btnaddimg"
-                      type="file"
-                      name={`file-${index}`}
-                      id={`file-${index}`}
-                      onChange={(e) => handleFileChange(index, e)}
-                    />
+                    <input className="btnaddimg" type="file" name={`file-${index}`} id={`file-${index}`} onChange={(e) => handleFileChange(index, e)} />
                   </div>
                 </div>
               ))}
