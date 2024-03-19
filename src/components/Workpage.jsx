@@ -178,7 +178,7 @@ function Workpage() {
                   {work && work.fileUrlList && work.fileUrlList.length > 0 ? (
                     <img className="workpageimg" draggable="false" src={work.fileUrlList[0]} />
                   ) : (
-                    <img className="workpageimg" style={{ width: "118px", height: "26px" }} src="https://qiwrlvedwhommigwrmcz.supabase.co/storage/v1/object/public/images/logo-eng.png" draggable="false" alt="Placeholder" />
+                    <img className="workpageimg" style={{ width: "118px", height: "26px" }} src="https://qiwrlvedwhommigwrmcz.supabase.co/storage/v1/object/public/images/pub/logo-eng.png" draggable="false" alt="Placeholder" />
                   )}
                 </div>
               </div>
