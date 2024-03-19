@@ -73,7 +73,11 @@ function Remail() {
   //     console.error("Error inserting data:", error.message);
   //   }
   // };
-
+  const [titleLength, setTitleLength] = useState(0);
+  const handleTitleChange = (e) => {
+    setTitleLength(e.target.value.length);
+    console.log(e.target.value.length);
+  };
   return (
     <div>
       <div className="remail">
@@ -127,9 +131,15 @@ function Remail() {
           <div className="titletext">제목</div>
           <input type="text" name="to_title" style={{ borderBlockColor: "#c0c0c0" }} {...register("to_title", { required: "제목을 입력하세요" })} />
           {errors.to_title && <p>{errors.to_title.message}</p>}
+          <div style={{ display: "flex" }}>
+            {" "}
+            <div className="remailbody">내용</div>
+            <div className="remailbody" style={{ marginLeft: "auto" }}>
+              {titleLength}/1000
+            </div>
+          </div>
 
-          <div className="remailbody">내용</div>
-          <textarea name="message" style={{ borderBlockColor: "#7B8383" }} {...register("message", { required: "내용을 입력하세요" })}></textarea>
+          <textarea name="message" style={{ borderBlockColor: "#7B8383" }} {...register("message", { required: "내용을 입력하세요" })} onChange={handleTitleChange} maxLength={1000}></textarea>
           {errors.message && <p>{errors.message.message}</p>}
           <div className="remailbutton">
             {" "}

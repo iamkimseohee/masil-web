@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { createClient } from "@supabase/supabase-js";
+const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 const headerNav = [
   {
@@ -26,6 +28,27 @@ const headerNav = [
 ];
 
 const Header = () => {
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const fetchUser = async () => {
+    const { error } = await supabase.auth.signOut();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+      // 사용자 정보가 있는 경우
+      console.log("현재 로그인한 사용자:", user);
+      console.log("사용자 이메일:", user.email);
+      console.log("사용자 고유 식별자:", user.id);
+      // console.log("사용자 세션 토큰:", user.session.access_token);
+    } else {
+      // 사용자 정보가 없는 경우 (로그인되지 않은 상태)
+      console.log("로그인되지 않은 상태입니다.");
+    }
+  };
   const [show, setshow] = useState(false);
   const toggleMenu = () => {
     setshow(!show);

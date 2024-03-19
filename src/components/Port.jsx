@@ -46,8 +46,12 @@ const Port = () => {
                   }}
                   className={work && work.fileUrlList && work.fileUrlList.length === 0 ? "nocursor" : ""}
                 >
-                  <div className="port__wrapimgs">
-                    {work && work.fileUrlList && work.fileUrlList.length > 0 ? <img className="port__wrapimg" src={work.fileUrlList[0]} alt="Work Image" /> : <img className="port__wrapimg" src="https://qiwrlvedwhommigwrmcz.supabase.co/storage/v1/object/public/images/nopic.png" alt="Placeholder" />}
+                  <div className="port__wrapimgs" style={{ backgroundColor: "#F8F8F8", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    {work && work.fileUrlList && work.fileUrlList.length > 0 ? (
+                      <img className="port__wrapimg" src={work.fileUrlList[0]} alt="Work Image" />
+                    ) : (
+                      <img className="port__wrapimg" style={{ width: "118px", height: "26px" }} src="https://qiwrlvedwhommigwrmcz.supabase.co/storage/v1/object/public/images/logo-eng.png" alt="Placeholder" />
+                    )}
                   </div>
                   <div className="port__wraptitle">{work.title}</div>
                   <div className="port__wrapbody">{work.body}</div>

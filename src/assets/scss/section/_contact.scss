@@ -48,12 +48,15 @@
           margin-top: 39px;
         }
       }
-      .bodycontent {
-        margin-top: 57px;
-        margin-bottom: 12px;
-        @media (max-width: 768px) {
-          margin-top: 40px;
+      .bodyarea {
+        display: flex;
+        .bodycontent {
+          margin-top: 57px;
           margin-bottom: 12px;
+          @media (max-width: 768px) {
+            margin-top: 40px;
+            margin-bottom: 12px;
+          }
         }
       }
 

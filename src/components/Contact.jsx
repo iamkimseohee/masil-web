@@ -6,10 +6,7 @@ import { createClient } from "@supabase/supabase-js";
 import moment from "moment";
 import { useState } from "react";
 
-const supabase = createClient(
-  "https://qiwrlvedwhommigwrmcz.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY"
-);
+const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 const Contact = () => {
   const movePage = useNavigate();
@@ -97,9 +94,7 @@ const Contact = () => {
           if (isMobile) {
             movePage("/success");
           } else {
-            alert(
-              "감사합니다. 마실에 제안 및 문의 주셔서 감사합니다. 보내주신 내용은 담당자가 검토하여 필요시 회신 드리도록 하겠습니다."
-            );
+            alert("감사합니다. 마실에 제안 및 문의 주셔서 감사합니다. 보내주신 내용은 담당자가 검토하여 필요시 회신 드리도록 하겠습니다.");
             // window.location.reload(); // 페이지 새로고침
           }
           console.log("Data inserted into table A:", insertData);
@@ -112,9 +107,7 @@ const Contact = () => {
           if (isMobile) {
             movePage("/success");
           } else {
-            alert(
-              "감사합니다. 마실에 제안 및 문의 주셔서 감사합니다. 보내주신 내용은 담당자가 검토하여 필요시 회신 드리도록 하겠습니다."
-            );
+            alert("감사합니다. 마실에 제안 및 문의 주셔서 감사합니다. 보내주신 내용은 담당자가 검토하여 필요시 회신 드리도록 하겠습니다.");
             // window.location.reload(); // 페이지 새로고침
           }
           console.log("Data inserted into table B:", insertData);
@@ -123,6 +116,13 @@ const Contact = () => {
     } catch (error) {
       console.error("Error fetching data:", error.message);
     }
+  };
+
+  //~ 글자 감지
+  const [titleLength, setTitleLength] = useState(0);
+  const handleTitleChange = (e) => {
+    setTitleLength(e.target.value.length);
+    console.log(e.target.value.length);
   };
 
   return (
@@ -154,17 +154,21 @@ const Contact = () => {
               <input type="text" name="title" {...register("title", { required: "제목을 입력하세요" })} />
               {errors.title && <p>{errors.title.message}</p>}
               {/* 내용 */}
-              <div className="bodycontent">내용</div>
-              <textarea name="body" {...register("body", { required: "내용을 입력하세요" })}></textarea>
+              <div className="bodyarea">
+                <div className="bodycontent">내용</div>{" "}
+                <div className="bodycontent" style={{ marginLeft: "auto" }}>
+                  {titleLength}/1000
+                </div>
+              </div>
+
+              <textarea name="body" {...register("body", { required: "내용을 입력하세요" })} onChange={handleTitleChange} maxLength={1000}></textarea>
               {errors.body && <p>{errors.body.message}</p>}
               {/* <input type="file" /> */}
               <button type="submit">보내기</button>
             </form>
             <div className="text">
-              등록하신 제휴/제안/문의사항은 담당자가 면밀히 검토합니다. <br /> 가능한 빨리 답변을 드리는 것을 원칙으로
-              하고 있으나 주요 사안의 경우 시간이 조금 더 소요될 수 있습니다. <br />
-              제휴/제안/문의사항이 본사 방침과 맞지 않을 경우 답변을 드리지 않을 수 있으며, 관련 내용 및 자료는 즉시
-              파기됩니다. <br />
+              등록하신 제휴/제안/문의사항은 담당자가 면밀히 검토합니다. <br /> 가능한 빨리 답변을 드리는 것을 원칙으로 하고 있으나 주요 사안의 경우 시간이 조금 더 소요될 수 있습니다. <br />
+              제휴/제안/문의사항이 본사 방침과 맞지 않을 경우 답변을 드리지 않을 수 있으며, 관련 내용 및 자료는 즉시 파기됩니다. <br />
               답변은 입력하신 메일 주소로 발송되오니 정확한 주소를 적어주시기 바랍니다.
             </div>
           </div>

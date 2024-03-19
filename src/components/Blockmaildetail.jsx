@@ -4,10 +4,7 @@ import { createClient } from "@supabase/supabase-js";
 import upicon from "../assets/img/upicon.png";
 import downicon from "../assets/img/downicon.png";
 
-const supabase = createClient(
-  "https://qiwrlvedwhommigwrmcz.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY"
-);
+const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 function Blockmaildetail() {
   const { id } = useParams();
@@ -15,6 +12,29 @@ function Blockmaildetail() {
   const [blockMailDetail, setblockMailDetail] = useState(null);
   const [prevId, setPrevId] = useState(null);
   const [nextId, setNextId] = useState(null);
+
+  //~ 로그인 되어있는지 확인하기
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const fetchUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+      // 사용자 정보가 있는 경우
+      console.log("현재 로그인한 사용자:", user);
+      console.log("사용자 이메일:", user.email);
+      console.log("사용자 고유 식별자:", user.id);
+      // console.log("사용자 세션 토큰:", user.session.access_token);
+    } else {
+      // 사용자 정보가 없는 경우 (로그인되지 않은 상태)
+      console.log("로그인되지 않은 상태입니다.");
+      navigate("/login");
+    }
+  };
 
   const fetchBlockMailDetail = async (id) => {
     try {
@@ -33,13 +53,7 @@ function Blockmaildetail() {
 
   const fetchAdjacentIds = async () => {
     try {
-      const { data, error } = await supabase
-        .from("blockmail")
-        .select("*")
-        .order("id")
-        .range(0, 1)
-        .gt("id", id)
-        .limit(1);
+      const { data, error } = await supabase.from("blockmail").select("*").order("id").range(0, 1).gt("id", id).limit(1);
       console.log("다음", typeof data);
       console.log("다음", data[0]);
       if (error) {
@@ -51,13 +65,7 @@ function Blockmaildetail() {
     }
 
     try {
-      const { data, error } = await supabase
-        .from("blockmail")
-        .select("*")
-        .order("id", { ascending: false })
-        .range(0, 1)
-        .lt("id", id)
-        .limit(1);
+      const { data, error } = await supabase.from("blockmail").select("*").order("id", { ascending: false }).range(0, 1).lt("id", id).limit(1);
       console.log("이전", data[0]);
       if (error) {
         throw error;
@@ -86,10 +94,7 @@ function Blockmaildetail() {
 
     try {
       // "blockmail" 테이블에 메일 데이터 삭제
-      const { data: blockMailResponse, error: blockMailError } = await supabase
-        .from("blockmaillist")
-        .delete()
-        .eq("maillist", mail.maillist); // mail 객체에서 이메일 주소를 가져와서 이를 기준으로 삭제
+      const { data: blockMailResponse, error: blockMailError } = await supabase.from("blockmaillist").delete().eq("maillist", mail.maillist); // mail 객체에서 이메일 주소를 가져와서 이를 기준으로 삭제
 
       if (blockMailError) {
         throw blockMailError;
@@ -97,10 +102,7 @@ function Blockmaildetail() {
       console.log("Data inserted into blockmaillist successfully:", blockMailResponse);
 
       // "blockmail" 테이블에서 현재 선택한 이메일과 관련된 모든 데이터 가져오기
-      const { data: blockmailData, error: contactError } = await supabase
-        .from("blockmail")
-        .select("*")
-        .eq("email", blockMailDetail.email);
+      const { data: blockmailData, error: contactError } = await supabase.from("blockmail").select("*").eq("email", blockMailDetail.email);
       console.log(blockmailData);
       if (contactError) {
         throw contactError;
@@ -108,19 +110,14 @@ function Blockmaildetail() {
       console.log("Data retrieved from contact:", blockmailData);
 
       // "contact" 테이블에 메일 디테일 데이터 삽입
-      const { data: blockMailDetailResponse, error: blockMailDetailError } = await supabase
-        .from("contact")
-        .insert(blockmailData);
+      const { data: blockMailDetailResponse, error: blockMailDetailError } = await supabase.from("contact").insert(blockmailData);
       if (blockMailDetailError) {
         throw blockMailDetailError;
       }
       console.log("Data inserted into blockmail successfully:", blockMailDetailResponse);
 
       // "blockmail" 테이블에서 해당 메일 아이디와 일치하는 데이터 삭제
-      const { data: deleteResponse, error: deleteError } = await supabase
-        .from("blockmail")
-        .delete()
-        .eq("email", blockMailDetail.email);
+      const { data: deleteResponse, error: deleteError } = await supabase.from("blockmail").delete().eq("email", blockMailDetail.email);
       if (deleteError) {
         throw deleteError;
       }

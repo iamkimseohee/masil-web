@@ -64,6 +64,10 @@
         margin-left: 18px;
         margin-bottom: 5px;
         margin-top: 15px;
+        // 줄임말 ...
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
       }
       .workpagebody {
         font-size: 15px;
@@ -72,6 +76,10 @@
         width: 251px;
         margin-left: 18px;
         color: #c2c4c4;
+        // 줄임말 ...
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
       }
 
       // @media (max-width: 1024px) {

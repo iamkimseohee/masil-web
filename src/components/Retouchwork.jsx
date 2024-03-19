@@ -47,6 +47,18 @@ function Retouchwork() {
   }, [workDetail]);
   // console.log(workDetail);
 
+  //~ 글자 감지
+  const [bigTextLength, setBigTextLength] = useState(0);
+  const handleBigTextChange = (e) => {
+    setBigTextLength(e.target.value.length);
+    console.log(e.target.value);
+  };
+  const [textLength, setTextLength] = useState(0);
+  const handleTextChange = (e) => {
+    setTextLength(e.target.value.length);
+    console.log(e.target.value);
+  };
+
   //~ 체크박스
   const [isChecked, setIsChecked] = useState("");
   const [isChecked2, setIsChecked2] = useState("");
@@ -204,6 +216,14 @@ function Retouchwork() {
     setWorkDetail({ ...workDetail, fileUrlList: updatedWorkData });
     setDraggedItemId(null);
   };
+  const handleBigInputChange = (e) => {
+    handleChange(e); // handleChange 함수 호출
+    handleBigTextChange(e); // handleBigTextChange 함수 호출
+  };
+  const handleInputChange = (e) => {
+    handleChange(e); // handleChange 함수 호출
+    handleTextChange(e); // handleBigTextChange 함수 호출
+  };
 
   return (
     <div>
@@ -213,11 +233,15 @@ function Retouchwork() {
           <div className="retouchwork__body">
             <form>
               {/* 제목 */}
-              <div>큰 제목</div>
-              <input type="text" name="title" defaultValue={workDetail && workDetail.title} maxLength={15} onChange={handleChange} />
+              <div style={{ display: "flex" }}>
+                <div>큰 제목</div> <div style={{ marginLeft: "auto" }}>{bigTextLength} / 15</div>
+              </div>
+              <input type="text" name="title" defaultValue={workDetail && workDetail.title} maxLength={15} onChange={handleBigInputChange} />
               {/* 본문 내용 */}
-              <div>본문 내용</div>
-              <input type="text" name="body" defaultValue={workDetail && workDetail.body} maxLength={23} onChange={handleChange} />
+              <div style={{ display: "flex" }}>
+                <div>본문 내용</div> <div style={{ marginLeft: "auto" }}>{textLength} / 25</div>{" "}
+              </div>
+              <input type="text" name="body" defaultValue={workDetail && workDetail.body} maxLength={23} onChange={handleInputChange} />
               {/* 분야 */}
               <div className="checkboxline">
                 {" "}

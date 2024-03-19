@@ -4,10 +4,7 @@ import { createClient } from "@supabase/supabase-js";
 import upicon from "../assets/img/upicon.png";
 import downicon from "../assets/img/downicon.png";
 
-const supabase = createClient(
-  "https://qiwrlvedwhommigwrmcz.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY"
-);
+const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 function Maildetail() {
   const { id } = useParams();
@@ -16,6 +13,28 @@ function Maildetail() {
   const [prevId, setPrevId] = useState(null);
   const [nextId, setNextId] = useState(null);
   const [spamEmails, setSpamEmails] = useState([]);
+  //~ 로그인 되어있는지 확인하기
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const fetchUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+      // 사용자 정보가 있는 경우
+      console.log("현재 로그인한 사용자:", user);
+      console.log("사용자 이메일:", user.email);
+      console.log("사용자 고유 식별자:", user.id);
+      // console.log("사용자 세션 토큰:", user.session.access_token);
+    } else {
+      // 사용자 정보가 없는 경우 (로그인되지 않은 상태)
+      console.log("로그인되지 않은 상태입니다.");
+      navigate("/login");
+    }
+  };
 
   const fetchMailDetail = async (id) => {
     try {
@@ -46,13 +65,7 @@ function Maildetail() {
     }
 
     try {
-      const { data, error } = await supabase
-        .from("contact")
-        .select("*")
-        .order("id", { ascending: false })
-        .range(0, 1)
-        .lt("id", id)
-        .limit(1);
+      const { data, error } = await supabase.from("contact").select("*").order("id", { ascending: false }).range(0, 1).lt("id", id).limit(1);
       console.log("이전", data[0]);
       if (error) {
         throw error;
@@ -88,19 +101,14 @@ function Maildetail() {
       console.log("Data inserted into blockmaillist successfully:", blockMailResponse);
 
       // "contact" 테이블에서 현재 선택한 이메일과 관련된 모든 데이터 가져오기
-      const { data: contactData, error: contactError } = await supabase
-        .from("contact")
-        .select("*")
-        .eq("email", mailDetail.email);
+      const { data: contactData, error: contactError } = await supabase.from("contact").select("*").eq("email", mailDetail.email);
       if (contactError) {
         throw contactError;
       }
       console.log("Data retrieved from contact:", contactData);
 
       // "blockmail" 테이블에 메일 디테일 데이터 삽입
-      const { data: blockMailDetailResponse, error: blockMailDetailError } = await supabase
-        .from("blockmail")
-        .insert(contactData);
+      const { data: blockMailDetailResponse, error: blockMailDetailError } = await supabase.from("blockmail").insert(contactData);
 
       if (blockMailDetailError) {
         throw blockMailDetailError;
@@ -108,10 +116,7 @@ function Maildetail() {
       console.log("Data inserted into blockmail successfully:", blockMailDetailResponse);
 
       //* "contact" 테이블에서 해당 메일 아이디와 일치하는 데이터 삭제
-      const { data: deleteResponse, error: deleteError } = await supabase
-        .from("contact")
-        .delete()
-        .eq("email", mailDetail.email);
+      const { data: deleteResponse, error: deleteError } = await supabase.from("contact").delete().eq("email", mailDetail.email);
       if (deleteError) {
         throw deleteError;
       }

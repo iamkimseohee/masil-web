@@ -13,16 +13,35 @@ function Workpage() {
   const [checkedItems, setCheckedItems] = useState({});
   const movePage = useNavigate();
 
+  //~ 로그인 되어있는지 확인하기
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const fetchUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+      // 사용자 정보가 있는 경우
+      console.log("현재 로그인한 사용자:", user);
+      console.log("사용자 이메일:", user.email);
+      console.log("사용자 고유 식별자:", user.id);
+      // console.log("사용자 세션 토큰:", user.session.access_token);
+    } else {
+      // 사용자 정보가 없는 경우 (로그인되지 않은 상태)
+      console.log("로그인되지 않은 상태입니다.");
+      movePage("/login");
+    }
+  };
+
   //맨 위로 가기
   const scroll = () => {
     window.scroll({
       top: 0,
       behavior: "smooth",
     });
-  };
-
-  const goHome2 = () => {
-    movePage("/");
   };
 
   useEffect(() => {
@@ -155,11 +174,11 @@ function Workpage() {
                   <img src={retouch} alt="" className="retouch-btn" draggable="false" />
                 </NavLink>
 
-                <div className="workpageimgs" draggable="false">
+                <div className="workpageimgs" draggable="false" style={{ backgroundColor: "#F8F8F8", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   {work && work.fileUrlList && work.fileUrlList.length > 0 ? (
                     <img className="workpageimg" draggable="false" src={work.fileUrlList[0]} />
                   ) : (
-                    <img className="workpageimg" src="https://qiwrlvedwhommigwrmcz.supabase.co/storage/v1/object/public/images/nopic.png" draggable="false" alt="Placeholder" />
+                    <img className="workpageimg" style={{ width: "118px", height: "26px" }} src="https://qiwrlvedwhommigwrmcz.supabase.co/storage/v1/object/public/images/logo-eng.png" draggable="false" alt="Placeholder" />
                   )}
                 </div>
               </div>
@@ -184,7 +203,12 @@ function Workpage() {
           삭제
         </button>
 
-        <button className="btn btn_can" onClick={goHome2}>
+        <button
+          className="btn btn_can"
+          onClick={() => {
+            movePage("/");
+          }}
+        >
           취소
         </button>
         <button className="btn btn_ok" onClick={onSubmit}>

@@ -1,15 +1,34 @@
 // prettier-ignore
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { createClient } from "@supabase/supabase-js";
-
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 function Addwork() {
   const movePage = useNavigate();
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const fetchUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+      // 사용자 정보가 있는 경우
+      console.log("현재 로그인한 사용자:", user);
+      console.log("사용자 이메일:", user.email);
+      console.log("사용자 고유 식별자:", user.id);
+      // console.log("사용자 세션 토큰:", user.session.access_token);
+    } else {
+      // 사용자 정보가 없는 경우 (로그인되지 않은 상태)
+      console.log("로그인되지 않은 상태입니다.");
+    }
+  };
 
   const {
     register,
@@ -19,9 +38,14 @@ function Addwork() {
   } = useForm();
 
   //~ 글자 감지
-  const [titleLength, setTitleLength] = useState(0);
-  const handleTitleChange = (e) => {
-    setTitleLength(e.target.value.length);
+  const [bigTextLength, setBigTextLength] = useState(0);
+  const handleBigTextChange = (e) => {
+    setBigTextLength(e.target.value.length);
+    console.log(e.target.value);
+  };
+  const [textLength, setTextLength] = useState(0);
+  const handleTextChange = (e) => {
+    setTextLength(e.target.value.length);
     console.log(e.target.value);
   };
 
@@ -110,6 +134,15 @@ function Addwork() {
     }
   };
 
+  const handleBigInputChange = (e) => {
+    handleChange(e); // handleChange 함수 호출
+    handleBigTextChange(e); // handleBigTextChange 함수 호출
+  };
+  const handleInputChange = (e) => {
+    handleChange(e); // handleChange 함수 호출
+    handleTextChange(e); // handleBigTextChange 함수 호출
+  };
+
   return (
     <div>
       <section id="addwork">
@@ -118,11 +151,17 @@ function Addwork() {
           <div className="addwork__text">
             <form>
               {/* 제목 */}
-              <div>큰 제목</div>
-              <input type="text" name="title" maxLength={15} onChange={handleChange} />
+              <div style={{ display: "flex" }}>
+                <div>큰 제목</div> <div style={{ marginLeft: "auto" }}>{bigTextLength} / 15</div>
+              </div>
+
+              <input type="text" name="title" maxLength={15} onChange={handleBigInputChange} />
               {/* 본문 내용 */}
-              <div>본문 내용</div>
-              <input type="text" name="body" maxLength={23} onChange={handleChange} />
+              <div style={{ display: "flex" }}>
+                <div>본문 내용</div> <div style={{ marginLeft: "auto" }}>{textLength} / 25</div>{" "}
+              </div>
+
+              <input type="text" name="body" maxLength={25} onChange={handleInputChange} />
               {/* 분야 */}
               <div className="checkboxline">
                 {" "}

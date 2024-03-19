@@ -8,10 +8,7 @@ import listnum from "../assets/img/btnlistnum.png";
 import { useNavigate } from "react-router-dom";
 // import Userpage from "./Userpage";
 
-const supabase = createClient(
-  "https://qiwrlvedwhommigwrmcz.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY"
-);
+const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 const ITEMS_PER_PAGE = 10;
 
@@ -27,7 +24,28 @@ function Mailpage() {
   const [selectedPage, setSelectedPage] = useState(currentPage); // 현재 선택된 페이지를 나타내는 상태 추가
   const navigate = useNavigate(); // useNavigate 훅 사용
   // const [blocklist, setblocklist] = useState([]);
+  //~ 로그인 되어있는지 확인하기
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
+  const fetchUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+      // 사용자 정보가 있는 경우
+      console.log("현재 로그인한 사용자:", user);
+      console.log("사용자 이메일:", user.email);
+      console.log("사용자 고유 식별자:", user.id);
+      // console.log("사용자 세션 토큰:", user.session.access_token);
+    } else {
+      // 사용자 정보가 없는 경우 (로그인되지 않은 상태)
+      console.log("로그인되지 않은 상태입니다.");
+      navigate("/login");
+    }
+  };
   useEffect(() => {
     fetchContactData();
   }, [currentPage, itemsPerPage]);
@@ -214,10 +232,7 @@ function Mailpage() {
         throw error;
       }
 
-      const { data: blockData, error: contactError } = await supabase
-        .from("contact")
-        .select("*")
-        .in("email", blocklistEmails); //eq는 단일값, in은 열 안에 포함된 값 중 하나와 일치하는 결과를 반환
+      const { data: blockData, error: contactError } = await supabase.from("contact").select("*").in("email", blocklistEmails); //eq는 단일값, in은 열 안에 포함된 값 중 하나와 일치하는 결과를 반환
 
       console.log(blockData);
       if (contactError) {
@@ -228,9 +243,7 @@ function Mailpage() {
       // "blockmail" 테이블에  blocklistEmails데이터 삽입
       // blocklistEmails 배열의 각 이메일 주소를 반복하여 데이터베이스에 삽입
       for (const email of blocklistEmails) {
-        const { data: blockMailDetailResponse, error: blockMailDetailError } = await supabase
-          .from("blockmaillist")
-          .insert({ maillist: email });
+        const { data: blockMailDetailResponse, error: blockMailDetailError } = await supabase.from("blockmaillist").insert({ maillist: email });
 
         console.log(blockMailDetailResponse);
         if (blockMailDetailError) {
@@ -239,19 +252,14 @@ function Mailpage() {
         console.log("Data inserted into blockmail successfully:", blockMailDetailResponse);
       }
       // "blockmail" 테이블에 메일 디테일 데이터 삽입
-      const { data: blockMailDetailResponse, error: blockMailDetailError } = await supabase
-        .from("blockmail")
-        .insert(blockData);
+      const { data: blockMailDetailResponse, error: blockMailDetailError } = await supabase.from("blockmail").insert(blockData);
 
       if (blockMailDetailError) {
         throw blockMailDetailError;
       }
       console.log("Data inserted into blockmail successfully:", blockMailDetailResponse);
       //* "contact" 테이블에서 해당 메일 아이디와 일치하는 데이터 삭제
-      const { data: deleteResponse, error: deleteError } = await supabase
-        .from("contact")
-        .delete()
-        .in("email", blocklistEmails);
+      const { data: deleteResponse, error: deleteError } = await supabase.from("contact").delete().in("email", blocklistEmails);
       console.log(deleteResponse);
       if (deleteError) {
         throw deleteError;
@@ -332,12 +340,7 @@ function Mailpage() {
             <ul>
               {contactData.map((contact) => (
                 <li className="maillistli" key={contact.id}>
-                  <input
-                    type="checkbox"
-                    className="checkboxs"
-                    checked={checkedItems[contact.id] || false}
-                    onChange={() => handleCheckboxChange(contact.id, contact.email)}
-                  />
+                  <input type="checkbox" className="checkboxs" checked={checkedItems[contact.id] || false} onChange={() => handleCheckboxChange(contact.id, contact.email)} />
                   <NavLink to={`/userpage/maildetail/${contact.id}`} className="datalist">
                     <div className="num">{contact.id}</div>
                     <div className="name">{contact.name}</div>
@@ -375,11 +378,7 @@ function Mailpage() {
           {<button onClick={goToFirstPage}>{"|<"}</button>}
           {currentPage > 10 && <button onClick={goToPreviousPageSet}>{"<"}</button>}
           {pageNumbers.map((pageNumber) => (
-            <button
-              key={pageNumber}
-              onClick={() => goToPage(pageNumber)}
-              className={pageNumber === selectedPage ? "selected" : ""}
-            >
+            <button key={pageNumber} onClick={() => goToPage(pageNumber)} className={pageNumber === selectedPage ? "selected" : ""}>
               {pageNumber}
             </button>
           ))}
