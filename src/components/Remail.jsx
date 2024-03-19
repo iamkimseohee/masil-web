@@ -108,21 +108,6 @@ function Remail() {
             <input type="text" name="from_name" className="infoname2" style={{ borderBlockColor: "#e4e6e6" }} {...register("from_name", { required: "이름을 입력하세요" })} />
             {errors.from_name && <p>{errors.from_name.message}</p>}
             <input type="email" value="master@masil.com" name="from_email" className="infomail2" style={{ borderBlockColor: "#e4e6e6" }} readOnly />
-
-            {/* <input
-              type="email"
-              value="master@masil.com"
-              name="to_email"
-              style={{ borderBlockColor: "#CBD3D3" }}
-              {...register("to_email", {
-                required: "이메일을 입력하세요",
-                pattern: {
-                  value: /\S+@\S+\.\S+/,
-                  message: "이메일 형식에 맞지 않습니다.",
-                },
-              })}
-            />
-            {errors.to_email && <p>{errors.to_email.message}</p>} */}
           </div>
 
           <div className="titletext">참조</div>

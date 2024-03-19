@@ -5,22 +5,15 @@ import { useForm } from "react-hook-form";
 import { createClient } from "@supabase/supabase-js";
 import movebtn from "../assets/img/move.png";
 import delbtn from "../assets/img/delbtn.png";
+import { v4 as uuid } from "uuid";
 
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 function Retouchwork() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm();
+
   const movePage = useNavigate();
-  const gouserpage = () => {
-    movePage("/userpage");
-  };
 
   //~ 정보 가져오기
   const [workDetail, setWorkDetail] = useState(null);
@@ -39,16 +32,45 @@ function Retouchwork() {
     }
   };
   console.log(workDetail && workDetail.fileUrlList);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   useEffect(() => {
     if (workDetail) {
       setIsChecked(workDetail.code);
       setIsChecked2(workDetail.design);
     }
   }, [workDetail]);
-  // console.log(workDetail);
 
   //~ 글자 감지
+
+  // useEffect(() => {
+  //   if (workDetail && workDetail.title) {
+  //     setBigTextLength(workDetail.title.length);
+  //   }
+  //   if (workDetail && workDetail.body) {
+  //     setTextLength(workDetail.body.length);
+  //   }
+  // }, [workDetail]);
   const [bigTextLength, setBigTextLength] = useState(0);
+
+  useEffect(() => {
+    if (workDetail && workDetail.title) {
+      setBigTextLength(workDetail.title.length);
+    } else {
+      setBigTextLength(0); // workDetail이 null이거나 title이 없는 경우 초기값으로 설정
+    }
+    if (workDetail && workDetail.body) {
+      setTextLength(workDetail.body.length);
+    } else {
+      setTextLength(0); // workDetail이 null이거나 title이 없는 경우 초기값으로 설정
+    }
+  }, [workDetail]);
+
   const handleBigTextChange = (e) => {
     setBigTextLength(e.target.value.length);
     console.log(e.target.value);
@@ -139,7 +161,9 @@ function Retouchwork() {
             return null; // 이미지가 선택되지 않은 경우 null 반환
           }
           const selectedFile = input.file;
-          const imageName = `${Date.now()}_${selectedFile.name}`; // 파일 이름 생성
+
+          // const imageName = `${Date.now()}_${selectedFile.name}`; // 파일 이름 생성
+          const imageName = `${Date.now()}`; // 파일 이름 생성
           const { data, error } = await supabase.storage.from("images").upload(imageName, selectedFile, { overwrite: true });
           if (error) throw error;
           const imageUrl = await supabase.storage.from("images").getPublicUrl(imageName);
@@ -236,16 +260,42 @@ function Retouchwork() {
               <div style={{ display: "flex" }}>
                 <div>큰 제목</div> <div style={{ marginLeft: "auto" }}>{bigTextLength} / 15</div>
               </div>
-              <input type="text" name="title" defaultValue={workDetail && workDetail.title} maxLength={15} onChange={handleBigInputChange} />
+              <input
+                type="text"
+                name="title"
+                defaultValue={workDetail && workDetail.title}
+                maxLength={15}
+                {...register("title", {
+                  required: "제목을 입력하세요",
+                  onChange: (e) => {
+                    handleBigInputChange(e);
+                  },
+                })}
+              />
+              {errors.title && <p>{errors.title.message}</p>}
+
               {/* 본문 내용 */}
-              <div style={{ display: "flex" }}>
+              <div style={{ display: "flex", marginTop: "50px" }}>
                 <div>본문 내용</div> <div style={{ marginLeft: "auto" }}>{textLength} / 25</div>{" "}
               </div>
-              <input type="text" name="body" defaultValue={workDetail && workDetail.body} maxLength={23} onChange={handleInputChange} />
+              <input
+                type="text"
+                name="body"
+                defaultValue={workDetail && workDetail.body}
+                maxLength={25}
+                {...register("body", {
+                  required: "내용을 입력하세요",
+                  onChange: (e) => {
+                    handleInputChange(e);
+                  },
+                })}
+              />
+              {errors.body && <p>{errors.body.message}</p>}
+
               {/* 분야 */}
               <div className="checkboxline">
                 {" "}
-                <div>분야</div>
+                <div style={{ marginTop: "50px" }}>분야</div>
                 <div className="worktype">
                   <div>
                     <input type="checkbox" id="code" checked={isChecked} onClick={handleCheckboxChange1} value={isChecked ? "false" : "true"} name="code" onChange={handleChange} />

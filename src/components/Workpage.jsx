@@ -25,10 +25,7 @@ function Workpage() {
 
     if (user) {
       // 사용자 정보가 있는 경우
-      console.log("현재 로그인한 사용자:", user);
       console.log("사용자 이메일:", user.email);
-      console.log("사용자 고유 식별자:", user.id);
-      // console.log("사용자 세션 토큰:", user.session.access_token);
     } else {
       // 사용자 정보가 없는 경우 (로그인되지 않은 상태)
       console.log("로그인되지 않은 상태입니다.");

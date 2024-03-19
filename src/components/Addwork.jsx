@@ -5,6 +5,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { createClient } from "@supabase/supabase-js";
+import { v4 as uuid } from "uuid";
+
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 function Addwork() {
@@ -20,10 +22,8 @@ function Addwork() {
 
     if (user) {
       // 사용자 정보가 있는 경우
-      console.log("현재 로그인한 사용자:", user);
+
       console.log("사용자 이메일:", user.email);
-      console.log("사용자 고유 식별자:", user.id);
-      // console.log("사용자 세션 토큰:", user.session.access_token);
     } else {
       // 사용자 정보가 없는 경우 (로그인되지 않은 상태)
       console.log("로그인되지 않은 상태입니다.");
@@ -106,7 +106,8 @@ function Addwork() {
             return null;
           }
           const selectedFile = input.file;
-          const imageName = `${Date.now()}_${selectedFile.name}`;
+          // const imageName = `${Date.now()}_${selectedFile.name}`;
+          const imageName = `${Date.now()}`;
           const { data, error } = await supabase.storage.from("images").upload(imageName, selectedFile, { overwrite: true });
           if (error) throw error;
           const imageUrl = await supabase.storage.from("images").getPublicUrl(imageName);
@@ -155,17 +156,40 @@ function Addwork() {
                 <div>큰 제목</div> <div style={{ marginLeft: "auto" }}>{bigTextLength} / 15</div>
               </div>
 
-              <input type="text" name="title" maxLength={15} onChange={handleBigInputChange} />
+              <input
+                type="text"
+                name="title"
+                maxLength={15}
+                {...register("title", {
+                  required: "제목을 입력하세요",
+                  onChange: (e) => {
+                    handleBigInputChange(e);
+                  },
+                })}
+              />
+              {errors.title && <p>{errors.title.message}</p>}
               {/* 본문 내용 */}
-              <div style={{ display: "flex" }}>
-                <div>본문 내용</div> <div style={{ marginLeft: "auto" }}>{textLength} / 25</div>{" "}
+              <div style={{ display: "flex", marginTop: "50px" }}>
+                <div>본문 내용</div> <div style={{ marginLeft: "auto" }}>{textLength} / 25</div>
               </div>
 
-              <input type="text" name="body" maxLength={25} onChange={handleInputChange} />
+              <input
+                type="text"
+                name="body"
+                maxLength={25}
+                {...register("body", {
+                  required: "내용을 입력하세요",
+                  onChange: (e) => {
+                    handleInputChange(e);
+                  },
+                })}
+              />
+              {errors.body && <p>{errors.body.message}</p>}
+
               {/* 분야 */}
               <div className="checkboxline">
                 {" "}
-                <div>분야</div>
+                <div style={{ marginTop: "50px" }}>분야</div>
                 <div className="worktype">
                   <div>
                     <input type="checkbox" id="code" value={isChecked ? "false" : "true"} name="code" onClick={handleCheckboxChange1} onChange={handleChange} />
