@@ -31,12 +31,18 @@
         height: 30px;
         top: 14px; /* 원하는 위치로 조정 */
         left: 14px; /* 원하는 위치로 조정 */
+        &:hover {
+          cursor: pointer;
+        }
       }
       .move-btn {
         position: absolute; /* 절대 위치 설정 */
         top: 9px; /* 부모 요소 상단에 위치 */
         right: 14px; /* 부모 요소 왼쪽에 위치 */
         z-index: 2; /* 이미지 위에 표시 */
+        &:hover {
+          cursor: pointer;
+        }
       }
       .retouch-btn {
         position: absolute; /* 절대 위치 설정 */

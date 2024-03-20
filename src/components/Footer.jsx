@@ -29,7 +29,7 @@ const Footer = () => {
               </MobileView>
 
               <div className="text2">
-                <a href="mailto:dudan@ma-sil.co.kr">dudan@ma-sil.co.kr</a>&nbsp;/&nbsp;<a href="tel:">FAX. 0504-380-6568</a>
+                <a href="mailto:dudan@ma-sil.co.kr">dudan@ma-sil.co.kr</a>&nbsp;/&nbsp;<div>FAX. 0504-380-6568</div>
                 <br />
               </div>
               <div className="text3">

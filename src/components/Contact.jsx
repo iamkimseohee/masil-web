@@ -135,7 +135,7 @@ const Contact = () => {
               {/* 이름 */}
               <div>담당자 이름</div>
               <input type="text" name="name" {...register("name", { required: "이름을 입력하세요" })} />
-              {errors.name && <p>{errors.name.message}</p>}
+              {errors.name && <p style={{ color: "red" }}>{errors.name.message}</p>}
               {/* 메일 */}
               <div className="mailtitle">메일 주소</div>
               <input
@@ -149,10 +149,10 @@ const Contact = () => {
                   },
                 })}
               />
-              {errors.email && <p>{errors.email.message}</p>}
+              {errors.email && <p style={{ color: "red" }}>{errors.email.message}</p>}
               <div>제목</div>
               <input type="text" name="title" {...register("title", { required: "제목을 입력하세요" })} />
-              {errors.title && <p>{errors.title.message}</p>}
+              {errors.title && <p style={{ color: "red" }}>{errors.title.message}</p>}
               {/* 내용 */}
               <div className="bodyarea">
                 <div className="bodycontent">내용</div>{" "}
@@ -162,7 +162,7 @@ const Contact = () => {
               </div>
 
               <textarea name="body" {...register("body", { required: "내용을 입력하세요" })} onChange={handleTitleChange} maxLength={1000}></textarea>
-              {errors.body && <p>{errors.body.message}</p>}
+              {errors.body && <p style={{ color: "red" }}>{errors.body.message}</p>}
               {/* <input type="file" /> */}
               <button type="submit">보내기</button>
             </form>

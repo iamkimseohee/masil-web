@@ -23,7 +23,7 @@ const headerNav = [
 
   {
     title: "↑",
-    url: "/",
+    url: "#", // 맨위로
   },
 ];
 

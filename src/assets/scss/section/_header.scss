@@ -50,8 +50,11 @@
             }
           }
         }
+        .page_up {
+          // top: 30px;
+        }
         @media (max-width: 1024px) {
-          margin-top: 931px;
+          margin-top: 891px;
           margin-right: 14px;
           padding: 0%;
           padding-left: 31px;
@@ -61,7 +64,7 @@
           // line-height: 100%;
         }
         @media (max-width: 768px) {
-          margin-top: 686px;
+          margin-top: 662px;
           margin-right: 13px;
         }
       }
@@ -104,11 +107,11 @@
     cursor: pointer;
 
     @media (max-width: 1024px) {
-      top: 949px;
+      top: 909px;
       margin-right: 29px;
     }
     @media (max-width: 768px) {
-      top: 704px;
+      top: 680px;
       margin-right: 28px;
     }
   }

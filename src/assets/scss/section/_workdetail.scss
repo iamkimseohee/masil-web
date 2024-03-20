@@ -8,6 +8,7 @@
   }
   @media (max-width: 768px) {
     max-width: 412px;
+    margin-top: 0px;
   }
 }
 .workdetail__inner {
@@ -23,6 +24,9 @@
       display: flex;
       .backlogo {
         margin-top: 10px;
+        &:hover {
+          cursor: pointer;
+        }
       }
 
       .workdetail__top2__innertext {
@@ -45,6 +49,9 @@
       width: 128px;
       height: 64px;
       margin-right: 1049px;
+      &:hover {
+        cursor: pointer;
+      }
       @media (max-width: 1024px) {
         margin-right: 358px;
       }
@@ -56,6 +63,9 @@
       margin-top: 10px;
       justify-content: center;
       align-items: center;
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
   .bar1 {

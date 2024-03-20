@@ -361,7 +361,9 @@ function Blockmail() {
             <button onClick={handleDelete} className=" btnlist btndel">
               삭제
             </button>
-            <button className="btnlist btnblock">스팸 차단 해제</button>
+            <button className="btnlist btnblock" onClick={handleBlockCancle}>
+              스팸 차단 해제
+            </button>
             <nav className={`header__nav ${show2 ? "show2" : ""}`}>
               <ul>
                 <li>

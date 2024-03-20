@@ -90,7 +90,7 @@ function Remail() {
             <input
               type="email"
               name="to_email"
-              defaultValue={mailDetail && mailDetail.email}
+              value={mailDetail && mailDetail.email}
               className="infomail1"
               style={{ borderBlockColor: "#e4e6e6" }}
               // {...register("to_email", {
@@ -106,7 +106,7 @@ function Remail() {
           <div className="titletext">보내는 사람</div>
           <div className="mailinfo">
             <input type="text" name="from_name" className="infoname2" style={{ borderBlockColor: "#e4e6e6" }} {...register("from_name", { required: "이름을 입력하세요" })} />
-            {errors.from_name && <p>{errors.from_name.message}</p>}
+            {errors.from_name && <p style={{ color: "red" }}>{errors.from_name.message}</p>}
             <input type="email" value="master@masil.com" name="from_email" className="infomail2" style={{ borderBlockColor: "#e4e6e6" }} readOnly />
           </div>
 
@@ -115,7 +115,7 @@ function Remail() {
 
           <div className="titletext">제목</div>
           <input type="text" name="to_title" style={{ borderBlockColor: "#c0c0c0" }} {...register("to_title", { required: "제목을 입력하세요" })} />
-          {errors.to_title && <p>{errors.to_title.message}</p>}
+          {errors.to_title && <p style={{ color: "red" }}>{errors.to_title.message}</p>}
           <div style={{ display: "flex" }}>
             {" "}
             <div className="remailbody">내용</div>
@@ -125,7 +125,7 @@ function Remail() {
           </div>
 
           <textarea name="message" style={{ borderBlockColor: "#7B8383" }} {...register("message", { required: "내용을 입력하세요" })} onChange={handleTitleChange} maxLength={1000}></textarea>
-          {errors.message && <p>{errors.message.message}</p>}
+          {errors.message && <p style={{ color: "red" }}>{errors.message.message}</p>}
           <div className="remailbutton">
             {" "}
             <NavLink to={`/userpage/maildetail/${id}`}>

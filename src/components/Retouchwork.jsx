@@ -328,7 +328,7 @@ function Retouchwork() {
                   },
                 })}
               />
-              {errors.title && <p>{errors.title.message}</p>}
+              {errors.title && <p style={{ color: "red" }}>{errors.title.message}</p>}
 
               {/* 본문 내용 */}
               <div style={{ display: "flex", marginTop: "50px" }}>
@@ -348,7 +348,7 @@ function Retouchwork() {
                   },
                 })}
               />
-              {errors.body && <p>{errors.body.message}</p>}
+              {errors.body && <p style={{ color: "red" }}>{errors.body.message}</p>}
 
               {/* 분야 */}
               <div className="checkboxline">

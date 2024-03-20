@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js";
 import about from "../assets/img/logo.png";
 import close from "../assets/img/btn-close.png";
@@ -15,7 +15,14 @@ function Workdetail() {
 
   const goHome = () => {
     movePage("/");
-    window.scrollTo(0, 0);
+  };
+  const goHome2 = () => {
+    const portElement = document.getElementById("port");
+
+    console.log(portElement);
+    if (portElement) {
+      portElement.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   useEffect(() => {
@@ -46,7 +53,7 @@ function Workdetail() {
               src={close}
               alt="취소"
               onClick={() => {
-                movePage("/");
+                movePage(-1);
               }}
               className="canclebtn"
             />
@@ -72,10 +79,11 @@ function Workdetail() {
           {/* <div> {workDetail && <img src={workDetail.fileUrlList[1]} />}</div> */}
           <div className="workpic">{workDetail && workDetail.fileUrlList && workDetail.fileUrlList.map((url, index) => <img className="pic" key={index} src={url} />)}</div>
           <hr className="bar2" />
+
           <button
             className="btngolist"
             onClick={() => {
-              movePage("/");
+              movePage(-1);
             }}
           >
             목록

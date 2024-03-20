@@ -36,12 +36,18 @@
           top: 20px; /* 부모 요소 상단에 위치 */
           right: 66px; /* 부모 요소 왼쪽에 위치 */
           z-index: 2; /* 이미지 위에 표시 */
+          &:hover {
+            cursor: pointer;
+          }
         }
         .move-btn {
           position: absolute; /* 절대 위치 설정 */
           top: 20px; /* 부모 요소 상단에 위치 */
           right: 20px; /* 부모 요소 왼쪽에 위치 */
           z-index: 2; /* 이미지 위에 표시 */
+          &:hover {
+            cursor: pointer;
+          }
         }
         .pic {
           // float: left;
@@ -96,6 +102,9 @@
               //채크박스 내려주기
               position: relative;
               top: 6px;
+              &:hover {
+                cursor: pointer;
+              }
             }
           }
         }

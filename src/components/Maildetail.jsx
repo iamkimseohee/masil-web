@@ -164,8 +164,12 @@ function Maildetail() {
           <button onClick={handleDeleteMail} className="maildetailbtn maildel">
             삭제
           </button>
-          <button className="maildetailbtn mailblock">스팸차단</button>
-          <button className="maildetailbtn mailre">답장</button>
+          <button className="maildetailbtn mailblock" onClick={blockmail}>
+            스팸차단
+          </button>
+          <NavLink to={`/userpage/remail/${id}`} className="maildetailbtn mailre">
+            답장
+          </NavLink>
 
           <NavLink to="/userpage/mailpage" className="maildetailbtn maillist">
             목록
