@@ -44,12 +44,15 @@ function Retouchwork() {
     register,
     handleSubmit,
     setValue,
+
     formState: { errors },
   } = useForm({
-    // defaultValues: {
-    // title: "hi",
-    // },
+    values: {
+      title: workDetail && workDetail.title,
+      body: workDetail && workDetail.body,
+    },
   });
+  // console.log(register);
 
   useEffect(() => {
     if (workDetail) {
@@ -281,6 +284,8 @@ function Retouchwork() {
     setWorkDetail({ ...workDetail, fileUrlList: updatedWorkData, fileNameList: updatedWorkDataName });
     setDraggedItemId(null);
   };
+
+  const { text, sett } = useState("text");
   const handleBigInputChange = (e) => {
     handleChange(e); // handleChange 함수 호출
     handleBigTextChange(e); // handleBigTextChange 함수 호출
@@ -289,6 +294,14 @@ function Retouchwork() {
     handleChange(e); // handleChange 함수 호출
     handleTextChange(e); // handleBigTextChange 함수 호출
   };
+
+  // <input
+  //   type="text"
+  //   value={test}
+  //   onChange={(e) => {
+  //     sett(e.target.value);
+  //   }}
+  // />;
 
   return (
     <div>
@@ -304,12 +317,13 @@ function Retouchwork() {
               <input
                 type="text"
                 name="title"
-                defaultValue={workDetail && workDetail.title}
+                // defaultValue={workDetail && workDetail.title}
                 maxLength={15}
                 {...register("title", {
                   required: "제목을 입력하세요",
-
+                  // value: "hdfukj",
                   onChange: (e) => {
+                    // setWorkDetail({ ...workDetail, title: e.target.value });
                     handleBigInputChange(e);
                   },
                 })}
@@ -323,10 +337,11 @@ function Retouchwork() {
               <input
                 type="text"
                 name="body"
-                defaultValue={workDetail && workDetail.body}
+                // defaultValue={workDetail && workDetail.body}
                 maxLength={25}
                 {...register("body", {
                   required: "내용을 입력하세요",
+                  // value: "hi",
 
                   onChange: (e) => {
                     handleInputChange(e);
