@@ -95,10 +95,28 @@ function Addwork() {
   };
 
   //~ supabase로 보내요
+  const { v4: uuidv4 } = require("uuid"); // uuid 모듈을 불러옵니다.
 
   const onSubmit = async (data) => {
     try {
       // 이미지 업로드 및 URL 획득
+      // const uploadedImages = await Promise.all(
+      //   imageInputs.map(async (input) => {
+      //     if (!input.file) {
+      //       console.log("아무것도 없지롱");
+      //       return null;
+      //     }
+      //     const selectedFile = input.file;
+      //     const imageName = `${Date.now()}`; // 이미지 이름 생성
+      //     console.log(imageName);
+      //     const { data, error } = await supabase.storage.from("images").upload(imageName, selectedFile, { overwrite: true });
+      //     if (error) throw error;
+      //     const imageUrl = await supabase.storage.from("images").getPublicUrl(imageName);
+      //     console.log(imageUrl.data.publicUrl);
+      //     return { imageUrl: imageUrl.data.publicUrl, imageName: imageName }; // 이미지 URL과 이미지 이름을 객체로 반환
+      //   })
+      // );
+
       const uploadedImages = await Promise.all(
         imageInputs.map(async (input) => {
           console.log(input);
@@ -106,21 +124,40 @@ function Addwork() {
             return null;
           }
           const selectedFile = input.file;
-          // const imageName = `${Date.now()}_${selectedFile.name}`;
-          const imageName = `${Date.now()}`;
-          const { data, error } = await supabase.storage.from("images").upload(imageName, selectedFile, { overwrite: true });
+          const imageName = `${uuidv4()}`;
+          // const imageName = `${Date.now()}`; //파일 이름 바꾸기
+          const { data, error } = await supabase.storage.from("images").upload(imageName, selectedFile); // 파일 올리기
           if (error) throw error;
           const imageUrl = await supabase.storage.from("images").getPublicUrl(imageName);
           console.log(imageUrl.data.publicUrl);
-          return imageUrl.data.publicUrl;
+          return { imageUrl: imageUrl.data.publicUrl, imageName: imageName };
         })
       );
+
       const filteredImages = uploadedImages.filter((url) => url !== null);
 
       console.log(filteredImages);
 
+      // // 데이터베이스에 삽입할 데이터 준비
+      // const formDataWithImages = { ...formData, fileUrlList: filteredImages };
+      // console.log(formDataWithImages);
+
+      // // uploadedImages 배열에는 { imageUrl: "publicUrl", imageName: "imageName" } 형식의 객체들이 담김
+      // console.log(uploadedImages);
+      // // 이미지 URL과 이미지 이름을 따로 담을 배열들
+      const imageUrls = filteredImages.map((image) => image.imageUrl);
+      const imageNames = filteredImages.map((image) => image.imageName);
+      console.log(imageUrls);
+      console.log(imageNames);
+
+      // const filteredImages = imageUrls.filter((url) => url !== null);
+      // const filteredNames = imageNames.filter((url) => url !== null);
+
+      // console.log(filteredImages);
+      // console.log(filteredNames);
+
       // 데이터베이스에 삽입할 데이터 준비
-      const formDataWithImages = { ...formData, fileUrlList: filteredImages };
+      const formDataWithImages = { ...formData, fileUrlList: imageUrls, fileNameList: imageNames };
       console.log(formDataWithImages);
 
       // 데이터베이스에 데이터 삽입

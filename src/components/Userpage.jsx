@@ -27,7 +27,7 @@ function Userpage() {
 
   const movePage = useNavigate();
   useEffect(() => {
-    console.log("안녕", locatioin);
+    console.log(locatioin.pathname);
   });
 
   return (
@@ -42,23 +42,12 @@ function Userpage() {
               </NavLink>
             </div>
             <div className="menu">
-              <NavLink
-                to="mailpage"
-                className={
-                  locatioin.pathname.includes("/userpage/maildetail/") ||
-                  locatioin.pathname.includes("/userpage/remail/")
-                    ? "active"
-                    : ""
-                }
-              >
+              <NavLink to="mailpage" className={locatioin.pathname.includes("/userpage/maildetail/") || locatioin.pathname.includes("/userpage/remail/") ? "active" : ""}>
                 문의 관리
               </NavLink>
             </div>
             <div className="menu">
-              <NavLink
-                to="blockmail"
-                className={locatioin.pathname.includes("/userpage/blockmaildetail/") ? "active" : ""}
-              >
+              <NavLink to="blockmail" className={locatioin.pathname.includes("/userpage/blockmaildetail/") ? "active" : ""}>
                 스팸 리스트
               </NavLink>
             </div>

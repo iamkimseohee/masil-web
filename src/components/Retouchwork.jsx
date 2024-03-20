@@ -31,13 +31,25 @@ function Retouchwork() {
       console.error("Error fetching mail detail:", error.message);
     }
   };
-  console.log(workDetail && workDetail.fileUrlList);
+  console.log(workDetail);
+  const maxArr = 8 - (workDetail && workDetail.fileUrlList.length);
+  // console.log(maxArr);
+  // console.log(workDetail && workDetail.fileUrlList.length);
+
+  useEffect(() => {
+    fetchWorkDetail(id);
+  }, [id]);
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    // defaultValues: {
+    // title: "hi",
+    // },
+  });
 
   useEffect(() => {
     if (workDetail) {
@@ -48,14 +60,6 @@ function Retouchwork() {
 
   //~ 글자 감지
 
-  // useEffect(() => {
-  //   if (workDetail && workDetail.title) {
-  //     setBigTextLength(workDetail.title.length);
-  //   }
-  //   if (workDetail && workDetail.body) {
-  //     setTextLength(workDetail.body.length);
-  //   }
-  // }, [workDetail]);
   const [bigTextLength, setBigTextLength] = useState(0);
 
   useEffect(() => {
@@ -99,21 +103,21 @@ function Retouchwork() {
     });
   };
 
-  //~ 글자 감지
-  const [titleLength, setTitleLength] = useState(0);
-  const handleTitleChange = (e) => {
-    setTitleLength(e.target.value.length);
-    console.log(e.target.value);
-  };
+  // //~ 글자 감지
+  // const [titleLength, setTitleLength] = useState(0);
+  // const handleTitleChange = (e) => {
+  //   setTitleLength(e.target.value.length);
+  //   console.log(e.target.value);
+  // };
 
   //~ 사진 추출
-  const [fileName, setFileName] = useState("");
-  const handleFileChange2 = (e) => {
-    // const fileName = e.target.value.split("\\").pop(); // 파일 경로에서 파일 이름만 추출
-    const selectedFile = e.target.files[0];
-    console.log(selectedFile);
-    setFileName(selectedFile); // 파일 이름 상태 업데이트
-  };
+  // const [fileName, setFileName] = useState("");
+  // const handleFileChange2 = (e) => {
+  //   // const fileName = e.target.value.split("\\").pop(); // 파일 경로에서 파일 이름만 추출
+  //   const selectedFile = e.target.files[0];
+  //   console.log(selectedFile);
+  //   setFileName(selectedFile); // 파일 이름 상태 업데이트
+  // };
 
   //~ form에 적은 값들 업데이트
   const [formData, setFormData] = useState({});
@@ -148,10 +152,13 @@ function Retouchwork() {
   };
 
   //~ supabase로 보내요
+  const { v4: uuidv4 } = require("uuid"); // uuid 모듈을 불러옵니다.
+
   const onSubmit = async (data) => {
     try {
       // 기존 이미지 URL들을 가져옵니다.
       const existingImageUrls = workDetail.fileUrlList || [];
+      const existingImageNamses = workDetail.fileNameList || [];
 
       // 새로 업로드할 이미지 URL들을 업로드합니다.
       const uploadedImages = await Promise.all(
@@ -163,12 +170,14 @@ function Retouchwork() {
           const selectedFile = input.file;
 
           // const imageName = `${Date.now()}_${selectedFile.name}`; // 파일 이름 생성
-          const imageName = `${Date.now()}`; // 파일 이름 생성
+          // const imageName = `${Date.now()}`; // 파일 이름 생성
+          const imageName = `${uuidv4()}`;
           const { data, error } = await supabase.storage.from("images").upload(imageName, selectedFile, { overwrite: true });
+
           if (error) throw error;
           const imageUrl = await supabase.storage.from("images").getPublicUrl(imageName);
           console.log(imageUrl.data.publicUrl);
-          return imageUrl.data.publicUrl;
+          return { imageUrl: imageUrl.data.publicUrl, imageName: imageName };
         })
       );
       console.log(uploadedImages);
@@ -176,12 +185,17 @@ function Retouchwork() {
       const filteredImages = uploadedImages.filter((url) => url !== null);
 
       console.log(filteredImages);
+      const imageUrls = filteredImages.map((image) => image.imageUrl);
+      const imageNames = filteredImages.map((image) => image.imageName);
+      console.log(imageUrls);
+      console.log(imageNames);
 
       // 기존 이미지 URL들과 새로 업로드한 이미지 URL들을 합칩니다.
-      const allImageUrls = [...existingImageUrls, ...filteredImages];
+      const allImageUrls = [...existingImageUrls, ...imageUrls];
+      const allImageNames = [...existingImageNamses, ...imageNames];
 
       // 데이터베이스에 삽입할 데이터 준비
-      const formDataWithImages = { ...formData, fileUrlList: allImageUrls };
+      const formDataWithImages = { ...formData, fileUrlList: allImageUrls, fileNameList: allImageNames };
       console.log(formDataWithImages);
 
       // 데이터베이스에 데이터 삽입
@@ -190,7 +204,18 @@ function Retouchwork() {
       if (error) throw error;
 
       console.log("Data inserted successfully:", updatedData);
+      // console.log(delName);
+      delName.map(async (imageUrl) => {
+        console.log(imageUrl);
+        try {
+          // Supabase Storage에서 이미지 삭제
+          await supabase.storage.from("images").remove([imageUrl]);
 
+          console.log("Image deleted successfully from storage:", imageUrl);
+        } catch (error) {
+          console.error("Error deleting image from storage:", error.message);
+        }
+      });
       navigate("/userpage/workpage");
       // 페이지 이동 등 추가 작업이 필요하다면 이곳에 추가
     } catch (error) {
@@ -198,17 +223,29 @@ function Retouchwork() {
     }
   };
 
+  //~사진 삭제
+  const [delName, setDelName] = useState([]);
+
   const handleImageDelete = (index) => {
     console.log(index);
     const updatedFileUrlList = [...workDetail.fileUrlList];
-    console.log(updatedFileUrlList);
-    updatedFileUrlList.splice(index, 1); // 해당 인덱스의 이미지 URL 제거
-    setWorkDetail({ ...workDetail, fileUrlList: updatedFileUrlList }); // 이미지 URL 목록 업데이트
-  };
+    const updatedFileNameList = [...workDetail.fileNameList];
 
-  useEffect(() => {
-    fetchWorkDetail(id);
-  }, [id]);
+    console.log(updatedFileUrlList);
+    console.log(updatedFileNameList);
+    const deletedImageName = updatedFileNameList[index]; // 삭제된 이미지 URL 저장
+    console.log(deletedImageName);
+    updatedFileUrlList.splice(index, 1); // 해당 인덱스의 이미지 URL 제거
+    updatedFileNameList.splice(index, 1); // 해당 인덱스의 이미지 Name 제거
+    setWorkDetail({ ...workDetail, fileUrlList: updatedFileUrlList, fileNameList: updatedFileNameList }); // 이미지 URL 목록 업데이트
+    setDelName([...delName, deletedImageName]);
+
+    // deleteImageFromStorage(deletedImageName);
+  };
+  console.log(delName);
+
+  // const deleteImageFromStorage =
+
   //~드래그 기능
   const [draggedItemId, setDraggedItemId] = useState(null);
 
@@ -231,13 +268,17 @@ function Retouchwork() {
     // 드래그된 요소를 배열에서 제거합니다.
     const draggedWork = workDetail.fileUrlList[draggedItemId];
     const newWorkData = workDetail.fileUrlList.filter((_, index) => index !== draggedItemId);
+
+    const draggedWorkName = workDetail.fileNameList[draggedItemId];
+    const newWorkDataName = workDetail.fileNameList.filter((_, index) => index !== draggedItemId);
     console.log(newWorkData);
 
     // 드롭된 위치에 드래그된 요소를 삽입합니다.
     const updatedWorkData = [...newWorkData.slice(0, dropZoneId), draggedWork, ...newWorkData.slice(dropZoneId)];
+    const updatedWorkDataName = [...newWorkData.slice(0, dropZoneId), draggedWorkName, ...newWorkDataName.slice(dropZoneId)];
 
     // 변경된 배열을 상태에 설정합니다.
-    setWorkDetail({ ...workDetail, fileUrlList: updatedWorkData });
+    setWorkDetail({ ...workDetail, fileUrlList: updatedWorkData, fileNameList: updatedWorkDataName });
     setDraggedItemId(null);
   };
   const handleBigInputChange = (e) => {
@@ -267,6 +308,7 @@ function Retouchwork() {
                 maxLength={15}
                 {...register("title", {
                   required: "제목을 입력하세요",
+
                   onChange: (e) => {
                     handleBigInputChange(e);
                   },
@@ -285,6 +327,7 @@ function Retouchwork() {
                 maxLength={25}
                 {...register("body", {
                   required: "내용을 입력하세요",
+
                   onChange: (e) => {
                     handleInputChange(e);
                   },
@@ -329,7 +372,7 @@ function Retouchwork() {
               </div>
 
               {/* //~ 이미지 입력창 */}
-              {imageInputs.map((input, index) => (
+              {imageInputs.slice(0, maxArr).map((input, index) => (
                 <div key={index}>
                   <div>추가할 이미지{index + 1}</div>
                   <div className="filebox">
