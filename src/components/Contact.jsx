@@ -95,7 +95,7 @@ const Contact = () => {
             movePage("/success");
           } else {
             alert("마실에 제안 및 문의 주셔서 감사합니다. 보내주신 내용은 담당자가 검토하여 필요시 회신 드리도록 하겠습니다.");
-            window.location.reload(); // 페이지 새로고침
+            // window.location.reload(); // 페이지 새로고침
           }
           console.log("Data inserted into table A:", insertData);
         } else {
@@ -108,7 +108,7 @@ const Contact = () => {
             movePage("/success");
           } else {
             alert("마실에 제안 및 문의 주셔서 감사합니다. 보내주신 내용은 담당자가 검토하여 필요시 회신 드리도록 하겠습니다.");
-            window.location.reload(); // 페이지 새로고침
+            // window.location.reload(); // 페이지 새로고침
           }
           console.log("Data inserted into table B:", insertData);
         }

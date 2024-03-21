@@ -60,8 +60,8 @@ function Userpage() {
               <Route path="/workpage" element={<Workpage />}></Route>
               <Route path="/blockmail" element={<Blockmail />}></Route>
               <Route path="/mailpage/*" element={<Mailpage />}></Route>
-              <Route path="/maildetail/:id" element={<Maildetail />} />
-              <Route path="/blockmaildetail/:id" element={<Blockmaildetail />} />
+              <Route path="/maildetail/:id/:index" element={<Maildetail />} />
+              <Route path="/blockmaildetail/:id/:index" element={<Blockmaildetail />} />
               <Route path="/remail/:id" element={<Remail />} />
             </Routes>
           </div>

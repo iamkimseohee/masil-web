@@ -7,13 +7,16 @@ import downicon from "../assets/img/downicon.png";
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 function Maildetail() {
-  const { id } = useParams();
+  const { id, index } = useParams();
   const navigate = useNavigate();
   const [mailDetail, setMailDetail] = useState(null);
   const [prevId, setPrevId] = useState(null);
   const [nextId, setNextId] = useState(null);
-  const [spamEmails, setSpamEmails] = useState([]);
+
+  const indexNum = parseInt(index);
+
   //~ 로그인 되어있는지 확인하기
+
   useEffect(() => {
     fetchUser();
   }, []);
@@ -131,6 +134,7 @@ function Maildetail() {
     fetchMailDetail(id);
     fetchAdjacentIds();
   }, [id]);
+  console.log(prevId);
 
   return (
     <div>
@@ -152,7 +156,8 @@ function Maildetail() {
         </div>
         <div className="maildetail__bodytop">
           <div className="maildetail__bodytoplist">
-            <div className="mailbodyid">{mailDetail && mailDetail.id}</div>
+            <div className="mailbodyid">{indexNum}</div>
+            {/* <div className="mailbodyid">{mailDetail && mailDetail.id}</div> */}
             <div className="mailbodyname">{mailDetail && mailDetail.name}</div>
             <div className="mailbodyemail">{mailDetail && mailDetail.email}</div>
             <div className="mailbodytime">{mailDetail && mailDetail.time}</div>
@@ -177,10 +182,10 @@ function Maildetail() {
         </div>
         {prevId && (
           <div className="prevmail">
-            <NavLink to={`/userpage/maildetail/${prevId.id}`} className="prevmail__inner">
+            <NavLink to={`/userpage/maildetail/${prevId.id}/${indexNum - 1}`} className="prevmail__inner">
               {/* <div>▲</div> */}
               <img src={upicon} alt="" className="icon" />
-              <div className="mailid">{prevId.id}</div>
+              <div className="mailid">{indexNum - 1}</div>
               <div className="mailname">{prevId.name}</div>
               <div className="mailtitle">{prevId.title}</div>
               <div className="mailtime">{prevId.time}</div>
@@ -189,10 +194,10 @@ function Maildetail() {
         )}
         {nextId && (
           <div className="nextmail">
-            <NavLink to={`/userpage/maildetail/${nextId?.id}`} className="nextmail__inner">
+            <NavLink to={`/userpage/maildetail/${nextId?.id}/${indexNum + 1}`} className="nextmail__inner">
               {/* <div>▼</div> */}
               <img src={downicon} alt="" className="icon" />
-              <div className="mailid">{nextId.id}</div>
+              <div className="mailid">{indexNum + 1}</div>
               <div className="mailname">{nextId.name}</div>
               <div className="mailtitle">{nextId.title}</div>
               <div className="mailtime">{nextId.time}</div>

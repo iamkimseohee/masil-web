@@ -23,9 +23,19 @@ const headerNav = [
 
   {
     title: "↑",
-    url: "#", // 맨위로
+    url: "#header", // 맨위로
   },
 ];
+const smoothScroll = (targetId) => {
+  const targetElement = document.getElementById(targetId);
+  console.log(targetId, targetElement);
+  if (targetElement) {
+    window.scrollTo({
+      top: targetElement.offsetTop,
+      behavior: "smooth", // smooth 스크롤 효과 설정
+    });
+  }
+};
 
 const Header = () => {
   useEffect(() => {
@@ -61,7 +71,15 @@ const Header = () => {
           <ul>
             {headerNav.map((nav, key) => (
               <li key={key}>
-                <a href={nav.url}>{nav.title}</a>
+                <a
+                  href={nav.url}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    smoothScroll(nav.url.substring(1));
+                  }}
+                >
+                  {nav.title}
+                </a>
               </li>
             ))}
           </ul>

@@ -7,12 +7,14 @@ import downicon from "../assets/img/downicon.png";
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 function Blockmaildetail() {
-  const { id } = useParams();
+  const { id, index } = useParams();
+
   const navigate = useNavigate();
   const [blockMailDetail, setblockMailDetail] = useState(null);
   const [prevId, setPrevId] = useState(null);
   const [nextId, setNextId] = useState(null);
 
+  const indexNum = parseInt(index);
   //~ 로그인 되어있는지 확인하기
   useEffect(() => {
     fetchUser();
@@ -150,7 +152,7 @@ function Blockmaildetail() {
         </div>
         <div className="blockmaildetail__bodytop">
           <div className="blockmaildetail__bodytoplist">
-            <div className="blockmailbodyid">{blockMailDetail && blockMailDetail.id}</div>
+            <div className="blockmailbodyid">{indexNum}</div>
             <div className="blockmailbodyname">{blockMailDetail && blockMailDetail.name}</div>
             <div className="blockmailbodyemail">{blockMailDetail && blockMailDetail.email}</div>
             <div className="blockmailbodytime">{blockMailDetail && blockMailDetail.time}</div>
@@ -172,10 +174,10 @@ function Blockmaildetail() {
         </div>
         {prevId && (
           <div className="blockprevmail">
-            <NavLink to={`/userpage/blockmaildetail/${prevId.id}`} className="prevmail__inner">
+            <NavLink to={`/userpage/blockmaildetail/${prevId.id}/${indexNum - 1}`} className="prevmail__inner">
               {/* <div>▲</div> */}
               <img src={upicon} alt="" className="icon" />
-              <div className="mailid">{prevId.id}</div>
+              <div className="mailid">{indexNum - 1}</div>
               <div className="mailname">{prevId.name}</div>
               <div className="mailtitle">{prevId.title}</div>
               <div className="mailtime">{prevId.time}</div>
@@ -184,10 +186,10 @@ function Blockmaildetail() {
         )}
         {nextId && (
           <div className="nextmail">
-            <NavLink to={`/userpage/blockmaildetail/${nextId?.id}`} className="nextmail__inner">
+            <NavLink to={`/userpage/blockmaildetail/${nextId?.id}/${indexNum + 1}`} className="nextmail__inner">
               {/* <div>▼</div> */}
               <img src={downicon} alt="" className="icon" />
-              <div className="mailid">{nextId.id}</div>
+              <div className="mailid">{indexNum + 1}</div>
               <div className="mailname">{nextId.name}</div>
               <div className="mailtitle">{nextId.title}</div>
               <div className="mailtime">{nextId.time}</div>

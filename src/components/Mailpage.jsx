@@ -338,11 +338,11 @@ function Mailpage() {
           {/* 메일리스트 */}
           <div className="maillist">
             <ul>
-              {contactData.map((contact) => (
+              {contactData.map((contact, index) => (
                 <li className="maillistli" key={contact.id}>
                   <input type="checkbox" className="checkboxs" checked={checkedItems[contact.id] || false} onChange={() => handleCheckboxChange(contact.id, contact.email)} />
-                  <NavLink to={`/userpage/maildetail/${contact.id}`} className="datalist">
-                    <div className="num">{contact.id}</div>
+                  <NavLink to={{ pathname: `/userpage/maildetail/${contact.id}/${index + 1}` }} className="datalist">
+                    <div className="num">{index + 1}</div>
                     <div className="name">{contact.name}</div>
                     <div className="title maintitle">{contact.title}</div>
                     <div className="time">{contact.time}</div>
@@ -384,7 +384,7 @@ function Mailpage() {
               {pageNumber}
             </button>
           ))}
-          {currentPage > 11 && currentPage < totalPages && <button onClick={goToNextPageSet}>{">"}</button>}
+          {totalPages > 10 && currentPage < totalPages && <button onClick={goToNextPageSet}>{">"}</button>}
           <button onClick={goToLastPage}>{">|"}</button>
         </div>
       </section>
