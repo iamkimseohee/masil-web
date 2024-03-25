@@ -1,13 +1,13 @@
 #intro {
-  margin-top: 121px;
+  margin-top: 40px;
   margin-bottom: 181px;
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   // transition: 5s;
   // width: 100%;
   @media (max-width: 1024px) {
-    margin-top: 91px;
+    margin-top: 40px;
   }
   @media (max-width: 768px) {
     margin-top: 60px;
@@ -19,16 +19,17 @@
   border: 1px solid rebeccapurple;
   // width: 100%;
   // min-width: 1000px;
+  width: 1234px;
   margin-left: 344px;
   margin-right: 344px;
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
   flex-direction: column;
-  transition: 3s;
+  transition: 2s;
 
   @media (max-width: 1024px) {
-    transition: 3s;
+    transition: 2s;
 
     // max-width: 532px;
     margin-left: 118px;
@@ -65,6 +66,10 @@
     color: #03acb4;
     margin-bottom: 20px;
 
+    letter-spacing: -1.36px;
+
+    line-height: 40px;
+
     @media (max-width: 768px) {
       // display: none;
       font-size: 28px;
@@ -74,6 +79,7 @@
     // .text {
     font-family: "Pretendard-Regular";
     font-size: 19px;
+    color: #3f3c33;
     line-height: 28px;
     text-align: left;
     position: relative;

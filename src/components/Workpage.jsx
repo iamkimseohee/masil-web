@@ -159,12 +159,14 @@ function Workpage() {
       </button>
       <div>
         <ul>
-          {workData.map((work) => (
+          {workData.map((work, index) => (
             <li key={work.id} onDrop={(e) => handleDrop(e, work.id)} onDragOver={handleDragOver}>
               {/* <input type="checkbox" checked={checkedItems[work.id] || false} onChange={() => handleCheckboxChange(work.id)} />
             <div className="workpageimgs">{work && work.fileUrlList && work.fileUrlList.length > 0 && <img className="workpageimg" src={work.fileUrlList[0]} />}</div> */}
               <div className="workpageitem">
-                <input type="checkbox" checked={checkedItems[work.id] || false} onChange={() => handleCheckboxChange(work.id)} />
+                <input type="checkbox" id={`ch-${index}`} style={{ display: "none" }} className="workinput" checked={checkedItems[work.id] || false} onChange={() => handleCheckboxChange(work.id)} />
+                <label htmlFor={`ch-${index}`}></label>
+
                 <img src={movebtn} alt="" className="move-btn" onDragStart={(e) => handleDragStart(e, work.id)} />
                 <NavLink to={"/retouchwork/" + work.id} draggable="false">
                   {" "}

@@ -123,6 +123,10 @@ const Contact = () => {
   const handleTitleChange = (e) => {
     setTitleLength(e.target.value.length);
     console.log(e.target.value.length);
+
+    if (titleLength > 1000) {
+      alert("1000자까지만 적을수 있습니다 ");
+    }
   };
 
   return (
@@ -134,7 +138,7 @@ const Contact = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
               {/* 이름 */}
               <div>담당자 이름</div>
-              <input type="text" name="name" {...register("name", { required: "이름을 입력하세요" })} />
+              <input type="text" name="name" {...register("name", { required: "이름을 입력하세요" })} maxLength={15} />
               {errors.name && <p style={{ color: "red" }}>{errors.name.message}</p>}
               {/* 메일 */}
               <div className="mailtitle">메일 주소</div>
@@ -151,7 +155,7 @@ const Contact = () => {
               />
               {errors.email && <p style={{ color: "red" }}>{errors.email.message}</p>}
               <div>제목</div>
-              <input type="text" name="title" {...register("title", { required: "제목을 입력하세요" })} />
+              <input type="text" name="title" {...register("title", { required: "제목을 입력하세요" })} maxLength={25} />
               {errors.title && <p style={{ color: "red" }}>{errors.title.message}</p>}
               {/* 내용 */}
               <div className="bodyarea">

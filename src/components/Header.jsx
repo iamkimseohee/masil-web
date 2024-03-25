@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
+import up from "../assets/img/17.png";
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 const headerNav = [
@@ -22,7 +23,7 @@ const headerNav = [
   },
 
   {
-    title: "↑",
+    title: <img src={up} alt="" />,
     url: "#header", // 맨위로
   },
 ];
@@ -43,7 +44,7 @@ const Header = () => {
   }, []);
 
   const fetchUser = async () => {
-    const { error } = await supabase.auth.signOut();
+    // const { error } = await supabase.auth.signOut();
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -64,31 +65,33 @@ const Header = () => {
     setshow(!show);
   };
   return (
-    <header id="header" role="banner">
+    <div id="header">
       <div className="header__inner">
         <div className="header__logo"></div>
-        <nav className={`header__nav ${show ? "show" : ""}`} aria-label="메인메뉴">
-          <ul>
-            {headerNav.map((nav, key) => (
-              <li key={key}>
-                <a
-                  href={nav.url}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    smoothScroll(nav.url.substring(1));
-                  }}
-                >
-                  {nav.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        <div className="header__nav__mobile" id="headerToggle" aria-controls="primary-menu" aria-expanded={show ? "true" : "false"} tabIndex="0" onClick={toggleMenu}>
-          <div className="bluecir"></div>
+        <div className="hi" style={{ border: "1px solid black", height: "0px" }}>
+          <div className={`header__nav ${show ? "show" : ""}`}>
+            <ul>
+              {headerNav.map((nav, key) => (
+                <li key={key}>
+                  <a
+                    href={nav.url}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      smoothScroll(nav.url.substring(1));
+                    }}
+                  >
+                    {nav.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="header__nav__mobile" aria-expanded={show ? "true" : "false"} onClick={toggleMenu}>
+            <div className="bluecir"></div>
+          </div>
         </div>
       </div>
-    </header>
+    </div>
   );
 };
 

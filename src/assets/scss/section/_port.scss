@@ -2,149 +2,160 @@
   width: 100%;
   // height: 100vh;
   margin-bottom: 181px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
   @media (max-width: 768px) {
     margin-bottom: 132px;
   }
-}
-.port__inner {
-  border: 1px solid blueviolet;
+  .port__inner {
+    border: 1px solid blueviolet;
 
-  // width: 100%;
-  // max-width: 1232px;
-  // height: 100%;
-  margin-left: 344px;
-  margin-right: 344px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-end;
-  flex-direction: column;
-  transition: 3s;
-
-  @media (max-width: 1024px) {
-    transition: 2s;
-    // max-width: 532px;
-    margin-left: 118px;
-    margin-right: 118px;
-  }
-  @media (max-width: 767px) {
-    transition: 1s;
-    // max-width: 356px;
-    margin-left: 28px;
-    margin-right: 28px;
-  }
-
-  .port__title {
-    font-family: "Pretendard-Bold";
-    font-size: 34px;
-    color: #03acb4;
-    margin-bottom: 20px;
-
-    @media (max-width: 320px) {
-      // display: none;
-    }
-  }
-  .port__text {
-    font-family: "Pretendard-Regular";
-    font-size: 19px;
-    text-align: left;
-    position: relative;
-    z-index: 100;
-    transition: all 0.3s;
-    cursor: all-scroll;
-    margin-bottom: 64px;
+    // width: 100%;
+    width: 1232px;
+    // height: 100%;
+    margin-left: 344px;
+    margin-right: 344px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    flex-direction: column;
+    transition: 3s;
 
     @media (max-width: 1024px) {
-      margin-bottom: 36px;
+      transition: 2s;
+      // max-width: 532px;
+      margin-left: 118px;
+      margin-right: 118px;
     }
-  }
+    @media (max-width: 767px) {
+      transition: 1s;
+      // max-width: 356px;
+      margin-left: 28px;
+      margin-right: 28px;
+    }
 
-  .port__wrap {
-    width: 100%;
-    display: inline-flex;
-    border: 1px solid darkblue;
-    // justify-content: space-between;
-    gap: 12px;
-    // float: left;
-    margin: 0;
-    flex-wrap: wrap; //줄바꿈
-    // justify-content: space-between;
-    //스크롤
-    overflow: auto;
-    height: 500px;
+    .port__title {
+      font-family: "Pretendard-Bold";
+      font-size: 34px;
+      color: #03acb4;
+      margin-bottom: 20px;
+      letter-spacing: -1.36px;
 
-    li {
-      .nocursor {
-        &:hover {
-          cursor: auto;
-        }
+      @media (max-width: 320px) {
+        // display: none;
       }
-      width: 296px;
-      height: 223px;
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 30px;
-      border: 1px solid #c2c4c433;
-      // border: 1px solid black;
-      border-radius: 10px;
-      // background-color: aquamarine
-
-      .port__wrapimgs {
-        height: 142px;
-        .port__wrapimg {
-          width: 100%;
-          height: 142px;
-          border-top-left-radius: 10px;
-          border-top-right-radius: 10px;
-        }
-      }
-
-      .port__wraptitle {
-        font-size: 24px;
-        text-align: left;
-        font-family: "Pretendard-Medium";
-        width: 251px;
-        margin-left: 18px;
-        margin-bottom: 5px;
-        margin-top: 15px;
-        // 줄임말 ...
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        @media (max-width: 1024px) {
-          width: 221px;
-        }
-        @media (max-width: 767px) {
-          width: 145px;
-        }
-      }
-      .port__wrapbody {
-        font-size: 15px;
-        text-align: left;
-        font-family: "Pretendard-Regular";
-        width: 251px;
-        margin-left: 18px;
-        color: #c2c4c4;
-        // 줄임말 ...
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        @media (max-width: 1024px) {
-          width: 221px;
-        }
-        @media (max-width: 767px) {
-          width: 145px;
-        }
-      }
+    }
+    .port__text {
+      font-family: "Pretendard-Regular";
+      font-size: 19px;
+      color: #3f3c33;
+      text-align: left;
+      position: relative;
+      z-index: 100;
+      transition: all 0.3s;
+      cursor: all-scroll;
+      margin-bottom: 64px;
 
       @media (max-width: 1024px) {
-        width: 256px;
+        margin-bottom: 36px;
       }
-      @media (max-width: 767px) {
-        width: 172px;
+    }
+
+    .port__wrap {
+      width: 100%;
+      display: inline-flex;
+      border: 1px solid darkblue;
+      // justify-content: space-between;
+      gap: 12px;
+      // float: left;
+      margin: 0;
+      flex-wrap: wrap; //줄바꿈
+      // justify-content: space-between;
+      //스크롤
+      // overflow: auto;
+      // height: 500px;
+
+      li {
+        .nocursor {
+          &:hover {
+            cursor: auto;
+          }
+        }
+        width: 296px;
+        height: 223px;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 30px;
+        border: 1px solid #c2c4c433;
+        // border: 1px solid black;
+        border-radius: 10px;
+        // background-color: aquamarine
+
+        .port__wrapimgs {
+          height: 142px;
+          .port__wrapimg {
+            width: 100%;
+            height: 142px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+          }
+        }
+
+        .port__wraptitle {
+          font-size: 24px;
+          color: #3f3c33;
+          line-height: 28px;
+          letter-spacing: -0.14px;
+          text-align: left;
+          font-family: "Pretendard-Medium";
+          width: 251px;
+          margin-left: 18px;
+          margin-bottom: 5px;
+          margin-top: 15px;
+          // 줄임말 ...
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          @media (max-width: 1024px) {
+            width: 221px;
+          }
+          @media (max-width: 767px) {
+            width: 145px;
+          }
+        }
+        .port__wrapbody {
+          font-size: 15px;
+          text-align: left;
+          font-family: "Pretendard-Regular";
+          width: 251px;
+          margin-left: 18px;
+          line-height: 22px;
+          letter-spacing: -0.09px;
+          color: #c2c4c4;
+          // 줄임말 ...
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          @media (max-width: 1024px) {
+            width: 221px;
+          }
+          @media (max-width: 767px) {
+            width: 145px;
+          }
+        }
+
+        @media (max-width: 1024px) {
+          width: 256px;
+        }
+        @media (max-width: 767px) {
+          width: 172px;
+        }
       }
     }
   }
-}
-.port__wrap::-webkit-scrollbar {
-  display: none;
+  .port__wrap::-webkit-scrollbar {
+    display: none;
+  }
 }

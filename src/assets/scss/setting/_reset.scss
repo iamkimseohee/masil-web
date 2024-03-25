@@ -57,3 +57,30 @@ button {
     cursor: pointer;
   }
 }
+input:focus {
+  outline: none;
+}
+// input[type="checkbox"]{
+//   display: none;
+// }
+/* 수직 스크롤바 스타일 */
+::-webkit-scrollbar {
+  width: 20px; /* 스크롤바의 너비 */
+}
+
+/* 스크롤바의 손잡이(스크롤바의 끝 지점에서 드래그할 수 있는 부분) */
+::-webkit-scrollbar-thumb {
+  background: #eeeeee; /* 스크롤바 손잡이 배경색 */
+  border-radius: 12px; /* 스크롤바 손잡이의 모서리 반경 */
+  @media (max-width: 1024px) {
+    ::-webkit-scrollbar {
+      width: 20px; /* 스크롤바의 너비 */
+    }
+  }
+
+  /* 스크롤바의 손잡이(스크롤바의 끝 지점에서 드래그할 수 있는 부분) */
+  ::-webkit-scrollbar-thumb {
+    background: #eeeeee; /* 스크롤바 손잡이 배경색 */
+    border-radius: 12px; /* 스크롤바 손잡이의 모서리 반경 */
+  }
+}

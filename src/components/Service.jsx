@@ -6,7 +6,6 @@ import Lottie from "lottie-react";
 const Service = () => {
   return (
     <div>
-      {" "}
       <section id="service">
         <div className="service__inner">
           <h1 className="service__title">
@@ -28,8 +27,6 @@ const Service = () => {
             </ul>
           </div>
           <Lottie animationData={aboutservice2} className="servicepic"></Lottie>
-
-          {/* <img src={aboutservice} alt="서비스그림" className="servicepic" /> */}
         </div>
       </section>
     </div>

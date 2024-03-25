@@ -33,7 +33,7 @@ function Userpage() {
   return (
     <div>
       <section id="userpage">
-        <div className="userpage__inner">
+        <div className="userpage__inner" style={{ border: "1px solid black" }}>
           <h1 className="userpage__title">마실 관리자</h1>
           <div className="userpage__btn">
             <div className="menu">

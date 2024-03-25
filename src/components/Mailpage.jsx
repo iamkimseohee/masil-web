@@ -329,7 +329,8 @@ function Mailpage() {
           </div>
           {/* //체크박스 번호 담당자이름 */}
           <div className="titlelist">
-            <input type="checkbox" name="" id="" className="checkboz" checked={selectAll} onChange={handleSelectAll} />
+            <input type="checkbox" name="" id="ch" className="checkboz" checked={selectAll} onChange={handleSelectAll} />
+            <label htmlFor="ch"></label>
             <div className="num">번호</div>
             <div className="name">담당자이름</div>
             <div className="title">제목</div>
@@ -340,7 +341,9 @@ function Mailpage() {
             <ul>
               {contactData.map((contact, index) => (
                 <li className="maillistli" key={contact.id}>
-                  <input type="checkbox" className="checkboxs" checked={checkedItems[contact.id] || false} onChange={() => handleCheckboxChange(contact.id, contact.email)} />
+                  <input type="checkbox" id={`ch-${index}`} style={{ display: "none" }} className="checkboxs" checked={checkedItems[contact.id] || false} onChange={() => handleCheckboxChange(contact.id, contact.email)} />
+                  <label htmlFor={`ch-${index}`}></label>
+
                   <NavLink to={{ pathname: `/userpage/maildetail/${contact.id}/${index + 1}` }} className="datalist">
                     <div className="num">{index + 1}</div>
                     <div className="name">{contact.name}</div>

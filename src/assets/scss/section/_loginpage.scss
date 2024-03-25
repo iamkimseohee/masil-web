@@ -1,14 +1,17 @@
 #login {
-  max-width: 1232px;
-  margin-left: auto;
-  margin-right: auto;
+  display: flex;
+  justify-content: center;
   margin-top: 81px;
   // width: 100%;
+  border: 1px solid darkblue;
 }
 
 .login__inner {
+  border: 1px solid darkblue;
+  margin-left: 342px;
+  margin-right: 342px;
   // width: 100%;
-  max-width: 1232px;
+  width: 1232px;
 
   //   max-width: 1920px;
   display: flex;
@@ -22,7 +25,7 @@
     font-family: "Pretendard-Bold";
     font-size: 34px;
     color: #03acb4;
-    margin-bottom: 318px;
+    margin-bottom: 250px;
   }
   .login__text {
     width: 100%;
@@ -71,6 +74,7 @@
       font-family: "Pretendard-Medium";
       border: 1px solid #c2c4c4;
       margin-right: 12px;
+
       &:hover {
         border: 1px solid #3445db;
       }

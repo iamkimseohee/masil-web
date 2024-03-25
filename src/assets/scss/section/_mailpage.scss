@@ -129,6 +129,7 @@
     text-align: center;
 
     .checkboz {
+      display: none;
       margin-right: 30px;
       width: 26px;
       height: 26px;
@@ -236,4 +237,53 @@
   .selected {
     color: #3f3c33;
   }
+}
+input#ch + label:before {
+  content: "";
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  border: 1px solid#CBD3D3;
+  border-radius: 4px;
+  vertical-align: middle;
+  margin-right: 30px;
+}
+input#ch:checked + label:before {
+  content: "\2713";
+  // background-color: #f47c7  c;
+  border-color: #00b5b5;
+  font-size: 33px; /* 표시할 체크 표시의 크기 */
+  color: #00b5b5; /* 체크 표시의 색상 */
+
+  // color: #00b5b5;
+  // background-image: url("check_btn.png");
+  // background-repeat: no-repeat;
+  // background-position: 50%;
+  display: inline-block; /* 인라인 요소로 설정하여 텍스트와 함께 배치 */
+  line-height: 25px; /* 체크 표시의 세로 정렬을 위해 높이 지정 */
+}
+
+input.checkboxs + label:before {
+  content: "";
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  border: 1px solid#CBD3D3;
+  border-radius: 4px;
+  vertical-align: middle;
+  margin-right: 20px;
+}
+input.checkboxs:checked + label:before {
+  content: "\2713";
+  // background-color: #f47c7  c;
+  border-color: #00b5b5;
+  font-size: 33px; /* 표시할 체크 표시의 크기 */
+  color: #00b5b5; /* 체크 표시의 색상 */
+
+  // color: #00b5b5;
+  // background-image: url("check_btn.png");
+  // background-repeat: no-repeat;
+  // background-position: 50%;
+  display: inline-block; /* 인라인 요소로 설정하여 텍스트와 함께 배치 */
+  line-height: 25px; /* 체크 표시의 세로 정렬을 위해 높이 지정 */
 }

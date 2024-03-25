@@ -1,98 +1,104 @@
 #footer {
-  // width: 100%;
+  width: 100%;
   background-color: #eeeeee;
-  border: 1px solid red;
-}
-.footer__inner {
-  // width: 100%;
-  //   max-width: 1232px;
-  margin-left: 458px;
-  margin-right: 458px;
+  // border: 1px solid red;
+  display: flex;
+  justify-content: center;
+  // align-items: center;
 
-  @media (max-width: 1024px) {
-    transition: 1s;
-    // max-width: 530px;
-    margin-left: 119px;
-    margin-right: 119px;
-  }
-  @media (max-width: 767px) {
-    transition: 1s;
-    // max-width: 356px;
-    margin-left: 28px;
-    margin-right: 28px;
-  }
+  .footer__inner {
+    // width: 100%;
+    width: 1234px;
+    border: 1px solid blueviolet;
+    // margin-left: 458px;
+    // margin-right: 458px;
 
-  border: 1px solid blueviolet;
-  .text {
-    .text1 {
-      color: #8990cb;
-      font-size: 13px;
-      padding-top: 30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 14px;
+    // width: 1234px;
+    @media (max-width: 1024px) {
+      transition: 1s;
+
+      // max-width: 530px;
+      // margin-left: 119px;
+      // margin-right: 119px;
     }
-    img {
-      margin-left: auto;
-      margin-right: auto;
-      display: flex;
-      // @media (max-width: 1024px) {
-      //   pointer-events: none;
-      // }
+    @media (max-width: 767px) {
+      transition: 1s;
+      // max-width: 356px;
+      // margin-left: 28px;
+      // margin-right: 28px;
     }
-    .text2 {
-      display: flex;
-      flex-direction: row;
-      margin-top: 30px;
-      justify-content: center;
-      align-items: center;
-      font-size: 13px;
-      color: #7b808d;
 
-      // line-height: 1.5; /* Adjust as needed */
-      a {
-        display: block;
+    .text {
+      .text1 {
+        color: #8990cb;
+        font-size: 13px;
+        padding-top: 30px;
+        display: flex;
+        justify-content: center;
+        // align-items: center;
+        margin-bottom: 14px;
       }
-    }
-    .text3 {
-      text-align: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding-bottom: 29px;
-      font-size: 13px;
-      line-height: 21px;
-      transition: 2s;
-      color: #7b808d;
-      .br-m {
-        display: none;
+      img {
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        // @media (max-width: 1024px) {
+        //   pointer-events: none;
+        // }
       }
-      @media (max-width: 1024px) {
-        padding-bottom: 99px;
+      .text2 {
+        display: flex;
+        flex-direction: row;
+        margin-top: 30px;
+        justify-content: center;
+        align-items: center;
+        font-size: 13px;
+        color: #7b808d;
+
+        // line-height: 1.5; /* Adjust as needed */
+        a {
+          display: block;
+        }
+      }
+      .text3 {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 29px;
+        font-size: 13px;
+        line-height: 21px;
         transition: 2s;
-      }
-      @media (max-width: 768px) {
+        color: #7b808d;
         .br-m {
-          display: inline;
+          display: none;
+        }
+        @media (max-width: 1024px) {
+          padding-bottom: 99px;
+          transition: 2s;
+        }
+        @media (max-width: 768px) {
+          .br-m {
+            display: inline;
+          }
         }
       }
     }
   }
+  // @media (hover: none) and (pointer: coarse) {
+  //   .untouch-device {
+  //     display: none;
+  //   }
+  //   .touch-device {
+  //     display: block;
+  //   }
+  // }
+  // @media (hover: hover) and (pointer: fine) {
+  //   .untouch-device {
+  //     display: block;
+  //   }
+  //   .touch-device {
+  //     display: none;
+  //   }
+  // }
 }
-// @media (hover: none) and (pointer: coarse) {
-//   .untouch-device {
-//     display: none;
-//   }
-//   .touch-device {
-//     display: block;
-//   }
-// }
-// @media (hover: hover) and (pointer: fine) {
-//   .untouch-device {
-//     display: block;
-//   }
-//   .touch-device {
-//     display: none;
-//   }
-// }
