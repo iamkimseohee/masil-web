@@ -6,13 +6,20 @@ import { createClient } from "@supabase/supabase-js";
 import moment from "moment";
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
+import up from "../assets/img/up.png";
 
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 function Remail() {
+  const scroll = () => {
+    window.scroll({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
   const movePage = useNavigate();
 
-  const { id } = useParams();
+  const { id, index } = useParams();
   const [mailDetail, setMailDetail] = useState(null);
 
   const form = useRef();
@@ -84,7 +91,7 @@ function Remail() {
         <form ref={form} onSubmit={handleSubmit(sendEmail)}>
           <div className="titletext">받는 사람</div>
           <div className="mailinfo">
-            <input type="text" name="to_name" className="infoname1" defaultValue={mailDetail && mailDetail.name} style={{ borderBlockColor: "#e4e6e6" }} />
+            <input type="text" name="to_name" className="infoname1" value={mailDetail && mailDetail.name} style={{ borderBlockColor: "#e4e6e6" }} readOnly />
             {/* <input type="text" name="to_name" className="infoname1" defaultValue={mailDetail && mailDetail.name} style={{ borderBlockColor: "#e4e6e6" }} {...register("to_name", { required: "이름을 입력하세요" })} /> */}
             {/* {errors.to_name && <p>{errors.to_name.message}</p>} */}
             <input
@@ -93,7 +100,7 @@ function Remail() {
               value={mailDetail && mailDetail.email}
               className="infomail1"
               style={{ borderBlockColor: "#e4e6e6" }}
-              // {...register("to_email", {
+              readOnly // {...register("to_email", {
               //   required: "이메일을 입력하세요",
               //   pattern: {
               //     value: /\S+@\S+\.\S+/,
@@ -126,16 +133,20 @@ function Remail() {
 
           <textarea name="message" style={{ borderBlockColor: "#7B8383" }} {...register("message", { required: "내용을 입력하세요" })} onChange={handleTitleChange} maxLength={1000}></textarea>
           {errors.message && <p style={{ color: "red" }}>{errors.message.message}</p>}
-          <div className="remailbutton">
-            {" "}
-            <NavLink to={`/userpage/maildetail/${id}`}>
-              <button className="remialbtn">취소</button>
-            </NavLink>
-            <button type="submit" className="remialbtn">
-              보내기
-            </button>
-          </div>
         </form>
+
+        <div className="remailbutton">
+          {" "}
+          <NavLink to={`/userpage/maildetail/${id}/${index}`}>
+            <button className="cancle">취소</button>
+          </NavLink>
+          <button type="submit" onClick={handleSubmit(sendEmail)} className="ok">
+            보내기
+          </button>
+          <button onClick={scroll} className="page_up">
+            <img src={up} alt="" />
+          </button>
+        </div>
       </div>
     </div>
   );

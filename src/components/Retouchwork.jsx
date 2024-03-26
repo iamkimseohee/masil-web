@@ -6,10 +6,18 @@ import { createClient } from "@supabase/supabase-js";
 import movebtn from "../assets/img/move.png";
 import delbtn from "../assets/img/delbtn.png";
 import { v4 as uuid } from "uuid";
+import home from "../assets/img/home.png";
+import up from "../assets/img/up.png";
 
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 function Retouchwork() {
+  const scroll = () => {
+    window.scroll({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -308,6 +316,15 @@ function Retouchwork() {
       <section id="retouchwork">
         <div className="retouchwork__inner">
           <h1 className="retouchwork__title">작업물 수정</h1>
+          <button
+            className="btnhome"
+            onClick={() => {
+              movePage("/");
+            }}
+          >
+            <img src={home} alt="" className="homebtn" />
+          </button>
+
           <div className="retouchwork__body">
             <form>
               {/* 제목 */}
@@ -413,10 +430,16 @@ function Retouchwork() {
               onClick={() => {
                 movePage("/userpage");
               }}
+              className="cancle"
             >
               취소
             </button>
-            <button onClick={handleSubmit(onSubmit)}>확인</button>
+            <button onClick={handleSubmit(onSubmit)} className="ok">
+              확인
+            </button>
+            <button onClick={scroll} className="page_up">
+              <img src={up} alt="" />
+            </button>
           </div>
         </div>
       </section>

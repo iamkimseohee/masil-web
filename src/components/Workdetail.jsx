@@ -45,6 +45,14 @@ function Workdetail() {
   return (
     <div>
       <section id="workdetail">
+        <div className="workdetail__top2">
+          <div className="workdetail__top2__inner">
+            {" "}
+            <img src={back} alt="뒤로가기" onClick={goHome} className="backlogo" />
+            <div className="workdetail__top2__innertext">작업</div>
+          </div>
+          <hr className="mobilebar" />
+        </div>
         <div className="workdetail__inner">
           <div className="workdetail__top">
             {" "}
@@ -58,14 +66,7 @@ function Workdetail() {
               className="canclebtn"
             />
           </div>
-          <div className="workdetail__top2">
-            <div className="workdetail__top2__inner">
-              {" "}
-              <img src={back} alt="뒤로가기" onClick={goHome} className="backlogo" />
-              <div className="workdetail__top2__innertext">작업</div>
-            </div>
-          </div>
-          <hr className="bar1" />
+
           <div className="workdetail__title">{workDetail && workDetail.title}</div>
           <div className="workdetail__body">{workDetail && workDetail.body}</div>
           <div className="worketail__icon">

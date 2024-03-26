@@ -1,197 +1,143 @@
 #mailpage {
   max-width: 1232px;
   margin-top: 60px;
-}
-.mailpage__inner {
-  // border: 1px solid rebeccapurple;
-  .btnspace {
-    // width: 100%;
-    height: 60px;
-    display: flex;
-    border-top: 1px solid #c2c4c4;
-    // border-left: 0;
-    // border-right: 0;
-    border-bottom: 1.8px solid #b6b9bf;
-    .btnlist {
-      border: none;
-      outline: none;
-      background-color: inherit;
-      font-size: 19px;
-      font-family: "Pretendard-Regular";
-      cursor: pointer;
-      &:hover {
-        color: #03acb4;
-      }
-    }
-    .btndel {
-      margin-right: 75px;
-      width: 33px;
-    }
-    .btnblock {
-      width: 71px;
-      margin-right: 1027px;
-    }
-    // .btnre {
-    //   width: 48px;
-    //   margin-right: 60px;
-    // }
-    .btnlistnum {
-      width: 23px;
-      margin-right: 0px;
-    }
+  .mailpage__inner {
+    // border: 1px solid rebeccapurple;
+    .btnspace {
+      // width: 100%;
+      height: 60px;
+      display: flex;
+      border-top: 1px solid #c2c4c4;
+      // border-left: 0;
+      // border-right: 0;
+      border-bottom: 1.8px solid #b6b9bf;
 
-    .header__nav {
-      display: none;
-      //클릭 했을때
-      &.show {
-        display: block;
-        ul {
-          // position: fixed;
-          display: block;
-          position: absolute;
-          // left: 1135px;
-          // top: 40px;
-          margin-top: 40px;
-          margin-left: -72px;
-          width: 96px;
-          height: 105px;
-          border: 1px solid #c2c4c4;
-          border-top-left-radius: 12px;
-          border-bottom-left-radius: 12px;
-          border-bottom-right-radius: 12px;
-          background-color: #ffffff;
-
-          li {
-            display: block;
-            text-align: center;
-            button {
-              align-content: space-around;
-              margin-top: 13px;
-              display: inline-block;
-              font-size: 13px;
-              color: #7b808d;
-              font-family: "Pretendard-Regular";
-              cursor: pointer;
-              border: none;
-              outline: none;
-              background-color: inherit;
-            }
-          }
-        }
-      }
-      &.show2 {
-        display: block;
-        ul {
-          // position: fixed;
-          display: block;
-          position: absolute;
-          // left: 1135px;
-          // top: 40px;
-          margin-top: 40px;
-          margin-left: -72px;
-          width: 96px;
-          height: 105px;
-          border: 1px solid #c2c4c4;
-          border-top-left-radius: 12px;
-          border-bottom-left-radius: 12px;
-          border-bottom-right-radius: 12px;
-          background-color: #ffffff;
-
-          li {
-            display: block;
-            text-align: center;
-            button {
-              align-content: space-around;
-              margin-top: 13px;
-              display: inline-block;
-              font-size: 13px;
-              color: #7b808d;
-              font-family: "Pretendard-Regular";
-              cursor: pointer;
-              border: none;
-              outline: none;
-              background-color: inherit;
-            }
-          }
-        }
-      }
-    }
-  }
-  .titlelist {
-    display: flex;
-    font-size: 13px;
-    color: #7b808d;
-    font-family: "Pretendard-Regular";
-    // display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 62px;
-    text-align: center;
-
-    .checkboz {
-      display: none;
-      margin-right: 30px;
-      width: 26px;
-      height: 26px;
-      &:hover {
+      .btnlist {
+        color: #3f3c33;
+        border: none;
+        outline: none;
+        background-color: inherit;
+        font-size: 19px;
+        font-family: "Pretendard-Regular";
         cursor: pointer;
+        &:hover {
+          color: #03acb4;
+        }
       }
-    }
-    .num {
-      width: 48px;
-      margin-right: 30px;
-    }
-    .name {
-      width: 148px;
-      margin-right: 40px;
-    }
-    .title {
-      width: 758px;
-    }
-    .time {
-      width: 158px;
-    }
-    .maintitle {
-      text-align: left;
-    }
-  }
-  .maillist {
-    border: 1.5px solid #c2c4c4;
-    border-left: 0;
-    border-right: 0;
-    border-bottom: 0;
-    // height: 662px;
-    padding-top: 20px;
-    padding-bottom: 0px;
+      .btndel {
+        margin-right: 75px;
+        width: 33px;
+      }
+      .btnblock {
+        width: 71px;
+        margin-right: 1027px;
+      }
+      // .btnre {
+      //   width: 48px;
+      //   margin-right: 60px;
+      // }
+      .btnlistnum {
+        width: 23px;
+        margin-right: 0px;
+      }
 
-    // display: flex;
-    .maillistli {
-      &:hover {
-        color: #03acb4;
+      .header__nav {
+        display: none;
+        //클릭 했을때
+        &.show {
+          display: block;
+          ul {
+            // position: fixed;
+            display: block;
+            position: absolute;
+            // left: 1135px;
+            // top: 40px;
+            margin-top: 40px;
+            margin-left: -72px;
+            width: 96px;
+            height: 105px;
+            border: 1px solid #c2c4c4;
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            background-color: #ffffff;
+
+            li {
+              display: block;
+              text-align: center;
+              button {
+                align-content: space-around;
+                margin-top: 13px;
+                display: inline-block;
+                font-size: 13px;
+                color: #7b808d;
+                font-family: "Pretendard-Regular";
+                cursor: pointer;
+                border: none;
+                outline: none;
+                background-color: inherit;
+              }
+            }
+          }
+        }
+        &.show2 {
+          display: block;
+          ul {
+            // position: fixed;
+            display: block;
+            position: absolute;
+            // left: 1135px;
+            // top: 40px;
+            margin-top: 40px;
+            margin-left: -72px;
+            width: 96px;
+            height: 105px;
+            border: 1px solid #c2c4c4;
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            background-color: #ffffff;
+
+            li {
+              display: block;
+              text-align: center;
+              button {
+                align-content: space-around;
+                margin-top: 13px;
+                display: inline-block;
+                font-size: 13px;
+                color: #7b808d;
+                font-family: "Pretendard-Regular";
+                cursor: pointer;
+                border: none;
+                outline: none;
+                background-color: inherit;
+              }
+            }
+          }
+        }
       }
-      .checkboxs {
-        margin-right: 24px;
-        // width: 50px;
+    }
+    .titlelist {
+      display: flex;
+      font-size: 13px;
+      color: #7b808d;
+      font-family: "Pretendard-Regular";
+      // display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 62px;
+      text-align: center;
+
+      .checkboz {
+        display: none;
+        margin-right: 30px;
         width: 26px;
         height: 26px;
-        // height: 50px;
         &:hover {
           cursor: pointer;
         }
       }
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 42px;
-      // border: 1px solid royalblue;
-      // height: 50px;
-      font-size: 19px;
-      font-family: "Pretendard-Regular";
-      color: #3f3c33;
-    }
-    .datalist {
-      display: flex;
-      text-align: center;
       .num {
         width: 48px;
         margin-right: 30px;
@@ -210,80 +156,149 @@
         text-align: left;
       }
     }
-  }
-}
-.pagination {
-  margin-top: 30px;
-  display: flex;
-  justify-content: center;
-  button {
-    border: none;
-    outline: none;
-    background-color: inherit;
-    width: 50px;
-    height: 50px;
-    border-radius: 37px;
-    border: 1px solid #cbd3d3;
-    margin-right: 20px;
-    color: #c2c4c4;
-    font-size: 19px;
-    font-family: "Pretendard-Regular";
+    .maillist {
+      border: 1.5px solid #c2c4c4;
+      border-left: 0;
+      border-right: 0;
+      border-bottom: 0;
+      // height: 662px;
+      padding-top: 20px;
+      padding-bottom: 0px;
 
-    &:hover {
-      cursor: pointer;
-      border: 1px solid #3445db;
+      // display: flex;
+      .maillistli {
+        &:hover {
+          color: #03acb4;
+        }
+        .checkboxs {
+          margin-right: 24px;
+          // width: 50px;
+          width: 26px;
+          height: 26px;
+          // height: 50px;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 42px;
+        // border: 1px solid royalblue;
+        // height: 50px;
+        font-size: 19px;
+        font-family: "Pretendard-Regular";
+        color: #3f3c33;
+      }
+      .datalist {
+        display: flex;
+        text-align: center;
+        .num {
+          width: 48px;
+          margin-right: 30px;
+        }
+        .name {
+          width: 145px;
+          margin-right: 40px;
+        }
+        .title {
+          width: 751px;
+        }
+        .time {
+          width: 158px;
+        }
+        .maintitle {
+          text-align: left;
+        }
+      }
     }
   }
-  .selected {
-    color: #3f3c33;
+  .pagination {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    button {
+      border: none;
+      outline: none;
+      background-color: inherit;
+      width: 50px;
+      height: 50px;
+      border-radius: 37px;
+      border: 1px solid #cbd3d3;
+      margin-right: 20px;
+      color: #c2c4c4;
+      font-size: 19px;
+      font-family: "Pretendard-Regular";
+
+      &:hover {
+        cursor: pointer;
+        border: 1px solid #3445db;
+      }
+    }
+    .selected {
+      color: #3f3c33;
+    }
+    .page_up {
+      width: 60px;
+      height: 60px;
+      position: absolute;
+      bottom: -3px;
+      right: -18px;
+      img {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 4px;
+      }
+    }
   }
-}
-input#ch + label:before {
-  content: "";
-  display: inline-block;
-  width: 26px;
-  height: 26px;
-  border: 1px solid#CBD3D3;
-  border-radius: 4px;
-  vertical-align: middle;
-  margin-right: 30px;
-}
-input#ch:checked + label:before {
-  content: "\2713";
-  // background-color: #f47c7  c;
-  border-color: #00b5b5;
-  font-size: 33px; /* 표시할 체크 표시의 크기 */
-  color: #00b5b5; /* 체크 표시의 색상 */
+  input#ch + label:before {
+    content: "";
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    border: 1px solid#CBD3D3;
+    border-radius: 4px;
+    vertical-align: middle;
+    margin-right: 30px;
+  }
+  input#ch:checked + label:before {
+    content: "\2713";
+    // background-color: #f47c7  c;
+    border-color: #00b5b5;
+    font-size: 33px; /* 표시할 체크 표시의 크기 */
+    color: #00b5b5; /* 체크 표시의 색상 */
 
-  // color: #00b5b5;
-  // background-image: url("check_btn.png");
-  // background-repeat: no-repeat;
-  // background-position: 50%;
-  display: inline-block; /* 인라인 요소로 설정하여 텍스트와 함께 배치 */
-  line-height: 25px; /* 체크 표시의 세로 정렬을 위해 높이 지정 */
-}
+    // color: #00b5b5;
+    // background-image: url("check_btn.png");
+    // background-repeat: no-repeat;
+    // background-position: 50%;
+    display: inline-block; /* 인라인 요소로 설정하여 텍스트와 함께 배치 */
+    line-height: 25px; /* 체크 표시의 세로 정렬을 위해 높이 지정 */
+  }
 
-input.checkboxs + label:before {
-  content: "";
-  display: inline-block;
-  width: 26px;
-  height: 26px;
-  border: 1px solid#CBD3D3;
-  border-radius: 4px;
-  vertical-align: middle;
-  margin-right: 20px;
-}
-input.checkboxs:checked + label:before {
-  content: "\2713";
-  // background-color: #f47c7  c;
-  border-color: #00b5b5;
-  font-size: 33px; /* 표시할 체크 표시의 크기 */
-  color: #00b5b5; /* 체크 표시의 색상 */
+  input.checkboxs + label:before {
+    content: "";
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    border: 1px solid#CBD3D3;
+    border-radius: 4px;
+    vertical-align: middle;
+    margin-right: 30px;
+  }
+  input.checkboxs:checked + label:before {
+    content: "\2713";
+    // background-color: #f47c7  c;
+    border-color: #00b5b5;
+    font-size: 33px; /* 표시할 체크 표시의 크기 */
+    color: #00b5b5; /* 체크 표시의 색상 */
 
-  // color: #00b5b5;
-  // background-image: url("check_btn.png");
-  // background-repeat: no-repeat;
-  // background-position: 50%;
-  display: inline-block; /* 인라인 요소로 설정하여 텍스트와 함께 배치 */
-  line-height: 25px; /* 체크 표시의 세로 정렬을 위해 높이 지정 */
+    // color: #00b5b5;
+    // background-image: url("check_btn.png");
+    // background-repeat: no-repeat;
+    // background-position: 50%;
+    display: inline-block; /* 인라인 요소로 설정하여 텍스트와 함께 배치 */
+    line-height: 25px; /* 체크 표시의 세로 정렬을 위해 높이 지정 */
+  }
 }

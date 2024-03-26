@@ -10,6 +10,7 @@ import Maildetail from "./Maildetail";
 import Blockmail from "./Blockmail";
 import Remail from "./Remail";
 import Blockmaildetail from "./Blockmaildetail";
+import home from "../assets/img/home.png";
 function Userpage() {
   // const [isActive, setIsActive] = useState(true);
 
@@ -33,8 +34,17 @@ function Userpage() {
   return (
     <div>
       <section id="userpage">
-        <div className="userpage__inner" style={{ border: "1px solid black" }}>
+        <div className="userpage__inner">
           <h1 className="userpage__title">마실 관리자</h1>
+          <button
+            className="btnhome"
+            onClick={() => {
+              movePage("/");
+            }}
+          >
+            <img src={home} alt="" className="homebtn" />
+          </button>
+
           <div className="userpage__btn">
             <div className="menu">
               <NavLink to="workpage" className={locatioin.pathname === "/userpage" ? "active" : ""}>
@@ -62,7 +72,7 @@ function Userpage() {
               <Route path="/mailpage/*" element={<Mailpage />}></Route>
               <Route path="/maildetail/:id/:index" element={<Maildetail />} />
               <Route path="/blockmaildetail/:id/:index" element={<Blockmaildetail />} />
-              <Route path="/remail/:id" element={<Remail />} />
+              <Route path="/remail/:id/:index" element={<Remail />} />
             </Routes>
           </div>
         </div>

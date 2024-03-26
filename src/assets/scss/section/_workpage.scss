@@ -103,6 +103,7 @@
     height: 1px;
   }
   .workpage__btn {
+    display: flex;
     .btn {
       width: 236px;
       height: 60px;
@@ -118,7 +119,7 @@
       }
     }
     .btn_del {
-      margin-right: 424px;
+      margin-right: 421px;
     }
     .page_up {
       width: 60px;
@@ -131,6 +132,12 @@
       border: 1px solid #c2c4c4;
       &:hover {
         border: 1px solid #3445db;
+      }
+      img {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 4px;
       }
     }
   }
@@ -149,6 +156,8 @@ input.workinput + label:before {
   border: 1px solid#CBD3D3;
   border-radius: 4px;
   vertical-align: middle;
+  background-color: white;
+
   // margin-right: 10px;
   // margin-bottom: 4px;
 }

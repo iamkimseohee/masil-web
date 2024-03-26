@@ -92,6 +92,8 @@
     color: #3f3c33;
     font-family: "Pretendard-Regular";
     // border-top: 2px solid #c2c4c4;
+    // border-top: 1px solid #efefef;
+    border-bottom: 2px solid #c2c4c4;
 
     .prevmail__inner {
       display: flex;
@@ -163,6 +165,33 @@
     }
     &:hover {
       color: #03acb4;
+    }
+  }
+  .page_up {
+    border: none;
+    outline: none;
+    background-color: inherit;
+
+    width: 60px;
+    height: 60px;
+    margin-top: 20px;
+    float: right;
+    border-radius: 37px;
+    border: 1px solid #cbd3d3;
+
+    color: #c2c4c4;
+    font-size: 19px;
+    font-family: "Pretendard-Regular";
+
+    &:hover {
+      cursor: pointer;
+      border: 1px solid #3445db;
+    }
+    img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 4px;
     }
   }
 }

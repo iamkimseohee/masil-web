@@ -68,7 +68,7 @@ const Header = () => {
     <div id="header">
       <div className="header__inner">
         <div className="header__logo"></div>
-        <div className="hi" style={{ border: "1px solid black", height: "0px" }}>
+        <div className="hi">
           <div className={`header__nav ${show ? "show" : ""}`}>
             <ul>
               {headerNav.map((nav, key) => (

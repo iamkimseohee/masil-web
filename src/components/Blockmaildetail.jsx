@@ -3,10 +3,17 @@ import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js";
 import upicon from "../assets/img/upicon.png";
 import downicon from "../assets/img/downicon.png";
+import up from "../assets/img/up.png";
 
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 function Blockmaildetail() {
+  const scroll = () => {
+    window.scroll({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
   const { id, index } = useParams();
 
   const navigate = useNavigate();
@@ -196,6 +203,9 @@ function Blockmaildetail() {
             </NavLink>
           </div>
         )}
+        <button onClick={scroll} className="page_up">
+          <img src={up} alt="" />
+        </button>
       </div>
     </div>
   );

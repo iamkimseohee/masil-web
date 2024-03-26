@@ -2,206 +2,247 @@
   max-width: 1232px;
   margin-left: auto;
   margin-right: auto;
-}
-.addwork__inner {
-  // border: 1px solid saddlebrown;
-  max-width: 1232px;
-  margin-left: auto;
-  margin-right: auto;
-  display: grid;
-  .addwork__title {
-    margin-top: 81px;
-    margin-bottom: 83px;
-    font-size: 34px;
-    color: #03acb4;
-    font-family: "Pretendard-Bold";
-  }
-  .addwork__text {
-    form {
-      div {
-        font-size: 13px;
-        color: #c2c4c4;
-        margin-bottom: 12px;
-      }
-      input {
-        width: 100%;
-        height: 51px;
-        border-left-width: 0;
-        border-right-width: 0;
-        border-top-width: 0;
-        // border-bottom-width: 1;
-        border-color: #707070;
-        background: transparent;
-        // margin-bottom: 50px;
-      }
-      .checkboxline {
-        border: 1px solid #c2c4c4;
-        border-width: 0 0 1px;
-        height: 82px;
-        margin-bottom: 30px;
 
-        .worktype {
-          font-size: 19px;
-          color: #3f3c33;
-          display: flex;
+  .addwork__inner {
+    position: relative;
+
+    // border: 1 px solid saddlebrown;
+    max-width: 1232px;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    .addwork__title {
+      margin-top: 81px;
+      margin-bottom: 83px;
+      font-size: 34px;
+      color: #03acb4;
+      font-family: "Pretendard-Bold";
+    }
+    .btnhome {
+      position: absolute;
+      outline: none;
+      background-color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 37px;
+      border: 1px solid #cbd3d3;
+
+      top: 94px;
+      right: 0px;
+      &:hover {
+        cursor: pointer;
+        border: 1px solid #3445db;
+      }
+    }
+    .addwork__text {
+      form {
+        div {
+          font-size: 13px;
+          color: #c2c4c4;
+          margin-bottom: 12px;
+        }
+        input {
+          width: 100%;
           height: 51px;
+          border-left-width: 0;
+          border-right-width: 0;
+          border-top-width: 0;
+          // border-bottom-width: 1;
+          border-color: #b7b7b7;
+          background: transparent;
+          // margin-bottom: 50px;
+        }
+        .checkboxline {
+          border: 1px solid #c2c4c4;
+          border-width: 0 0 1px;
+          height: 82px;
           margin-bottom: 30px;
 
-          div {
-            // width: 100%;
-            label {
-              font-family: "Pretendard-Regular";
-              margin-right: 97px;
-              font-size: 19px;
-              color: #3f3c33;
-            }
-            input {
-              margin-right: 10px;
-              width: 26px;
-              height: 26px;
-              display: none; //기존 체크박스 디자인 없애기
-              // accent-color: #00b5b5;
-              //채크박스 내려주기
-              position: relative;
-              top: 6px;
+          .worktype {
+            font-size: 19px;
+            color: #3f3c33;
+            display: flex;
+            height: 51px;
+            margin-bottom: 30px;
+            border-color: #b7b7b7;
+
+            div {
+              // width: 100%;
+              label {
+                font-family: "Pretendard-Regular";
+                margin-right: 97px;
+                font-size: 19px;
+                color: #3f3c33;
+              }
+              input {
+                margin-right: 10px;
+
+                width: 26px;
+                height: 26px;
+                display: none; //기존 체크박스 디자인 없애기
+                // accent-color: #00b5b5;
+                //채크박스 내려주기
+                position: relative;
+                top: 6px;
+              }
             }
           }
         }
-      }
-      .filebox {
-        height: 83px;
-        display: flex;
-        .upload-name {
-          display: inline-block;
-          width: 1076px;
-          height: 51px;
-          padding: 0 10px;
-          vertical-align: middle;
-          border-bottom: 2px solid #707070;
-          // width: 78%;
-          // color: #999999;
-          // align-items: center;
-          // justify-content: center;
-          margin-bottom: 0;
-          border-width: 0 0 2px;
-        }
-        .btn-upload {
-          width: 126px;
-          height: 47px;
-          font-family: "Pretendard-Regular";
-          background-color: white;
-          border: 1px solid #c2c4c4;
-          border-radius: 37px;
-          font-size: 19px;
-          margin-left: 30px;
-          color: #3f3c33;
-          cursor: pointer;
+        .filebox {
+          height: 83px;
           display: flex;
-          align-items: center;
-          justify-content: center;
-          &:hover {
-            border: 1px solid #3445db;
+          .upload-name {
+            display: inline-block;
+            width: 1076px;
+            height: 51px;
+            padding: 0 10px;
+            vertical-align: middle;
+            border-bottom: 2px solid #707070;
+            border-color: #b7b7b7;
+
+            // width: 78%;
+            // color: #999999;
+            // align-items: center;
+            // justify-content: center;
+            margin-bottom: 0;
+            border-width: 0 0 2px;
+          }
+          .btn-upload {
+            width: 126px;
+            height: 47px;
+            font-family: "Pretendard-Regular";
+            background-color: white;
+            border: 1px solid #c2c4c4;
+
+            border-radius: 37px;
+            font-size: 19px;
+            margin-left: 30px;
+            color: #3f3c33;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &:hover {
+              border: 1px solid #3445db;
+            }
           }
         }
       }
     }
-  }
-  .addimg {
-    button {
-      background-color: white;
-      border-radius: 37px;
-      width: 180px;
-      height: 47px;
-      font-family: "Pretendard-Regular";
-      font-size: 19px;
-      color: #3f3c33;
-      border: 1px solid #c2c4c4;
-      &:hover {
-        border: 1px solid #3445db;
+    .addimg {
+      button {
+        background-color: white;
+        border-radius: 37px;
+        width: 180px;
+        height: 47px;
+        font-family: "Pretendard-Regular";
+        font-size: 19px;
+        color: #3f3c33;
+        border: 1px solid #c2c4c4;
+        &:hover {
+          border: 1px solid #3445db;
+        }
       }
+      text-align: center;
+      margin-bottom: 170px;
     }
-    text-align: center;
-    margin-bottom: 170px;
-  }
-  .line {
-    border: 0px;
+    .line {
+      border: 0px;
 
-    border-top: 1px solid #c2c4c4;
-    margin-bottom: 40px;
-  }
-  .addwork__btn {
-    button {
-      display: inline-block;
-      background-color: white;
-      border-radius: 37px;
-      width: 236px;
-      height: 60px;
-      font-size: 24px;
-      color: #3f3c33;
-      font-family: "Pretendard-Medium";
-      border: 1px solid #c2c4c4;
-      // margin-right: 20px;
-      margin-left: 20px;
-      margin-bottom: 121px;
-      &:hover {
-        border: 1px solid #3445db;
+      border-top: 1px solid #c2c4c4;
+      margin-bottom: 40px;
+    }
+    .addwork__btn {
+      display: flex;
+      // justify-content: center;
+      button {
+        // margin-left: auto;
+        display: inline-block;
+        background-color: white;
+        border-radius: 37px;
+        width: 236px;
+        height: 60px;
+        font-size: 24px;
+        color: #3f3c33;
+        font-family: "Pretendard-Medium";
+        border: 1px solid #c2c4c4;
+        // margin-right: 20px;
+        margin-bottom: 121px;
+        &:hover {
+          border: 1px solid #3445db;
+        }
       }
+      .cancle {
+        margin-left: 370px;
+      }
+      .ok {
+        margin-left: 20px;
+        margin-right: 310px;
+      }
+      .page_up {
+        // margin-left: auto;
+        width: 60px;
+        height: 60px;
+        background-color: white;
+        border-radius: 37px;
+        font-family: "Pretendard-Regular";
+        font-size: 24px;
+        color: #3f3c33;
+        border: 1px solid #c2c4c4;
+        &:hover {
+          border: 1px solid #3445db;
+        }
+        img {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-left: 4px;
+        }
+      }
+      // margin-left: auto;
+      // margin-right: auto;
+      text-align: center;
     }
-    // margin-left: auto;
-    // margin-right: auto;
-    text-align: center;
   }
-}
-.btnaddimg {
-  display: none;
-}
-input#code + label:before {
-  content: "";
-  display: inline-block;
-  width: 26px;
-  height: 26px;
-  border: 1px solid#CBD3D3;
-  border-radius: 4px;
-  vertical-align: middle;
-  margin-right: 10px;
-  margin-bottom: 4px;
-}
-input#code:checked + label:before {
-  content: "\2713";
-  // background-color: #f47c7  c;
-  border-color: #00b5b5;
-  font-size: 33px; /* 표시할 체크 표시의 크기 */
-  color: #00b5b5; /* 체크 표시의 색상 */
-
-  // color: #00b5b5;
-  // background-image: url("check_btn.png");
-  // background-repeat: no-repeat;
-  // background-position: 50%;
-  display: inline-block; /* 인라인 요소로 설정하여 텍스트와 함께 배치 */
-  line-height: 25px; /* 체크 표시의 세로 정렬을 위해 높이 지정 */
-}
-input#design + label:before {
-  content: "";
-  display: inline-block;
-  width: 26px;
-  height: 26px;
-  border: 1px solid#CBD3D3;
-  border-radius: 4px;
-  vertical-align: middle;
-  margin-right: 10px;
-  margin-bottom: 4px;
-}
-input#design:checked + label:before {
-  content: "\2713";
-  // background-color: #f47c7  c;
-  border-color: #00b5b5;
-  font-size: 33px; /* 표시할 체크 표시의 크기 */
-  color: #00b5b5; /* 체크 표시의 색상 */
-
-  // color: #00b5b5;
-  // background-image: url("check_btn.png");
-  // background-repeat: no-repeat;
-  // background-position: 50%;
-  display: inline-block; /* 인라인 요소로 설정하여 텍스트와 함께 배치 */
-  line-height: 25px; /* 체크 표시의 세로 정렬을 위해 높이 지정 */
+  .btnaddimg {
+    display: none;
+  }
+  input#code + label:before {
+    content: "";
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    border: 1px solid#CBD3D3;
+    border-radius: 4px;
+    vertical-align: middle;
+    margin-right: 10px;
+    margin-bottom: 4px;
+  }
+  input#code:checked + label:before {
+    content: "\2713";
+    border-color: #00b5b5;
+    font-size: 33px; /* 표시할 체크 표시의 크기 */
+    color: #00b5b5; /* 체크 표시의 색상 */
+    display: inline-block; /* 인라인 요소로 설정하여 텍스트와 함께 배치 */
+    line-height: 25px; /* 체크 표시의 세로 정렬을 위해 높이 지정 */
+  }
+  input#design + label:before {
+    content: "";
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    border: 1px solid#CBD3D3;
+    border-radius: 4px;
+    vertical-align: middle;
+    margin-right: 10px;
+    margin-bottom: 4px;
+  }
+  input#design:checked + label:before {
+    content: "\2713";
+    border-color: #00b5b5;
+    font-size: 33px; /* 표시할 체크 표시의 크기 */
+    color: #00b5b5; /* 체크 표시의 색상 */
+    display: inline-block; /* 인라인 요소로 설정하여 텍스트와 함께 배치 */
+    line-height: 25px; /* 체크 표시의 세로 정렬을 위해 높이 지정 */
+  }
 }

@@ -5,11 +5,19 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { createClient } from "@supabase/supabase-js";
-import { v4 as uuid } from "uuid";
+import home from "../assets/img/home.png";
+import up from "../assets/img/up.png";
 
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 function Addwork() {
+  const scroll = () => {
+    window.scroll({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   const movePage = useNavigate();
   useEffect(() => {
     fetchUser();
@@ -186,6 +194,14 @@ function Addwork() {
       <section id="addwork">
         <div className="addwork__inner">
           <h1 className="addwork__title">작업물 추가</h1>
+          <button
+            className="btnhome"
+            onClick={() => {
+              movePage("/");
+            }}
+          >
+            <img src={home} alt="" className="homebtn" />
+          </button>
           <div className="addwork__text">
             <form>
               {/* 제목 */}
@@ -266,10 +282,16 @@ function Addwork() {
               onClick={() => {
                 movePage("/userpage");
               }}
+              className="cancle"
             >
               취소
             </button>
-            <button onClick={handleSubmit(onSubmit)}>확인</button>
+            <button onClick={handleSubmit(onSubmit)} className="ok">
+              확인
+            </button>
+            <button onClick={scroll} className="page_up">
+              <img src={up} alt="" />
+            </button>
           </div>
         </div>
       </section>

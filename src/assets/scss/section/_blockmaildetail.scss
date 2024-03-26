@@ -6,7 +6,7 @@
     border-bottom: 2px solid #b6b9bf;
     // border: 1px solid rebeccapurple;
     height: 62px;
-
+    margin-right: 0px;
     .blockmaildetailbtn {
       border: none;
       outline: none;
@@ -21,22 +21,23 @@
     }
     .blockmaildel {
       margin-right: 69px;
-      width: 48px;
+      width: 33px;
     }
     .mailblock {
       width: 110px;
-      margin-right: 960px;
+      margin-right: 970px;
     }
     .blockmailre {
       width: 48px;
-      margin-right: 38px;
-      display: flex;
-      align-items: center;
+      margin-right: 0px;
+      // display: flex;
+      // align-items: center;
     }
     .blockmaillist {
       width: 48px;
       display: flex;
       align-items: center;
+      justify-content: center;
     }
   }
   .blockmaildetail__bodytop {
@@ -163,6 +164,33 @@
     }
     &:hover {
       color: #03acb4;
+    }
+  }
+  .page_up {
+    border: none;
+    outline: none;
+    background-color: inherit;
+
+    width: 60px;
+    height: 60px;
+    margin-top: 20px;
+    float: right;
+    border-radius: 37px;
+    border: 1px solid #cbd3d3;
+
+    color: #c2c4c4;
+    font-size: 19px;
+    font-family: "Pretendard-Regular";
+
+    &:hover {
+      cursor: pointer;
+      border: 1px solid #3445db;
+    }
+    img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 4px;
     }
   }
 }

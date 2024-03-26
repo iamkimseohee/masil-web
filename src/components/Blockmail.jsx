@@ -7,12 +7,19 @@ import Maildetail from "./Maildetail";
 import listnum from "../assets/img/btnlistnum.png";
 import { useNavigate } from "react-router-dom";
 import Userpage from "./Userpage";
+import up from "../assets/img/up.png";
 
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 const ITEMS_PER_PAGE = 10;
 
 function Blockmail() {
+  const scroll = () => {
+    window.scroll({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
   const [checkedItems, setCheckedItems] = useState({});
   const [checkedMails, setcheckedMails] = useState({});
 
@@ -393,6 +400,9 @@ function Blockmail() {
           ))}
           {totalPages > 10 && currentPage < totalPages && <button onClick={goToNextPageSet}>{">"}</button>}
           <button onClick={goToLastPage}>{">|"}</button>
+          <button onClick={scroll} className="page_up">
+            <img src={up} alt="" />
+          </button>
         </div>
       </section>
     </div>

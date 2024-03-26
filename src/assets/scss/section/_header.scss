@@ -12,7 +12,7 @@
   justify-content: center;
 }
 .header__inner {
-  border: 1px solid violet;
+  // border: 1px solid violet;
   margin-left: 344px;
   margin-right: 344px;
   width: 1234px;
@@ -100,7 +100,7 @@
           // width: 305px;
           height: 50px;
           // right: 189px;
-          top: 69px;
+          top: 43px;
           margin-left: -255px;
           background-color: white;
           box-shadow: 0 0px 10px #c2c4c4cc;
@@ -115,7 +115,7 @@
           // margin-top: 112px;
           // margin-right: 173px;
           @media (max-width: 1024px) {
-            top: 51px;
+            top: 25px;
             // padding-left: 25px;
             // padding-right: 60px;
 
@@ -123,7 +123,7 @@
             // margin-right: 29px;
           }
           @media (max-width: 767px) {
-            top: 64px;
+            top: 37px;
             opacity: 95%;
             padding-left: 20px;
             padding-right: 50px;
