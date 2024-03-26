@@ -142,7 +142,7 @@ function Workpage() {
       console.log("New data inserted into work successfully:", data);
 
       // 삭제 후 추가 작업이 필요한 경우 여기에 추가합니다.
-      window.location.reload();
+      // window.location.reload();
     } catch (error) {
       console.error("Error updating data:", error.message);
     }
