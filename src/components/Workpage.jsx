@@ -143,6 +143,8 @@ function Workpage() {
 
       // 삭제 후 추가 작업이 필요한 경우 여기에 추가합니다.
       // window.location.reload();
+      movePage("/userpage");
+      console.log("hi");
     } catch (error) {
       console.error("Error updating data:", error.message);
     }
