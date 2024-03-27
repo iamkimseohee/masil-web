@@ -35,6 +35,13 @@ const smoothScroll = (targetId) => {
       top: targetElement.offsetTop,
       behavior: "smooth", // smooth 스크롤 효과 설정
     });
+    if (targetId == "header") {
+      console.log("hi");
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
   }
 };
 
@@ -51,9 +58,8 @@ const Header = () => {
 
     if (user) {
       // 사용자 정보가 있는 경우
-      console.log("현재 로그인한 사용자:", user);
-      console.log("사용자 이메일:", user.email);
-      console.log("사용자 고유 식별자:", user.id);
+      console.log("현재 로그인한 사용자:", user.email);
+
       // console.log("사용자 세션 토큰:", user.session.access_token);
     } else {
       // 사용자 정보가 없는 경우 (로그인되지 않은 상태)

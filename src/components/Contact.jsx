@@ -14,54 +14,10 @@ const Contact = () => {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
   } = useForm();
 
   const onSubmit = async (data) => {
     console.log(data);
-    // try {
-    //   // 메일리스트 가져오기
-    //   const { data: blockListData, error: blockListError } = await supabase.from("blockmaillist").select("maillist");
-    //   console.log(blockListData);
-    //   if (blockListError) {
-    //     throw blockListError;
-    //   }
-
-    //   if (blockListData) {
-    //     // blocklist에서 이메일 주소 배열 가져오기
-    //     const blocklistEmails = blockListData.map((item) => item.maillist);
-    //     console.log(blocklistEmails);
-
-    //     // data의 email이 blocklistEmails에 있는지 알아보기
-    //     // blocklistEmails 배열에 데이터의 이메일이 포함되어 있는지 확인하고 필터링
-    //     const isBlocked = blocklistEmails.includes(data.email);
-
-    //     console.log("Is email blocked?", isBlocked);
-    //   }
-    // } catch (error) {
-    //   console.error("Error fetching data:", error.message);
-    // }
-    // try {
-    //   const now = moment().format("YYYY.MM.DD HH:mm"); //현재 시간
-    //   const newData = { ...data, time: now };
-    //   console.log(newData);
-
-    //   const { data: responseData, error } = await supabase.from("contact").insert([newData]);
-    //   if (error) {
-    //     throw error;
-    //   }
-    //   console.log("Data inserted successfully:", responseData);
-    //   if (isMobile) {
-    //     movePage("/success");
-    //   } else {
-    //     alert(
-    //       "감사합니다. 마실에 제안 및 문의 주셔서 감사합니다. 보내주신 내용은 담당자가 검토하여 필요시 회신 드리도록 하겠습니다."
-    //     );
-    //     // window.location.reload(); // 페이지 새로고침
-    //   }
-    // } catch (error) {
-    //   console.error("Error inserting data:", error.message);
-    // }
     try {
       const now = moment().format("YYYY.MM.DD HH:mm"); //현재 시간
       const newData = { ...data, time: now };
@@ -137,7 +93,7 @@ const Contact = () => {
           <div className="contact__text">
             <form onSubmit={handleSubmit(onSubmit)}>
               {/* 이름 */}
-              <div>담당자 이름</div>
+              <div>문의자 이름</div>
               <input type="text" name="name" {...register("name", { required: "이름을 입력하세요" })} maxLength={15} />
               {errors.name && <p style={{ color: "red" }}>{errors.name.message}</p>}
               {/* 메일 */}

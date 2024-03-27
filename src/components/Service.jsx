@@ -1,5 +1,4 @@
 import React from "react";
-// import aboutservice from "../assets/img/img2.png";
 import aboutservice2 from "../assets/img/serviceimg.json";
 import Lottie from "lottie-react";
 

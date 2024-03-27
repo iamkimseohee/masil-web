@@ -4,8 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  // transition: 5s;
-  // width: 100%;
+
   @media (max-width: 1024px) {
     margin-top: 40px;
   }
@@ -16,9 +15,6 @@
   }
 }
 .intro__inner {
-  // border: 1px solid rebeccapurple;
-  // width: 100%;
-  // min-width: 1000px;
   width: 1234px;
   margin-left: 344px;
   margin-right: 344px;
@@ -73,6 +69,7 @@
     @media (max-width: 768px) {
       // display: none;
       font-size: 28px;
+      line-height: 36px;
     }
   }
   .intro__text {
@@ -96,44 +93,20 @@
       margin-bottom: 50px;
       line-height: 22px;
     }
-    // }
-    // .img {
-    //     position: absolute;
-    //     left: 50%;
-    //     top: 50%;
-    //     transform: translate(-50%, -50%);
-    //     width: 30vh;
-    //     height: 30vh;
-    //     border-radius: 50%;
-    //     overflow: hidden;
-    //     filter: grayscale(100%);
-    //     transition: all 0.3s;
-
-    //     @media (max-width: 320px) {
-    //         width: 20vh;
-    //         height: 20vh;
-    //     }
-    // }
-
-    // &:hover .text {
-    //     opacity: 0;
-    // }
-    // &:hover .img {
-    //     filter: grayscale(0);
-    // }
   }
   .intropic {
     width: 100%;
     margin-left: auto;
     width: 454px;
     height: 426px;
-    // max-width: 291px;
-    // display: flex;
+
     @media (max-width: 1024px) {
+      width: 454px;
+      height: 426px;
     }
     @media (max-width: 768px) {
       width: 296px;
-      height: 2px;
+      height: 277px;
     }
   }
 }

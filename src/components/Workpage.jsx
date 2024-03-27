@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import movebtn from "../assets/img/move.png";
 import retouch from "../assets/img/retouch.png";
-import { useDrop } from "react-dnd";
 import up from "../assets/img/up.png";
 
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
@@ -164,8 +163,6 @@ function Workpage() {
         <ul>
           {workData.map((work, index) => (
             <li key={work.id} onDrop={(e) => handleDrop(e, work.id)} onDragOver={handleDragOver}>
-              {/* <input type="checkbox" checked={checkedItems[work.id] || false} onChange={() => handleCheckboxChange(work.id)} />
-            <div className="workpageimgs">{work && work.fileUrlList && work.fileUrlList.length > 0 && <img className="workpageimg" src={work.fileUrlList[0]} />}</div> */}
               <div className="workpageitem">
                 <input type="checkbox" id={`ch-${index}`} style={{ display: "none" }} className="workinput" checked={checkedItems[work.id] || false} onChange={() => handleCheckboxChange(work.id)} />
                 <label htmlFor={`ch-${index}`}></label>

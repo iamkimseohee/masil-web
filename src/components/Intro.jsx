@@ -1,6 +1,6 @@
 import React from "react";
 import about from "../assets/img/logo.png";
-// import aboutintro from "../assets/img/img1.png";
+
 import Lottie from "lottie-react";
 import introimg from "..//assets/img/introimg.json";
 
@@ -23,7 +23,6 @@ const Intro = () => {
           </div>
 
           <Lottie animationData={introimg} className="intropic"></Lottie>
-          {/* <img src={aboutintro} alt="인트로그림" className="intropic" /> */}
         </div>
       </section>
     </div>

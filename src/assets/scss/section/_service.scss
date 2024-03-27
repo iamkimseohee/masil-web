@@ -42,9 +42,11 @@
       color: #03acb4;
       margin-bottom: 20px;
       letter-spacing: -1.36px;
+      line-height: 40px;
 
       @media (max-width: 768px) {
         font-size: 28px;
+        line-height: 36px;
       }
     }
     .service__text {
@@ -64,6 +66,7 @@
 
         @media (max-width: 768px) {
           font-size: 15px;
+          line-height: 22px;
         }
       }
 
@@ -82,6 +85,7 @@
         @media (max-width: 768px) {
           margin-bottom: 50px;
           font-size: 15px;
+          line-height: 22px;
         }
         li {
           background: url("../../img/listimg.png") no-repeat 0px 7px;

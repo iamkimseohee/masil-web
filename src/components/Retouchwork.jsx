@@ -114,22 +114,6 @@ function Retouchwork() {
     });
   };
 
-  // //~ 글자 감지
-  // const [titleLength, setTitleLength] = useState(0);
-  // const handleTitleChange = (e) => {
-  //   setTitleLength(e.target.value.length);
-  //   console.log(e.target.value);
-  // };
-
-  //~ 사진 추출
-  // const [fileName, setFileName] = useState("");
-  // const handleFileChange2 = (e) => {
-  //   // const fileName = e.target.value.split("\\").pop(); // 파일 경로에서 파일 이름만 추출
-  //   const selectedFile = e.target.files[0];
-  //   console.log(selectedFile);
-  //   setFileName(selectedFile); // 파일 이름 상태 업데이트
-  // };
-
   //~ form에 적은 값들 업데이트
   const [formData, setFormData] = useState({});
   console.log("supabase에 입력될 값", formData);

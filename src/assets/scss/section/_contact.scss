@@ -1,18 +1,8 @@
 #contact {
-  // max-width: 1232px;
-  // margin-left: auto;
-  // width: 100%;
-
-  // margin-right: auto;
-  // border: 1px solid black;
-
   display: flex;
   justify-content: center;
   align-items: center;
   .contact__inner {
-    // border: 1px solid red;
-
-    // width: 100%;
     width: 1232px;
     margin-left: 344px;
     margin-right: 344px;
@@ -24,13 +14,11 @@
 
     @media (max-width: 1024px) {
       transition: 2s;
-      // max-width: 532px;
       margin-left: 118px;
       margin-right: 118px;
     }
     @media (max-width: 767px) {
       transition: 1s;
-      // max-width: 356px;
       margin-left: 28px;
       margin-right: 28px;
     }
@@ -41,7 +29,6 @@
       color: #03acb4;
       line-height: 36px;
       letter-spacing: -1.44px;
-      // margin-bottom: 47px;
     }
     .contact__text {
       width: 100%;
@@ -54,6 +41,7 @@
           margin-bottom: 12px;
           line-height: 22px;
           letter-spacing: -0.09px;
+          font-family: "Pretendard-Regular";
         }
         .mailtitle {
           @media (max-width: 767px) {
@@ -74,8 +62,7 @@
 
         input {
           width: 100%;
-          // position: relative;
-          // display: flex;
+
           color: #3f3c33;
           border-color: #b7b7b7;
           font-size: 24px;
@@ -86,16 +73,13 @@
           border-left-width: 0;
           border-right-width: 0;
           border-top-width: 0;
-          // border-bottom-width: 1;
           background: transparent;
           padding-left: 10px;
-          // margin-bottom: 47px;
           @media (max-width: 767px) {
             margin-bottom: 0px;
           }
         }
         textarea {
-          // margin-bottom: 40px;
           width: 100%;
           font-family: "Pretendard-Regular";
           border-color: #b7b7b7;
@@ -146,14 +130,11 @@
         color: #c2c4c4;
         font-size: 19px;
         text-align: left;
-        // position: relative;
         line-height: 28px;
         letter-spacing: -0.11px;
-        //   z-index: 100;
-        //   transition: all 0.3s;
+
         margin-bottom: 100px;
         @media (max-width: 767px) {
-          // display: none;
           font-size: 15px;
           margin-bottom: 80px;
           line-height: 22px;

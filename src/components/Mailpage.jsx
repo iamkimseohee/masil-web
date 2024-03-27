@@ -2,11 +2,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { NavLink, Route, Link } from "react-router-dom";
-// import Workpage from "./Workpage";
-// import Maildetail from "./Maildetail";
 import listnum from "../assets/img/btnlistnum.png";
 import { useNavigate } from "react-router-dom";
-// import Userpage from "./Userpage";
 import up from "../assets/img/up.png";
 
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
@@ -31,7 +28,6 @@ function Mailpage() {
   const [selectAll, setSelectAll] = useState(false); // 전체 선택 상태 추가
   const [selectedPage, setSelectedPage] = useState(currentPage); // 현재 선택된 페이지를 나타내는 상태 추가
   const navigate = useNavigate(); // useNavigate 훅 사용
-  // const [blocklist, setblocklist] = useState([]);
   //~ 로그인 되어있는지 확인하기
   useEffect(() => {
     fetchUser();
@@ -45,9 +41,6 @@ function Mailpage() {
     if (user) {
       // 사용자 정보가 있는 경우
       console.log("현재 로그인한 사용자:", user);
-      // console.log("사용자 이메일:", user.email);
-      // console.log("사용자 고유 식별자:", user.id);
-      // console.log("사용자 세션 토큰:", user.session.access_token);
     } else {
       // 사용자 정보가 없는 경우 (로그인되지 않은 상태)
       console.log("로그인되지 않은 상태입니다.");
@@ -86,7 +79,7 @@ function Mailpage() {
       const { data, error } = await supabase
         .from("contact")
         .select("*")
-        .order("id")
+        .order("id", { ascending: false })
         .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
       // console.log(data);
       if (error) {

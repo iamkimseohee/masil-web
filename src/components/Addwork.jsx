@@ -95,11 +95,18 @@ function Addwork() {
   const handleFileChange = async (index, e) => {
     console.log(index);
     const selectedFile = e.target.files[0];
-
     const finalFileList = [...imageInputs];
     finalFileList[index] = { fileName: selectedFile ? selectedFile.name : "", file: selectedFile }; // 파일 이름 및 파일 객체 저장
     console.log(finalFileList);
     setImageInputs(finalFileList); // 파일 리스트 업데이트
+  };
+
+  const [listFile, setListFile] = useState("");
+  const handleFile = async (e) => {
+    // console.log(e.target.files[0].name);
+    const selectedListFile = e.target.files[0];
+    const selectedListFileName = e.target.files[0].name;
+    setListFile(selectedListFileName);
   };
 
   //~ supabase로 보내요
@@ -107,24 +114,6 @@ function Addwork() {
 
   const onSubmit = async (data) => {
     try {
-      // 이미지 업로드 및 URL 획득
-      // const uploadedImages = await Promise.all(
-      //   imageInputs.map(async (input) => {
-      //     if (!input.file) {
-      //       console.log("아무것도 없지롱");
-      //       return null;
-      //     }
-      //     const selectedFile = input.file;
-      //     const imageName = `${Date.now()}`; // 이미지 이름 생성
-      //     console.log(imageName);
-      //     const { data, error } = await supabase.storage.from("images").upload(imageName, selectedFile, { overwrite: true });
-      //     if (error) throw error;
-      //     const imageUrl = await supabase.storage.from("images").getPublicUrl(imageName);
-      //     console.log(imageUrl.data.publicUrl);
-      //     return { imageUrl: imageUrl.data.publicUrl, imageName: imageName }; // 이미지 URL과 이미지 이름을 객체로 반환
-      //   })
-      // );
-
       const uploadedImages = await Promise.all(
         imageInputs.map(async (input) => {
           console.log(input);
@@ -146,23 +135,10 @@ function Addwork() {
 
       console.log(filteredImages);
 
-      // // 데이터베이스에 삽입할 데이터 준비
-      // const formDataWithImages = { ...formData, fileUrlList: filteredImages };
-      // console.log(formDataWithImages);
-
-      // // uploadedImages 배열에는 { imageUrl: "publicUrl", imageName: "imageName" } 형식의 객체들이 담김
-      // console.log(uploadedImages);
-      // // 이미지 URL과 이미지 이름을 따로 담을 배열들
       const imageUrls = filteredImages.map((image) => image.imageUrl);
       const imageNames = filteredImages.map((image) => image.imageName);
       console.log(imageUrls);
       console.log(imageNames);
-
-      // const filteredImages = imageUrls.filter((url) => url !== null);
-      // const filteredNames = imageNames.filter((url) => url !== null);
-
-      // console.log(filteredImages);
-      // console.log(filteredNames);
 
       // 데이터베이스에 삽입할 데이터 준비
       const formDataWithImages = { ...formData, fileUrlList: imageUrls, fileNameList: imageNames };
@@ -255,10 +231,18 @@ function Addwork() {
                 </div>
               </div>
               {/* 이미지 */}
+              <div>리스트 이미지 (16:10 비율)</div>
+              <div className="filebox">
+                <input type="text" className="upload-name" value={listFile} readOnly />
+                <label htmlFor={`file`} className="btn-upload">
+                  찾기
+                </label>
+                <input className="btnaddimg" type="file" name="file" id="file" onChange={(e) => handleFile(e)} />
+              </div>
 
               {imageInputs.map((input, index) => (
                 <div key={index}>
-                  <div>이미지{index + 1}</div>
+                  <div>본문 이미지{index + 1}</div>
                   <div className="filebox">
                     <input type="text" className="upload-name" value={input.file ? input.file.name : ""} readOnly />
                     <label htmlFor={`file-${index}`} className="btn-upload">

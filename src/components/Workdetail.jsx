@@ -77,7 +77,6 @@ function Workdetail() {
               </>
             )}
           </div>
-          {/* <div> {workDetail && <img src={workDetail.fileUrlList[1]} />}</div> */}
           <div className="workpic">{workDetail && workDetail.fileUrlList && workDetail.fileUrlList.map((url, index) => <img className="pic" key={index} src={url} />)}</div>
           <hr className="bar2" />
 

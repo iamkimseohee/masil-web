@@ -12,12 +12,6 @@ import Remail from "./Remail";
 import Blockmaildetail from "./Blockmaildetail";
 import home from "../assets/img/home.png";
 function Userpage() {
-  // const [isActive, setIsActive] = useState(true);
-
-  // const handleClick = () => {
-  //   setIsActive(!isActive);
-  // };
-  // console.log(isActive);
   const locatioin = useLocation();
   const scroll = () => {
     window.scroll({

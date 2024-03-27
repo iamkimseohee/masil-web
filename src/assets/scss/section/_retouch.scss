@@ -71,7 +71,7 @@
             // position: relative; /* 기본 위치 */
             // z-index: 1; /* move-btn 위에 표시 */
             width: 608px;
-            height: 365px;
+            // height: 365px;
           }
         }
         div {
@@ -89,6 +89,8 @@
           border-color: #b7b7b7;
           background: transparent;
           // margin-bottom: 50px;
+          padding-left: 10px;
+          padding-right: 10px;
         }
         .checkboxline {
           border: 1px solid #c2c4c4;

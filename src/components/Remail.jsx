@@ -17,7 +17,6 @@ function Remail() {
       behavior: "smooth",
     });
   };
-  const movePage = useNavigate();
 
   const { id, index } = useParams();
   const [mailDetail, setMailDetail] = useState(null);
@@ -26,9 +25,6 @@ function Remail() {
   const fetchMailDetail = async (id) => {
     try {
       const { data, error } = await supabase.from("contact").select("*").eq("id", id).single();
-      console.log("기존", data);
-
-      console.log("기존", typeof data);
       if (error) {
         throw error;
       }
@@ -41,11 +37,8 @@ function Remail() {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
   } = useForm();
   const sendEmail = (e) => {
-    // e.preventDefault();
-
     emailjs.sendForm("service_c6liqis", "template_fh0vber", form.current, "GtB_fUHRP8BVN2ou8").then(
       () => {
         console.log("SUCCESS!");
@@ -59,32 +52,34 @@ function Remail() {
     fetchMailDetail(id);
   }, [id]);
 
-  // const onSubmit = async (data) => {
-  //   console.log(data);
-  //   try {
-  //     const now = moment().format("YYYY.MM.DD HH:mm"); //현재 시간
-  //     const newData = { ...data, time: now };
-  //     console.log(newData);
-  //     const { data: responseData, error } = await supabase.from("contact").insert([newData]);
-  //     if (error) {
-  //       throw error;
-  //     }
-  //     console.log("Data inserted successfully:", responseData);
-  //     if (isMobile) {
-  //       movePage("/success");
-  //     } else {
-  //       alert("감사합니다. 마실에 제안 및 문의 주셔서 감사합니다. 보내주신 내용은 담당자가 검토하여 필요시 회신 드리도록 하겠습니다.");
-  //       // window.location.reload(); // 페이지 새로고침
-  //     }
-  //   } catch (error) {
-  //     console.error("Error inserting data:", error.message);
-  //   }
-  // };
   const [titleLength, setTitleLength] = useState(0);
+  const [nameLength, setNameLength] = useState(0);
+  const [ccLength, setCcLength] = useState(0);
+  console.log(titleLength, nameLength, ccLength);
+
+  const handleCcChange = (e) => {
+    setCcLength(e.target.value.length);
+    console.log("cc", e.target.value.length);
+    if (e.target.value.length > 38) {
+      alert("메일 주소는 최대 38자까지 입력 가능합니다.");
+    }
+  };
+  const handleNameChange = (e) => {
+    setNameLength(e.target.value.length);
+    console.log("name", e.target.value.length);
+    if (e.target.value.length > 38) {
+      alert("담당자 이름은 최대 38자까지 입력 가능합니다.");
+    }
+  };
+
   const handleTitleChange = (e) => {
     setTitleLength(e.target.value.length);
-    console.log(e.target.value.length);
+    console.log("title", e.target.value.length);
+    if (e.target.value.length > 38) {
+      alert("제목은 최대 38자까지 입력 가능합니다.");
+    }
   };
+
   return (
     <div>
       <div className="remail">
@@ -92,46 +87,29 @@ function Remail() {
           <div className="titletext">받는 사람</div>
           <div className="mailinfo">
             <input type="text" name="to_name" className="infoname1" value={mailDetail && mailDetail.name} style={{ borderBlockColor: "#e4e6e6" }} readOnly />
-            {/* <input type="text" name="to_name" className="infoname1" defaultValue={mailDetail && mailDetail.name} style={{ borderBlockColor: "#e4e6e6" }} {...register("to_name", { required: "이름을 입력하세요" })} /> */}
-            {/* {errors.to_name && <p>{errors.to_name.message}</p>} */}
-            <input
-              type="email"
-              name="to_email"
-              value={mailDetail && mailDetail.email}
-              className="infomail1"
-              style={{ borderBlockColor: "#e4e6e6" }}
-              readOnly // {...register("to_email", {
-              //   required: "이메일을 입력하세요",
-              //   pattern: {
-              //     value: /\S+@\S+\.\S+/,
-              //     message: "이메일 형식에 맞지 않습니다.",
-              //   },
-              // })}
-            />
-            {/* {errors.to_email && <p>{errors.to_email.message}</p>} */}
+
+            <input type="email" name="to_email" value={mailDetail && mailDetail.email} className="infomail1" style={{ borderBlockColor: "#e4e6e6" }} readOnly />
           </div>
           <div className="titletext">보내는 사람</div>
           <div className="mailinfo">
-            <input type="text" name="from_name" className="infoname2" style={{ borderBlockColor: "#e4e6e6" }} {...register("from_name", { required: "이름을 입력하세요" })} />
+            <input type="text" maxLength={38} name="from_name" className="infoname2" style={{ borderBlockColor: "#e4e6e6" }} {...register("from_name", { required: "이름을 입력하세요" })} onChange={handleNameChange} />
             {errors.from_name && <p style={{ color: "red" }}>{errors.from_name.message}</p>}
             <input type="email" value="master@masil.com" name="from_email" className="infomail2" style={{ borderBlockColor: "#e4e6e6" }} readOnly />
           </div>
 
           <div className="titletext">참조</div>
-          <input type="email" name="to_cc" style={{ borderBlockColor: "#c0c0c0" }} />
+          <input type="email" name="to_cc" style={{ borderBlockColor: "#c0c0c0" }} onChange={handleCcChange} />
 
           <div className="titletext">제목</div>
-          <input type="text" name="to_title" style={{ borderBlockColor: "#c0c0c0" }} {...register("to_title", { required: "제목을 입력하세요" })} />
+          <input type="text" name="to_title" maxLength={38} style={{ borderBlockColor: "#c0c0c0" }} {...register("to_title", { required: "제목을 입력하세요" })} onChange={handleTitleChange} />
           {errors.to_title && <p style={{ color: "red" }}>{errors.to_title.message}</p>}
           <div style={{ display: "flex" }}>
             {" "}
             <div className="remailbody">내용</div>
-            <div className="remailbody" style={{ marginLeft: "auto" }}>
-              {titleLength}/1000
-            </div>
+            <div className="remailbody" style={{ marginLeft: "auto" }}></div>
           </div>
 
-          <textarea name="message" style={{ borderBlockColor: "#7B8383" }} {...register("message", { required: "내용을 입력하세요" })} onChange={handleTitleChange} maxLength={1000}></textarea>
+          <textarea name="message" style={{ borderBlockColor: "#7B8383" }} {...register("message", { required: "내용을 입력하세요" })}></textarea>
           {errors.message && <p style={{ color: "red" }}>{errors.message.message}</p>}
         </form>
 

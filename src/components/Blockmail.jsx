@@ -87,7 +87,7 @@ function Blockmail() {
       const { data, error } = await supabase
         .from("blockmail")
         .select("*")
-        .order("id")
+        .order("id", { ascending: false })
         .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
       // console.log(data);
       if (error) {
