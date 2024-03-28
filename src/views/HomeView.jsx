@@ -14,9 +14,9 @@ const HomeView = () => {
       <Header />
       <Intro />
       <Service />
-
       <Port />
       <Contact />
+
       <Footer />
     </div>
   );

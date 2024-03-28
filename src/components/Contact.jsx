@@ -94,8 +94,8 @@ const Contact = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
               {/* 이름 */}
               <div>문의자 이름</div>
-              <input type="text" name="name" {...register("name", { required: "이름을 입력하세요" })} maxLength={15} />
-              {errors.name && <p style={{ color: "red" }}>{errors.name.message}</p>}
+              <input type="text" name="name" {...register("name", { required: "이름을 입력하세요" })} maxLength={15} autoComplete="off" />
+              {errors.name && <p style={{ color: "red", marginTop: "5px" }}>{errors.name.message}</p>}
               {/* 메일 */}
               <div className="mailtitle">메일 주소</div>
               <input
@@ -108,11 +108,12 @@ const Contact = () => {
                     message: "이메일 형식에 맞지 않습니다.",
                   },
                 })}
+                autoComplete="off"
               />
-              {errors.email && <p style={{ color: "red" }}>{errors.email.message}</p>}
+              {errors.email && <p style={{ color: "red", marginTop: "5px" }}>{errors.email.message}</p>}
               <div>제목</div>
-              <input type="text" name="title" {...register("title", { required: "제목을 입력하세요" })} maxLength={25} />
-              {errors.title && <p style={{ color: "red" }}>{errors.title.message}</p>}
+              <input type="text" name="title" {...register("title", { required: "제목을 입력하세요" })} maxLength={25} autoComplete="off" />
+              {errors.title && <p style={{ color: "red", marginTop: "5px" }}>{errors.title.message}</p>}
               {/* 내용 */}
               <div className="bodyarea">
                 <div className="bodycontent">내용</div>{" "}
@@ -121,7 +122,7 @@ const Contact = () => {
                 </div>
               </div>
 
-              <textarea name="body" {...register("body", { required: "내용을 입력하세요" })} onChange={handleTitleChange} maxLength={1000}></textarea>
+              <textarea name="body" {...register("body", { required: "내용을 입력하세요" })} onChange={handleTitleChange} maxLength={1000} autoComplete="off"></textarea>
               {errors.body && <p style={{ color: "red" }}>{errors.body.message}</p>}
               {/* <input type="file" /> */}
               <button type="submit">보내기</button>

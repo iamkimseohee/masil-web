@@ -93,7 +93,7 @@ function Remail() {
           <div className="titletext">보내는 사람</div>
           <div className="mailinfo">
             <input type="text" maxLength={38} name="from_name" className="infoname2" style={{ borderBlockColor: "#e4e6e6" }} {...register("from_name", { required: "이름을 입력하세요" })} onChange={handleNameChange} />
-            {errors.from_name && <p style={{ color: "red" }}>{errors.from_name.message}</p>}
+            {errors.from_name && <p style={{ color: "red", marginTop: "5px" }}>{errors.from_name.message}</p>}
             <input type="email" value="master@masil.com" name="from_email" className="infomail2" style={{ borderBlockColor: "#e4e6e6" }} readOnly />
           </div>
 
@@ -102,7 +102,7 @@ function Remail() {
 
           <div className="titletext">제목</div>
           <input type="text" name="to_title" maxLength={38} style={{ borderBlockColor: "#c0c0c0" }} {...register("to_title", { required: "제목을 입력하세요" })} onChange={handleTitleChange} />
-          {errors.to_title && <p style={{ color: "red" }}>{errors.to_title.message}</p>}
+          {errors.to_title && <p style={{ color: "red", marginTop: "5px" }}>{errors.to_title.message}</p>}
           <div style={{ display: "flex" }}>
             {" "}
             <div className="remailbody">내용</div>

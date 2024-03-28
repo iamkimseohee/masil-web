@@ -42,7 +42,6 @@ function Addwork() {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
   } = useForm();
 
   //~ 글자 감지
@@ -101,19 +100,35 @@ function Addwork() {
     setImageInputs(finalFileList); // 파일 리스트 업데이트
   };
 
-  const [listFile, setListFile] = useState("");
-  const handleFile = async (e) => {
+  //~ 썸네일 사진
+  const [thumbNail, setThumbNail] = useState({ file: null, fileName: "" });
+  const handleThumbNail = async (e) => {
     // console.log(e.target.files[0].name);
-    const selectedListFile = e.target.files[0];
-    const selectedListFileName = e.target.files[0].name;
-    setListFile(selectedListFileName);
+    const selectedThumbNailFile = e.target.files[0];
+    const selectedThumbNail = { fileName: selectedThumbNailFile ? selectedThumbNailFile.name : "", file: selectedThumbNailFile };
+    console.log(selectedThumbNail);
+    setThumbNail(selectedThumbNail);
   };
+  console.log(thumbNail);
 
   //~ supabase로 보내요
   const { v4: uuidv4 } = require("uuid"); // uuid 모듈을 불러옵니다.
 
   const onSubmit = async (data) => {
     try {
+      let thumbNailUrl = null; // 썸네일 이미지 URL 초기값 설정
+
+      // 썸네일 이미지가 있는 경우에만 업로드
+      if (thumbNail.file) {
+        // 썸네일 이미지 업로드
+        const thumbNailName = `${uuidv4()}`;
+        const { data: thumbNailData, error: thumbNailError } = await supabase.storage.from("images").upload(thumbNailName, thumbNail.file);
+        if (thumbNailError) {
+          throw thumbNailError;
+        }
+        const fakethumbNailUrl = await supabase.storage.from("images").getPublicUrl(thumbNailName);
+        thumbNailUrl = fakethumbNailUrl.data.publicUrl;
+      }
       const uploadedImages = await Promise.all(
         imageInputs.map(async (input) => {
           console.log(input);
@@ -130,8 +145,10 @@ function Addwork() {
           return { imageUrl: imageUrl.data.publicUrl, imageName: imageName };
         })
       );
+      console.log("☀️", typeof uploadedImages);
 
       const filteredImages = uploadedImages.filter((url) => url !== null);
+      const filteredImages2 = uploadedImages.filter((url) => url !== null);
 
       console.log(filteredImages);
 
@@ -141,7 +158,7 @@ function Addwork() {
       console.log(imageNames);
 
       // 데이터베이스에 삽입할 데이터 준비
-      const formDataWithImages = { ...formData, fileUrlList: imageUrls, fileNameList: imageNames };
+      const formDataWithImages = { ...formData, fileUrlList: imageUrls, fileNameList: imageNames, thumbNailUrl: thumbNailUrl };
       console.log(formDataWithImages);
 
       // 데이터베이스에 데이터 삽입
@@ -150,7 +167,7 @@ function Addwork() {
 
       console.log("Data inserted successfully:", insertedData);
       // 페이지 이동 등 추가 작업이 필요하다면 이곳에 추가
-      movePage("/userpage/workpage");
+      // movePage("/userpage/workpage");
     } catch (error) {
       console.error("Error:", error.message);
     }
@@ -160,6 +177,7 @@ function Addwork() {
     handleChange(e); // handleChange 함수 호출
     handleBigTextChange(e); // handleBigTextChange 함수 호출
   };
+  console.log(bigTextLength, textLength);
   const handleInputChange = (e) => {
     handleChange(e); // handleChange 함수 호출
     handleTextChange(e); // handleBigTextChange 함수 호출
@@ -233,11 +251,11 @@ function Addwork() {
               {/* 이미지 */}
               <div>리스트 이미지 (16:10 비율)</div>
               <div className="filebox">
-                <input type="text" className="upload-name" value={listFile} readOnly />
+                <input type="text" className="upload-name" value={thumbNail ? thumbNail.fileName : ""} readOnly />
                 <label htmlFor={`file`} className="btn-upload">
                   찾기
                 </label>
-                <input className="btnaddimg" type="file" name="file" id="file" onChange={(e) => handleFile(e)} />
+                <input className="btnaddimg" type="file" name="file" id="file" onChange={(e) => handleThumbNail(e)} />
               </div>
 
               {imageInputs.map((input, index) => (

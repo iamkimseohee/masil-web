@@ -174,8 +174,8 @@ function Workpage() {
                 </NavLink>
 
                 <div className="workpageimgs" draggable="false" style={{ backgroundColor: "#F8F8F8", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  {work && work.fileUrlList && work.fileUrlList.length > 0 ? (
-                    <img className="workpageimg" draggable="false" src={work.fileUrlList[0]} />
+                  {work && work.thumbNailUrl && work.thumbNailUrl.length > 0 ? (
+                    <img className="workpageimg" draggable="false" src={work.thumbNailUrl} />
                   ) : (
                     <img className="workpageimg" style={{ width: "118px", height: "26px" }} src="https://qiwrlvedwhommigwrmcz.supabase.co/storage/v1/object/public/images/pub/logo-eng.png" draggable="false" alt="Placeholder" />
                   )}

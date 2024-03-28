@@ -65,6 +65,7 @@ const Loginpage = () => {
       movePage("/userpage");
     } catch (error) {
       console.error("로그인 오류:", error.message);
+      alert("이메일, 비밀번호를 확인 해주세요");
       // 오류 처리
     }
   };

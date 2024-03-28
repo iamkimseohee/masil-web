@@ -13,16 +13,14 @@ function Workdetail() {
   const { id } = useParams();
   const movePage = useNavigate();
 
-  const goHome = () => {
+  const goPort = () => {
     movePage("/");
-  };
-  const goHome2 = () => {
-    const portElement = document.getElementById("port");
-
-    console.log(portElement);
-    if (portElement) {
-      portElement.scrollIntoView({ behavior: "smooth" });
-    }
+    setTimeout(() => {
+      window.scrollTo({
+        top: document.getElementById("port").offsetTop,
+        behavior: "smooth", // smooth 스크롤 효과 설정
+      });
+    }, 500);
   };
 
   useEffect(() => {
@@ -48,7 +46,7 @@ function Workdetail() {
         <div className="workdetail__top2">
           <div className="workdetail__top2__inner">
             {" "}
-            <img src={back} alt="뒤로가기" onClick={goHome} className="backlogo" />
+            <img src={back} alt="뒤로가기" onClick={goPort} className="backlogo" />
             <div className="workdetail__top2__innertext">작업</div>
           </div>
           <hr className="mobilebar" />
@@ -56,15 +54,8 @@ function Workdetail() {
         <div className="workdetail__inner">
           <div className="workdetail__top">
             {" "}
-            <img src={about} alt="어바웃" onClick={goHome} className="intrologo" />
-            <img
-              src={close}
-              alt="취소"
-              onClick={() => {
-                movePage(-1);
-              }}
-              className="canclebtn"
-            />
+            <img src={about} alt="어바웃" onClick={goPort} className="intrologo" />
+            <img src={close} alt="취소" onClick={goPort} className="canclebtn" />
           </div>
 
           <div className="workdetail__title">{workDetail && workDetail.title}</div>
@@ -80,12 +71,7 @@ function Workdetail() {
           <div className="workpic">{workDetail && workDetail.fileUrlList && workDetail.fileUrlList.map((url, index) => <img className="pic" key={index} src={url} />)}</div>
           <hr className="bar2" />
 
-          <button
-            className="btngolist"
-            onClick={() => {
-              movePage(-1);
-            }}
-          >
+          <button className="btngolist" onClick={goPort}>
             목록
           </button>
         </div>

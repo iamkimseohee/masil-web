@@ -29,8 +29,9 @@ const Port = () => {
         <div className="port__inner">
           <h1 className="port__title">작업</h1>
           <div className="port__text">마실은 2001년부터 20년 넘게 개발 업무를 진행해온, 작지만 믿을 수 있는 회사입니다.</div>
-          <div className="ddd">
-            <div className="port__wrap">
+
+          <div className="port__wrap">
+            <ul>
               {workData.map((work, index) => (
                 <li key={work.id}>
                   <NavLink
@@ -44,8 +45,8 @@ const Port = () => {
                     className={work && work.fileUrlList && work.fileUrlList.length === 0 ? "nocursor" : ""}
                   >
                     <div className="port__wrapimgs" style={{ backgroundColor: "#F8F8F8", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      {work && work.fileUrlList && work.fileUrlList.length > 0 ? (
-                        <img className="port__wrapimg" src={work.fileUrlList[0]} alt="Work Image" />
+                      {work && work.thumbNailUrl && work.thumbNailUrl.length > 0 ? (
+                        <img className="port__wrapimg" src={work.thumbNailUrl} alt="Work Image" />
                       ) : (
                         <img className="port__wrapimg" style={{ width: "118px", height: "26px" }} src="https://qiwrlvedwhommigwrmcz.supabase.co/storage/v1/object/public/images/pub/logo-eng.png" alt="Placeholder" />
                       )}
@@ -55,7 +56,7 @@ const Port = () => {
                   </NavLink>
                 </li>
               ))}
-            </div>
+            </ul>
           </div>
         </div>
       </section>

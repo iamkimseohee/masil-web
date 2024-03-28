@@ -105,6 +105,10 @@
         width: 296px;
         height: 277px;
       }
+      @media (max-width: 300px) {
+        width: 250px;
+        height: 277px;
+      }
     }
   }
 }

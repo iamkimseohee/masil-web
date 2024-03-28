@@ -40,6 +40,9 @@
         // align-items: center;
 
         margin-bottom: 14px;
+        @media (max-width: 300px) {
+          font-size: 10px;
+        }
       }
       img {
         margin-left: auto;
@@ -88,20 +91,4 @@
       }
     }
   }
-  // @media (hover: none) and (pointer: coarse) {
-  //   .untouch-device {
-  //     display: none;
-  //   }
-  //   .touch-device {
-  //     display: block;
-  //   }
-  // }
-  // @media (hover: hover) and (pointer: fine) {
-  //   .untouch-device {
-  //     display: block;
-  //   }
-  //   .touch-device {
-  //     display: none;
-  //   }
-  // }
 }
