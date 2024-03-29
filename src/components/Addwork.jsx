@@ -33,7 +33,7 @@ function Addwork() {
 
       console.log("사용자 이메일:", user.email);
     } else {
-      // 사용자 정보가 없는 경우 (로그인되지 않은 상태)
+      // 사용자 정보가 없는 경우
       console.log("로그인되지 않은 상태입니다.");
     }
   };
@@ -92,21 +92,17 @@ function Addwork() {
   //~사진 업로드 하고 경로 올려주기
 
   const handleFileChange = async (index, e) => {
-    console.log(index);
     const selectedFile = e.target.files[0];
     const finalFileList = [...imageInputs];
     finalFileList[index] = { fileName: selectedFile ? selectedFile.name : "", file: selectedFile }; // 파일 이름 및 파일 객체 저장
-    console.log(finalFileList);
     setImageInputs(finalFileList); // 파일 리스트 업데이트
   };
 
   //~ 썸네일 사진
   const [thumbNail, setThumbNail] = useState({ file: null, fileName: "" });
   const handleThumbNail = async (e) => {
-    // console.log(e.target.files[0].name);
     const selectedThumbNailFile = e.target.files[0];
     const selectedThumbNail = { fileName: selectedThumbNailFile ? selectedThumbNailFile.name : "", file: selectedThumbNailFile };
-    console.log(selectedThumbNail);
     setThumbNail(selectedThumbNail);
   };
   console.log(thumbNail);
@@ -131,35 +127,25 @@ function Addwork() {
       }
       const uploadedImages = await Promise.all(
         imageInputs.map(async (input) => {
-          console.log(input);
           if (!input.file) {
             return null;
           }
           const selectedFile = input.file;
           const imageName = `${uuidv4()}`;
-          // const imageName = `${Date.now()}`; //파일 이름 바꾸기
           const { data, error } = await supabase.storage.from("images").upload(imageName, selectedFile); // 파일 올리기
           if (error) throw error;
           const imageUrl = await supabase.storage.from("images").getPublicUrl(imageName);
-          console.log(imageUrl.data.publicUrl);
           return { imageUrl: imageUrl.data.publicUrl, imageName: imageName };
         })
       );
-      console.log("☀️", typeof uploadedImages);
 
       const filteredImages = uploadedImages.filter((url) => url !== null);
-      const filteredImages2 = uploadedImages.filter((url) => url !== null);
-
-      console.log(filteredImages);
 
       const imageUrls = filteredImages.map((image) => image.imageUrl);
       const imageNames = filteredImages.map((image) => image.imageName);
-      console.log(imageUrls);
-      console.log(imageNames);
 
       // 데이터베이스에 삽입할 데이터 준비
       const formDataWithImages = { ...formData, fileUrlList: imageUrls, fileNameList: imageNames, thumbNailUrl: thumbNailUrl };
-      console.log(formDataWithImages);
 
       // 데이터베이스에 데이터 삽입
       const { data: insertedData, error } = await supabase.from("work").insert([formDataWithImages]);
@@ -198,7 +184,6 @@ function Addwork() {
           </button>
           <div className="addwork__text">
             <form>
-              {/* 제목 */}
               <div style={{ display: "flex" }}>
                 <div>큰 제목</div> <div style={{ marginLeft: "auto" }}>{bigTextLength} / 15</div>
               </div>
@@ -215,7 +200,6 @@ function Addwork() {
                 })}
               />
               {errors.title && <p style={{ color: "red" }}>{errors.title.message}</p>}
-              {/* 본문 내용 */}
               <div style={{ display: "flex", marginTop: "50px" }}>
                 <div>본문 내용</div> <div style={{ marginLeft: "auto" }}>{textLength} / 25</div>
               </div>
@@ -233,7 +217,6 @@ function Addwork() {
               />
               {errors.body && <p style={{ color: "red" }}>{errors.body.message}</p>}
 
-              {/* 분야 */}
               <div className="checkboxline">
                 {" "}
                 <div style={{ marginTop: "50px" }}>분야</div>
@@ -248,7 +231,6 @@ function Addwork() {
                   </div>
                 </div>
               </div>
-              {/* 이미지 */}
               <div>리스트 이미지 (16:10 비율)</div>
               <div className="filebox">
                 <input type="text" className="upload-name" value={thumbNail ? thumbNail.fileName : ""} readOnly />

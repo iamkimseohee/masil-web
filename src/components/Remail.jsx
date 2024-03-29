@@ -1,9 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { isMobile } from "react-device-detect";
 import { createClient } from "@supabase/supabase-js";
-import moment from "moment";
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
 import up from "../assets/img/up.png";
@@ -55,18 +53,15 @@ function Remail() {
   const [titleLength, setTitleLength] = useState(0);
   const [nameLength, setNameLength] = useState(0);
   const [ccLength, setCcLength] = useState(0);
-  console.log(titleLength, nameLength, ccLength);
 
   const handleCcChange = (e) => {
     setCcLength(e.target.value.length);
-    console.log("cc", e.target.value.length);
     if (e.target.value.length > 38) {
       alert("메일 주소는 최대 38자까지 입력 가능합니다.");
     }
   };
   const handleNameChange = (e) => {
     setNameLength(e.target.value.length);
-    console.log("name", e.target.value.length);
     if (e.target.value.length > 38) {
       alert("담당자 이름은 최대 38자까지 입력 가능합니다.");
     }
@@ -74,7 +69,6 @@ function Remail() {
 
   const handleTitleChange = (e) => {
     setTitleLength(e.target.value.length);
-    console.log("title", e.target.value.length);
     if (e.target.value.length > 38) {
       alert("제목은 최대 38자까지 입력 가능합니다.");
     }
@@ -104,7 +98,6 @@ function Remail() {
           <input type="text" name="to_title" maxLength={38} style={{ borderBlockColor: "#c0c0c0" }} {...register("to_title", { required: "제목을 입력하세요" })} onChange={handleTitleChange} />
           {errors.to_title && <p style={{ color: "red", marginTop: "5px" }}>{errors.to_title.message}</p>}
           <div style={{ display: "flex" }}>
-            {" "}
             <div className="remailbody">내용</div>
             <div className="remailbody" style={{ marginLeft: "auto" }}></div>
           </div>
@@ -114,7 +107,6 @@ function Remail() {
         </form>
 
         <div className="remailbutton">
-          {" "}
           <NavLink to={`/userpage/maildetail/${id}/${index}`}>
             <button className="cancle">취소</button>
           </NavLink>

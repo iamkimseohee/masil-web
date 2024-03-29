@@ -5,12 +5,7 @@ import { BrowserView, MobileView } from "react-device-detect";
 
 const Footer = () => {
   const movePage = useNavigate();
-  // const scroll = () => {
-  //   window.scroll({
-  //     top: 0,
-  //     behavior: "smooth",
-  //   });
-  // };
+
   const login = () => {
     movePage("/login");
   };
@@ -21,7 +16,7 @@ const Footer = () => {
           <div className="text">
             <div className="text1">"A friendly and comfortable IT partner to work with"</div>
             <BrowserView>
-              <img src={underLogo} alt="under logo" className="underlogo" onClick={login} style={{ cursor: "pointer" }} />
+              <img src={underLogo} alt="under logo" className="underlogo" onClick={login} />
             </BrowserView>
             <MobileView className="hi">
               <img src={underLogo} alt="under logo" className="underlogo" />

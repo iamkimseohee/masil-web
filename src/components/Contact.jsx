@@ -17,11 +17,9 @@ const Contact = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       const now = moment().format("YYYY.MM.DD HH:mm"); //현재 시간
       const newData = { ...data, time: now };
-      console.log(newData);
       // 메일리스트 가져오기
       const { data: blockListData, error: blockListError } = await supabase.from("blockmaillist").select("maillist");
       console.log(blockListData);
@@ -42,7 +40,6 @@ const Contact = () => {
 
         // 조건에 따라 테이블 선택하여 데이터 삽입
         if (isBlocked) {
-          // A 테이블에 데이터 삽입
           const { data: insertData, error: insertError } = await supabase.from("blockmail").insert([newData]);
           if (insertError) {
             throw insertError;
@@ -51,11 +48,10 @@ const Contact = () => {
             movePage("/success");
           } else {
             alert("마실에 제안 및 문의 주셔서 감사합니다. 보내주신 내용은 담당자가 검토하여 필요시 회신 드리도록 하겠습니다.");
-            // window.location.reload(); // 페이지 새로고침
+            window.location.reload(); // 페이지 새로고침
           }
           console.log("Data inserted into table A:", insertData);
         } else {
-          // B 테이블에 데이터 삽입
           const { data: insertData, error: insertError } = await supabase.from("contact").insert([newData]);
           if (insertError) {
             throw insertError;
@@ -64,7 +60,7 @@ const Contact = () => {
             movePage("/success");
           } else {
             alert("마실에 제안 및 문의 주셔서 감사합니다. 보내주신 내용은 담당자가 검토하여 필요시 회신 드리도록 하겠습니다.");
-            // window.location.reload(); // 페이지 새로고침
+            window.location.reload(); // 페이지 새로고침
           }
           console.log("Data inserted into table B:", insertData);
         }
@@ -92,11 +88,9 @@ const Contact = () => {
           <h1 className="contact__title">문의</h1>
           <div className="contact__text">
             <form onSubmit={handleSubmit(onSubmit)}>
-              {/* 이름 */}
               <div>문의자 이름</div>
               <input type="text" name="name" {...register("name", { required: "이름을 입력하세요" })} maxLength={15} autoComplete="off" />
               {errors.name && <p style={{ color: "red", marginTop: "5px" }}>{errors.name.message}</p>}
-              {/* 메일 */}
               <div className="mailtitle">메일 주소</div>
               <input
                 type="email"
@@ -114,7 +108,6 @@ const Contact = () => {
               <div>제목</div>
               <input type="text" name="title" {...register("title", { required: "제목을 입력하세요" })} maxLength={25} autoComplete="off" />
               {errors.title && <p style={{ color: "red", marginTop: "5px" }}>{errors.title.message}</p>}
-              {/* 내용 */}
               <div className="bodyarea">
                 <div className="bodycontent">내용</div>{" "}
                 <div className="bodycontent" style={{ marginLeft: "auto" }}>
@@ -124,7 +117,6 @@ const Contact = () => {
 
               <textarea name="body" {...register("body", { required: "내용을 입력하세요" })} onChange={handleTitleChange} maxLength={1000} autoComplete="off"></textarea>
               {errors.body && <p style={{ color: "red" }}>{errors.body.message}</p>}
-              {/* <input type="file" /> */}
               <button type="submit">보내기</button>
             </form>
             <div className="text">

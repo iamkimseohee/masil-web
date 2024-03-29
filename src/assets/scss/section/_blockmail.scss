@@ -3,14 +3,10 @@
   margin-top: 60px;
 
   .blockmail_inner {
-    // border: 1px solid rebeccapurple;
     .btnspace {
-      // width: 100%;
       height: 60px;
       display: flex;
       border-top: 2px solid #c2c4c4;
-      // border-left: 0;
-      // border-right: 0;
       border-bottom: 2px solid #7b808d;
       .btnlist {
         color: #3f3c33;
@@ -25,22 +21,12 @@
         }
       }
       .btndel {
-        // display: flex;
-        // justify-content: center;
-        // align-items: center;
         margin-right: 69px;
         width: 33px;
-        // line-height: 28px;
-        // letter-spacing: -0.11px;
       }
       .btnblock {
-        // display: flex;
-        // justify-content: center;
-        // align-items: center;
         width: 109px;
         margin-right: 991px;
-        // letter-spacing: -0.11px;
-        // line-height: 28px;
       }
 
       .btnlistnum {
@@ -54,11 +40,8 @@
         &.show {
           display: block;
           ul {
-            // position: fixed;
             display: block;
             position: absolute;
-            // left: 1135px;
-            // top: 40px;
             margin-top: 40px;
             margin-left: -72px;
             width: 96px;
@@ -90,11 +73,8 @@
         &.show2 {
           display: block;
           ul {
-            // position: fixed;
             display: block;
             position: absolute;
-            // left: 1135px;
-            // top: 40px;
             margin-top: 40px;
             margin-left: -72px;
             width: 96px;
@@ -130,7 +110,6 @@
       font-size: 13px;
       color: #7b808d;
       font-family: "Pretendard-Regular";
-      // display: flex;
       justify-content: center;
       align-items: center;
       height: 62px;
@@ -167,21 +146,17 @@
       border-left: 0;
       border-right: 0;
       border-bottom: 0;
-      // height: 662px;
       padding-top: 20px;
       padding-bottom: 0px;
 
-      // display: flex;
       .maillistli {
         &:hover {
           color: #03acb4;
         }
         .checkboxs {
           margin-right: 24px;
-          // width: 50px;
           width: 26px;
           height: 26px;
-          // height: 50px;
           &:hover {
             cursor: pointer;
           }
@@ -190,8 +165,6 @@
         justify-content: center;
         align-items: center;
         margin-bottom: 42px;
-        // border: 1px solid royalblue;
-        // height: 50px;
         font-size: 19px;
         font-family: "Pretendard-Regular";
         color: #3f3c33;
@@ -274,7 +247,6 @@
     font-size: 33px; /* 표시할 체크 표시의 크기 */
     color: #00b5b5; /* 체크 표시의 색상 */
 
-    // background-position: 50%;
     display: inline-block; /* 인라인 요소로 설정하여 텍스트와 함께 배치 */
     line-height: 25px; /* 체크 표시의 세로 정렬을 위해 높이 지정 */
   }

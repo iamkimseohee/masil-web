@@ -7,7 +7,6 @@ import introimg from "..//assets/img/introimg.json";
 const Intro = () => {
   return (
     <div>
-      {" "}
       <section id="intro">
         <div className="intro__inner">
           <img src={about} alt="어바웃" className="intrologo" />

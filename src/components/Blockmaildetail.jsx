@@ -34,10 +34,7 @@ function Blockmaildetail() {
 
     if (user) {
       // 사용자 정보가 있는 경우
-      console.log("현재 로그인한 사용자:", user);
       console.log("사용자 이메일:", user.email);
-      console.log("사용자 고유 식별자:", user.id);
-      // console.log("사용자 세션 토큰:", user.session.access_token);
     } else {
       // 사용자 정보가 없는 경우 (로그인되지 않은 상태)
       console.log("로그인되지 않은 상태입니다.");
@@ -48,9 +45,6 @@ function Blockmaildetail() {
   const fetchBlockMailDetail = async (id) => {
     try {
       const { data, error } = await supabase.from("blockmail").select("*").eq("id", id).single();
-      console.log("기존", data);
-
-      console.log("기존", typeof data);
       if (error) {
         throw error;
       }
@@ -63,8 +57,6 @@ function Blockmaildetail() {
   const fetchAdjacentIds = async () => {
     try {
       const { data, error } = await supabase.from("blockmail").select("*").order("id").range(0, 1).gt("id", id).limit(1);
-      console.log("다음", typeof data);
-      console.log("다음", data[0]);
       if (error) {
         throw error;
       }
@@ -75,7 +67,6 @@ function Blockmaildetail() {
 
     try {
       const { data, error } = await supabase.from("blockmail").select("*").order("id", { ascending: false }).range(0, 1).lt("id", id).limit(1);
-      console.log("이전", data[0]);
       if (error) {
         throw error;
       }
@@ -98,8 +89,6 @@ function Blockmaildetail() {
 
   const blockCancl = async () => {
     const mail = { maillist: blockMailDetail.email };
-    console.log(mail);
-    console.log(blockMailDetail);
 
     try {
       // "blockmail" 테이블에 메일 데이터 삭제
@@ -112,7 +101,6 @@ function Blockmaildetail() {
 
       // "blockmail" 테이블에서 현재 선택한 이메일과 관련된 모든 데이터 가져오기
       const { data: blockmailData, error: contactError } = await supabase.from("blockmail").select("*").eq("email", blockMailDetail.email);
-      console.log(blockmailData);
       if (contactError) {
         throw contactError;
       }
@@ -182,7 +170,6 @@ function Blockmaildetail() {
         {prevId && (
           <div className="blockprevmail">
             <NavLink to={`/userpage/blockmaildetail/${prevId.id}/${indexNum - 1}`} className="prevmail__inner">
-              {/* <div>▲</div> */}
               <img src={upicon} alt="" className="icon" />
               <div className="mailid">{indexNum - 1}</div>
               <div className="mailname">{prevId.name}</div>
@@ -194,7 +181,6 @@ function Blockmaildetail() {
         {nextId && (
           <div className="nextmail">
             <NavLink to={`/userpage/blockmaildetail/${nextId?.id}/${indexNum + 1}`} className="nextmail__inner">
-              {/* <div>▼</div> */}
               <img src={downicon} alt="" className="icon" />
               <div className="mailid">{indexNum + 1}</div>
               <div className="mailname">{nextId.name}</div>

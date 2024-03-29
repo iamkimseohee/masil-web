@@ -43,14 +43,11 @@
         width: 169px;
         height: 85px;
         margin-bottom: 64px;
-
-        // margin-top: 91px;
       }
       @media (max-width: 767px) {
         width: 112px;
         height: 56px;
         margin-bottom: 50px;
-        // margin-top: 91px;
       }
     }
 
@@ -65,13 +62,11 @@
       line-height: 40px;
 
       @media (max-width: 768px) {
-        // display: none;
         font-size: 28px;
         line-height: 36px;
       }
     }
     .intro__text {
-      // .text {
       font-family: "Pretendard-Regular";
       font-size: 19px;
       color: #3f3c33;
@@ -80,7 +75,6 @@
       position: relative;
       z-index: 100;
       transition: all 0.3s;
-      cursor: all-scroll;
       margin-bottom: 83px;
       @media (max-width: 1024px) {
         margin-bottom: 60px;

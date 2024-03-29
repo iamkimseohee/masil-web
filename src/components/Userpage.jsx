@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 import Workpage from "./Workpage";
-// import Notice from "./Notice";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import Mailpage from "./Mailpage";
@@ -13,12 +12,6 @@ import Blockmaildetail from "./Blockmaildetail";
 import home from "../assets/img/home.png";
 function Userpage() {
   const locatioin = useLocation();
-  const scroll = () => {
-    window.scroll({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
 
   const movePage = useNavigate();
   useEffect(() => {

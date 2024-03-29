@@ -56,7 +56,6 @@ function Mailpage() {
     const fetchTotalItems = async () => {
       try {
         const { count, error } = await supabase.from("contact").select("id", { count: "exact" });
-        // console.log(count);
         if (error) {
           throw error;
         }
@@ -81,7 +80,6 @@ function Mailpage() {
         .select("*")
         .order("id", { ascending: false })
         .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
-      // console.log(data);
       if (error) {
         throw error;
       }
@@ -101,18 +99,12 @@ function Mailpage() {
   const maxPagesToShow = 10; // 한 번에 보여줄 최대 페이지 수
   let lastnum = String(currentPage).slice(-1);
 
-  console.log(lastnum, currentPage - lastnum + 1);
-
-  console.log(currentPage);
   let startPage = Math.max(currentPage - lastnum + 1, 1); //시작하는 페이지
   if (lastnum == 1) {
     startPage = currentPage;
   }
 
-  console.log("startPage🔥", startPage);
-
   let endPage = startPage + maxPagesToShow - 1; //마지막 페이지
-  console.log("endPage🔥", endPage);
   if (
     lastnum == 0 //< 버튼 눌렀을때
   ) {
@@ -128,25 +120,21 @@ function Mailpage() {
   for (let i = startPage; i <= endPage; i++) {
     pageNumbers.push(i);
   }
-  console.log(pageNumbers);
 
   // 페이지 이동 함수
   const goToPage = (pageNumber) => {
     setCurrentPage(pageNumber);
     setSelectedPage(pageNumber); // 선택된 페이지 업데이트
-    console.log(pageNumber);
   };
 
   //~ 10,20,30 버튼
   const [show, setshow] = useState(false);
   const toggleMenu = () => {
     setshow(!show);
-    console.log("클릭");
   };
   const [show2, setshow2] = useState(false);
   const toggleMenu2 = () => {
     setshow2(!show2);
-    console.log("클릭");
   };
 
   // 처음 페이지로 이동하는 함수
@@ -180,14 +168,11 @@ function Mailpage() {
   //~ 다음 10개
   const goToNextPageSet = () => {
     const lastDigit = String(selectedPage).slice(-1);
-    console.log(lastDigit);
     let pnum = 10 - lastDigit;
     if (lastDigit == 0) {
       pnum = 0;
     }
-    console.log(10 - lastDigit);
     const newStartPage = Math.min(selectedPage + pnum + 1, totalPages);
-    console.log(newStartPage);
 
     setCurrentPage(newStartPage);
     setSelectedPage(newStartPage);
@@ -223,10 +208,8 @@ function Mailpage() {
 
     try {
       const { data, error } = await supabase.from("contact").select("*").in("id", idsToBlock);
-      console.log(data);
       //선택한 메일들 다 뽑아오기
       const blocklistEmails = [...new Set(data.map((item) => item.email))]; // 중복 합치기
-      console.log(blocklistEmails);
 
       // const { error } = await supabase.from("contact").delete().in("id", idsToDelete);
       if (error) {
@@ -235,7 +218,6 @@ function Mailpage() {
 
       const { data: blockData, error: contactError } = await supabase.from("contact").select("*").in("email", blocklistEmails); //eq는 단일값, in은 열 안에 포함된 값 중 하나와 일치하는 결과를 반환
 
-      console.log(blockData);
       if (contactError) {
         throw contactError;
       }
@@ -246,7 +228,6 @@ function Mailpage() {
       for (const email of blocklistEmails) {
         const { data: blockMailDetailResponse, error: blockMailDetailError } = await supabase.from("blockmaillist").insert({ maillist: email });
 
-        console.log(blockMailDetailResponse);
         if (blockMailDetailError) {
           throw blockMailDetailError;
         }
@@ -261,7 +242,6 @@ function Mailpage() {
       console.log("Data inserted into blockmail successfully:", blockMailDetailResponse);
       //* "contact" 테이블에서 해당 메일 아이디와 일치하는 데이터 삭제
       const { data: deleteResponse, error: deleteError } = await supabase.from("contact").delete().in("email", blocklistEmails);
-      console.log(deleteResponse);
       if (deleteError) {
         throw deleteError;
       }
@@ -284,8 +264,6 @@ function Mailpage() {
       [id]: !prevState[id],
     }));
   };
-  console.log(checkedItems);
-  console.log(checkedMails);
 
   //~ 전체선택
   const handleSelectAll = () => {
@@ -306,7 +284,6 @@ function Mailpage() {
     <div>
       <section id="mailpage">
         <div className="mailpage__inner">
-          {/* 삭제,스팸차단, 답장 구역 */}
           <div className="btnspace">
             <button onClick={handleDelete} className=" btnlist btndel">
               삭제
@@ -328,7 +305,6 @@ function Mailpage() {
               <img src={listnum} onClick={toggleMenu} alt="" />
             </button>
           </div>
-          {/* //체크박스 번호 담당자이름 */}
           <div className="titlelist">
             <input type="checkbox" name="" id="ch" className="checkboz" checked={selectAll} onChange={handleSelectAll} />
             <label htmlFor="ch"></label>
@@ -337,7 +313,6 @@ function Mailpage() {
             <div className="title">제목</div>
             <div className="time">날짜 및 시간</div>
           </div>
-          {/* 메일리스트 */}
           <div className="maillist">
             <ul>
               {contactData.map((contact, index) => (
@@ -356,7 +331,6 @@ function Mailpage() {
             </ul>
           </div>
 
-          {/* 삭제,스팸차단, 답장 구역 */}
           <div className="btnspace">
             <button onClick={handleDelete} className=" btnlist btndel">
               삭제

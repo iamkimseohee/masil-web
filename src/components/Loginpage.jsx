@@ -12,7 +12,6 @@ const Loginpage = () => {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
   } = useForm();
   useEffect(() => {
     fetchUser();
@@ -33,7 +32,6 @@ const Loginpage = () => {
   };
 
   const signupHandler = async ({ email, password }) => {
-    console.log(email, password);
     try {
       const { user, error } = await supabase.auth.signUp({
         email,
@@ -51,7 +49,6 @@ const Loginpage = () => {
   };
 
   const signIn = async ({ email, password }) => {
-    console.log(email, password);
     try {
       const { user, session, error } = await supabase.auth.signInWithPassword({
         email,
@@ -85,7 +82,6 @@ const Loginpage = () => {
           </form>
           <div className="login__img">
             <button onClick={cancle}>취소</button>
-            {/* <button onClick={handleSubmit(signupHandler)}>회원가입</button> */}
 
             <button onClick={handleSubmit(signIn)}>확인</button>
           </div>

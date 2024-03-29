@@ -35,10 +35,7 @@ function Maildetail() {
 
     if (user) {
       // 사용자 정보가 있는 경우
-      console.log("현재 로그인한 사용자:", user);
       console.log("사용자 이메일:", user.email);
-      console.log("사용자 고유 식별자:", user.id);
-      // console.log("사용자 세션 토큰:", user.session.access_token);
     } else {
       // 사용자 정보가 없는 경우 (로그인되지 않은 상태)
       console.log("로그인되지 않은 상태입니다.");
@@ -49,9 +46,6 @@ function Maildetail() {
   const fetchMailDetail = async (id) => {
     try {
       const { data, error } = await supabase.from("contact").select("*").eq("id", id).single();
-      console.log("기존", data);
-
-      console.log("기존", typeof data);
       if (error) {
         throw error;
       }
@@ -64,8 +58,6 @@ function Maildetail() {
   const fetchAdjacentIds = async () => {
     try {
       const { data, error } = await supabase.from("contact").select("*").order("id").range(0, 1).gt("id", id).limit(1);
-      console.log("다음", typeof data);
-      console.log("다음", data[0]);
       if (error) {
         throw error;
       }
@@ -76,7 +68,6 @@ function Maildetail() {
 
     try {
       const { data, error } = await supabase.from("contact").select("*").order("id", { ascending: false }).range(0, 1).lt("id", id).limit(1);
-      console.log("이전", data[0]);
       if (error) {
         throw error;
       }
@@ -99,8 +90,6 @@ function Maildetail() {
 
   const blockmail = async () => {
     const mail = { maillist: mailDetail.email };
-    console.log(mail);
-    console.log(mailDetail);
 
     try {
       // "blockmail" 테이블에 메일 데이터 삽입
@@ -164,7 +153,6 @@ function Maildetail() {
         <div className="maildetail__bodytop">
           <div className="maildetail__bodytoplist">
             <div className="mailbodyid">{indexNum}</div>
-            {/* <div className="mailbodyid">{mailDetail && mailDetail.id}</div> */}
             <div className="mailbodyname">{mailDetail && mailDetail.name}</div>
             <div className="mailbodyemail">{mailDetail && mailDetail.email}</div>
             <div className="mailbodytime">{mailDetail && mailDetail.time}</div>
@@ -190,7 +178,6 @@ function Maildetail() {
         {prevId && (
           <div className="prevmail">
             <NavLink to={`/userpage/maildetail/${prevId.id}/${indexNum - 1}`} className="prevmail__inner">
-              {/* <div>▲</div> */}
               <img src={upicon} alt="" className="icon" />
               <div className="mailid">{indexNum - 1}</div>
               <div className="mailname">{prevId.name}</div>
@@ -202,7 +189,6 @@ function Maildetail() {
         {nextId && (
           <div className="nextmail">
             <NavLink to={`/userpage/maildetail/${nextId?.id}/${indexNum + 1}`} className="nextmail__inner">
-              {/* <div>▼</div> */}
               <img src={downicon} alt="" className="icon" />
               <div className="mailid">{indexNum + 1}</div>
               <div className="mailname">{nextId.name}</div>

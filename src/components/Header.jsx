@@ -29,7 +29,6 @@ const headerNav = [
 ];
 const smoothScroll = (targetId) => {
   const targetElement = document.getElementById(targetId);
-  console.log(targetId, targetElement);
   if (targetElement) {
     window.scrollTo({
       top: targetElement.offsetTop,
@@ -51,7 +50,6 @@ const Header = () => {
   }, []);
 
   const fetchUser = async () => {
-    // const { error } = await supabase.auth.signOut();
     const {
       data: { user },
     } = await supabase.auth.getUser();

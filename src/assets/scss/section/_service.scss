@@ -1,6 +1,5 @@
 #service {
   width: 100%;
-  // height: 100vh;
   margin-bottom: 181px;
 
   display: flex;
@@ -12,27 +11,21 @@
   }
 
   .service__inner {
-    // width: 100%;
-    // border: 1px solid rebeccapurple;
-
     width: 1232px;
     margin-left: 344px;
     margin-right: 344px;
     display: flex;
-    // align-items: flex-start;
     justify-content: flex-end;
     flex-direction: column;
     transition: 2s;
 
     @media (max-width: 1024px) {
       transition: 2s;
-      // max-width: 532px;
       margin-left: 118px;
       margin-right: 118px;
     }
     @media (max-width: 767px) {
       transition: 1s;
-      // max-width: 356px;
       margin-left: 28px;
       margin-right: 28px;
     }
@@ -62,35 +55,12 @@
         z-index: 100;
         transition: all 0.3s;
         cursor: all-scroll;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
 
         @media (max-width: 768px) {
           font-size: 15px;
           line-height: 22px;
-        }
-      }
-
-      ul {
-        font-family: "Pretendard-Regular";
-
-        color: #c2c4c4;
-        font-size: 19px;
-        margin-bottom: 80px;
-        line-height: 28px;
-        letter-spacing: -0.11px;
-
-        @media (max-width: 1024px) {
-          margin-bottom: 60px;
-        }
-        @media (max-width: 768px) {
-          margin-bottom: 50px;
-          font-size: 15px;
-          line-height: 22px;
-        }
-        li {
-          background: url("../../img/listimg.png") no-repeat 0px 7px;
-
-          padding: 0px 0px 4px 8px;
+          margin-bottom: 20px;
         }
       }
     }
@@ -99,8 +69,6 @@
       margin-left: auto;
       width: 454px;
       height: 426px;
-      // display: flex;
-
       @media (max-width: 768px) {
         width: 296px;
         height: 277px;
