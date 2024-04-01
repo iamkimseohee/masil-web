@@ -109,9 +109,12 @@ function Addwork() {
 
   //~ supabase로 보내요
   const { v4: uuidv4 } = require("uuid"); // uuid 모듈을 불러옵니다.
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = async (data) => {
     try {
+      console.log("클릭");
+      setIsSubmitting(true);
       let thumbNailUrl = null; // 썸네일 이미지 URL 초기값 설정
 
       // 썸네일 이미지가 있는 경우에만 업로드
@@ -153,9 +156,12 @@ function Addwork() {
 
       console.log("Data inserted successfully:", insertedData);
       // 페이지 이동 등 추가 작업이 필요하다면 이곳에 추가
-      // movePage("/userpage/workpage");
+      setIsSubmitting(false);
+
+      movePage("/userpage/workpage");
     } catch (error) {
       console.error("Error:", error.message);
+      setIsSubmitting(false);
     }
   };
 
@@ -270,7 +276,7 @@ function Addwork() {
             >
               취소
             </button>
-            <button onClick={handleSubmit(onSubmit)} className="ok">
+            <button onClick={handleSubmit(onSubmit)} className="ok" disabled={isSubmitting}>
               확인
             </button>
             <button onClick={scroll} className="page_up">

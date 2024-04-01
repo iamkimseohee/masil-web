@@ -8,6 +8,7 @@ import delbtn from "../assets/img/delbtn.png";
 import home from "../assets/img/home.png";
 import up from "../assets/img/up.png";
 import retouch from "../assets/img/retouch.png";
+import { kebabCase } from "lodash";
 
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
@@ -37,7 +38,7 @@ function Retouchwork() {
       console.error("Error fetching mail detail:", error.message);
     }
   };
-  // console.log(workDetail);
+  console.log(workDetail && workDetail.fileUrlList);
   const maxArr = 8 - (workDetail && workDetail.fileUrlList.length);
 
   useEffect(() => {
@@ -114,15 +115,13 @@ function Retouchwork() {
     });
   };
 
-  const [imageInputs, setImageInputs] = useState([{ fileName: "", file: null }]);
-
   //~ 이미지 입력칸 클릭 시 새로운 이미지 입력칸 추가
+  const [imageInputs, setImageInputs] = useState([{ fileName: "", file: null }]);
   const handleImageInputClick = () => {
     setImageInputs([...imageInputs, { fileName: "", file: null }]); // 새로운 이미지 입력칸 추가
   };
 
   //~사진 업로드 하고 경로 올려주기
-
   const handleFileChange = async (index, e) => {
     const selectedFile = e.target.files[0];
     const finalFileList = [...imageInputs];
@@ -130,7 +129,7 @@ function Retouchwork() {
     setImageInputs(finalFileList); // 파일 리스트 업데이트
   };
 
-  //~ 썸네일 사진
+  //~ 썸네일 사진 파일  인풋창
   const [thumbNail, setThumbNail] = useState({ file: null, fileName: "" });
   const handleThumbNail = async (e) => {
     const selectedThumbNailFile = e.target.files[0];
@@ -139,24 +138,178 @@ function Retouchwork() {
     setThumbNail(selectedThumbNail);
   };
 
+  //~ 사진 미리보기 수정
+  const [reThumbNail, setReThumbNail] = useState({ file: null, fileName: "" });
+
+  const handleReThumbNail = (e) => {
+    const file = e.target.files[0]; // 선택된 파일 가져오기
+    console.log(file);
+
+    const reSelectedThumbNail = { fileName: file ? file.name : "", file: file };
+    console.log(reSelectedThumbNail);
+    setReThumbNail(reSelectedThumbNail);
+    if (file) {
+      const reader = new FileReader(); // 파일을 읽을 FileReader 객체 생성
+      reader.onload = () => {
+        // 이미지를 읽은 후 실행되는 콜백 함수
+        const imageDataUrl = reader.result; // 이미지 데이터 URL 가져오기
+        console.log(imageDataUrl);
+        // 썸네일 이미지 교체
+        setWorkDetail({ ...workDetail, thumbNailUrl: imageDataUrl }); // 이미지 URL 목록 업데이트
+      };
+      reader.readAsDataURL(file); // 파일을 읽기 시작
+    }
+  };
+
+  //~ 본문 이미지 미리보기 수정
+  const [reImg, setReImg] = useState([{ file: null, fileName: "" }]);
+
+  const handleReImg = (e, index) => {
+    const file = e.target.files[0]; // 선택된 파일 가져오기
+    const updatedFileUrlList = [...workDetail.fileUrlList]; // 기존 파일 URL 리스트 복사
+    updatedFileUrlList[index] = { fileName: file ? file.name : "", file: file }; // 선택한 파일을 새로운 URL 리스트에 저장
+
+    // const reSelectedImg =
+    console.log(updatedFileUrlList);
+    setReImg(updatedFileUrlList);
+    console.log(reImg);
+
+    if (file) {
+      const reader = new FileReader(); // 파일을 읽을 FileReader 객체 생성
+      reader.onload = () => {
+        // 이미지를 읽은 후 실행되는 콜백 함수
+        const imageDataUrl = reader.result; // 이미지 데이터 URL 가져오기
+        console.log(imageDataUrl);
+        // 썸네일 이미지 교체
+        const updatedFileUrlList = [...workDetail.fileUrlList]; // 기존 파일 URL 리스트 복사
+        console.log(updatedFileUrlList);
+        updatedFileUrlList[index] = imageDataUrl; // 선택한 파일을 새로운 URL 리스트에 저장
+        setWorkDetail({ ...workDetail, fileUrlList: updatedFileUrlList }); // 이미지 URL 목록 업데이트
+      };
+      reader.readAsDataURL(file); // 파일을 읽기 시작
+    }
+  };
+  console.log(reImg);
+
+  //~사진 삭제
+  const [delName, setDelName] = useState([]);
+
+  const handleImageDelete = (index) => {
+    const updatedFileUrlList = [...workDetail.fileUrlList];
+    const updatedFileNameList = [...workDetail.fileNameList];
+
+    const deletedImageName = updatedFileNameList[index]; // 삭제된 이미지 URL 저장
+    alert("사진을 삭제 할까요?");
+
+    updatedFileUrlList.splice(index, 1); // 해당 인덱스의 이미지 URL 제거
+    updatedFileNameList.splice(index, 1); // 해당 인덱스의 이미지 Name 제거
+    setWorkDetail({ ...workDetail, fileUrlList: updatedFileUrlList, fileNameList: updatedFileNameList }); // 이미지 URL 목록 업데이트
+    setDelName([...delName, deletedImageName]);
+  };
+
+  // const [thumbNailDel, setThumbNailDel] = useState(workDetail && workDetail.thumbNailUrl);
+  const handleThumbNailDelete = () => {
+    alert("사진을 삭제 할까요?");
+
+    setWorkDetail({ ...workDetail, thumbNailUrl: "" }); // 이미지 URL 목록 업데이트
+  };
+  // console.log(workDetail);
+
+  //~드래그 기능
+  const [draggedItemId, setDraggedItemId] = useState(null);
+
+  const handleDragStart = (e, id) => {
+    setDraggedItemId(id);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e, dropZoneId, work) => {
+    e.preventDefault();
+
+    // 드래그된 요소를 배열에서 제거합니다.
+    const draggedWork = workDetail.fileUrlList[draggedItemId];
+    const newWorkData = workDetail.fileUrlList.filter((_, index) => index !== draggedItemId);
+
+    const draggedWorkName = workDetail.fileNameList[draggedItemId];
+    const newWorkDataName = workDetail.fileNameList.filter((_, index) => index !== draggedItemId);
+
+    // 드롭된 위치에 드래그된 요소를 삽입합니다.
+    const updatedWorkData = [...newWorkData.slice(0, dropZoneId), draggedWork, ...newWorkData.slice(dropZoneId)];
+    const updatedWorkDataName = [...newWorkData.slice(0, dropZoneId), draggedWorkName, ...newWorkDataName.slice(dropZoneId)];
+
+    // reImg 상태도 함께 업데이트합니다.
+    const updatedReImg = [...reImg.slice(0, dropZoneId), reImg[draggedItemId], ...reImg.slice(dropZoneId, draggedItemId), ...reImg.slice(draggedItemId + 1)];
+    setReImg(updatedReImg);
+
+    // 변경된 배열을 상태에 설정합니다.
+    setWorkDetail({ ...workDetail, fileUrlList: updatedWorkData, fileNameList: updatedWorkDataName });
+    setDraggedItemId(null);
+  };
+
+  // const { text, sett } = useState("text");
+  const handleBigInputChange = (e) => {
+    handleChange(e); // handleChange 함수 호출
+    handleBigTextChange(e); // handleBigTextChange 함수 호출
+  };
+  const handleInputChange = (e) => {
+    handleChange(e); // handleChange 함수 호출
+    handleTextChange(e); // handleBigTextChange 함수 호출
+  };
+
+  const handleThumbImageClick = () => {
+    const fileInput = document.getElementById(`thumb`);
+    if (fileInput) {
+      fileInput.click();
+    }
+  };
+  const handleImageClick = (index) => {
+    const fileInput = document.getElementById(`reimg-${index}`);
+    if (fileInput) {
+      fileInput.click();
+    }
+  };
+
   //~ supabase로 보내요
   const { v4: uuidv4 } = require("uuid"); // uuid 모듈을 불러옵니다.
-
   const onSubmit = async () => {
     try {
       // 기존 이미지 URL들을 가져옵니다.
-      //&
       const existingImageUrls = workDetail.fileUrlList || [];
       const existingImageNamses = workDetail.fileNameList || [];
-      const existingThumbImageNamses = workDetail.thumbNailUrl || [];
 
       //썸네일
       let thumbNailUrl; // 썸네일 이미지 URL 초기값 설정
 
-      // 썸네일 이미지가 있는 경우에만 업로드
-      //* 이미 썸네일 이미지가 있으면 그냥 패스
-      if (!(workDetail && workDetail.thumbNailUrl && workDetail.thumbNailUrl.length > 0)) {
+      // console.log(thumbNailDel);
+      if (!(workDetail.thumbNailUrl === "")) {
+        if (reThumbNail.file) {
+          // 썸네일 이미지 업로드
+          const thumbNailName = `${uuidv4()}`;
+          const { data: thumbNailData, error: thumbNailError } = await supabase.storage.from("images").upload(thumbNailName, reThumbNail.file);
+          if (thumbNailError) {
+            throw thumbNailError;
+          }
+          const fakethumbNailUrl = await supabase.storage.from("images").getPublicUrl(thumbNailName);
+          thumbNailUrl = fakethumbNailUrl.data.publicUrl;
+        }
         if (thumbNail.file) {
+          //-> 인풋창에 썸네일 사진이 있을때
+          // 썸네일 이미지 업로드
+          const thumbNailName = `${uuidv4()}`;
+          const { data: thumbNailData, error: thumbNailError } = await supabase.storage.from("images").upload(thumbNailName, thumbNail.file);
+          if (thumbNailError) {
+            throw thumbNailError;
+          }
+          const fakethumbNailUrl = await supabase.storage.from("images").getPublicUrl(thumbNailName);
+          thumbNailUrl = fakethumbNailUrl.data.publicUrl;
+        }
+      } else {
+        thumbNailUrl = "";
+        if (thumbNail.file) {
+          //-> 인풋창에 썸네일 사진이 있을때
           // 썸네일 이미지 업로드
           const thumbNailName = `${uuidv4()}`;
           const { data: thumbNailData, error: thumbNailError } = await supabase.storage.from("images").upload(thumbNailName, thumbNail.file);
@@ -167,6 +320,24 @@ function Retouchwork() {
           thumbNailUrl = fakethumbNailUrl.data.publicUrl;
         }
       }
+      // 기존 이미지가 변경되면 변경된 이미지   url을 업로드 합니다
+      const uploadedReImages = await Promise.all(
+        reImg.map(async (input, index) => {
+          if (!input.file) {
+            return null; // 이미지가 선택되지 않은 경우 null 반환
+          }
+          console.log(index);
+          const selectedFile = input.file;
+
+          const imageName = `${uuidv4()}`;
+          const { data, error } = await supabase.storage.from("images").upload(imageName, selectedFile, { overwrite: true });
+
+          if (error) throw error;
+          const imageUrl = await supabase.storage.from("images").getPublicUrl(imageName);
+          return (existingImageUrls[index] = imageUrl.data.publicUrl), (existingImageNamses[index] = imageName);
+        })
+      );
+
       // 새로 업로드할 이미지 URL들을 업로드합니다.
       const uploadedImages = await Promise.all(
         imageInputs.map(async (input) => {
@@ -180,7 +351,6 @@ function Retouchwork() {
 
           if (error) throw error;
           const imageUrl = await supabase.storage.from("images").getPublicUrl(imageName);
-          // console.log(imageUrl.data.publicUrl);
           return { imageUrl: imageUrl.data.publicUrl, imageName: imageName };
         })
       );
@@ -219,76 +389,7 @@ function Retouchwork() {
       console.error("Error:", error.message);
     }
   };
-
-  //~사진 삭제
-  const [delName, setDelName] = useState([]);
-
-  const handleImageDelete = (index) => {
-    const updatedFileUrlList = [...workDetail.fileUrlList];
-    const updatedFileNameList = [...workDetail.fileNameList];
-
-    const deletedImageName = updatedFileNameList[index]; // 삭제된 이미지 URL 저장
-
-    updatedFileUrlList.splice(index, 1); // 해당 인덱스의 이미지 URL 제거
-    updatedFileNameList.splice(index, 1); // 해당 인덱스의 이미지 Name 제거
-    setWorkDetail({ ...workDetail, fileUrlList: updatedFileUrlList, fileNameList: updatedFileNameList }); // 이미지 URL 목록 업데이트
-    setDelName([...delName, deletedImageName]);
-  };
-
-  const [thumbNailDel, setThumbNailDel] = useState();
-  const handleThumbNailDelete = () => {
-    const delThumb = (workDetail.thumbNailUrl = []);
-    setWorkDetail({ ...workDetail, thumbNailUrl: delThumb }); // 이미지 URL 목록 업데이트
-  };
-  console.log(workDetail);
-
-  //~드래그 기능
-  const [draggedItemId, setDraggedItemId] = useState(null);
-
-  const handleDragStart = (e, id) => {
-    setDraggedItemId(id);
-  };
-
-  const handleDragOver = (e) => {
-    e.preventDefault();
-  };
-
-  const handleDrop = (e, dropZoneId, work) => {
-    e.preventDefault();
-
-    // 드래그된 요소를 배열에서 제거합니다.
-    const draggedWork = workDetail.fileUrlList[draggedItemId];
-    const newWorkData = workDetail.fileUrlList.filter((_, index) => index !== draggedItemId);
-
-    const draggedWorkName = workDetail.fileNameList[draggedItemId];
-    const newWorkDataName = workDetail.fileNameList.filter((_, index) => index !== draggedItemId);
-
-    // 드롭된 위치에 드래그된 요소를 삽입합니다.
-    const updatedWorkData = [...newWorkData.slice(0, dropZoneId), draggedWork, ...newWorkData.slice(dropZoneId)];
-    const updatedWorkDataName = [...newWorkData.slice(0, dropZoneId), draggedWorkName, ...newWorkDataName.slice(dropZoneId)];
-
-    // 변경된 배열을 상태에 설정합니다.
-    setWorkDetail({ ...workDetail, fileUrlList: updatedWorkData, fileNameList: updatedWorkDataName });
-    setDraggedItemId(null);
-  };
-
-  const { text, sett } = useState("text");
-  const handleBigInputChange = (e) => {
-    handleChange(e); // handleChange 함수 호출
-    handleBigTextChange(e); // handleBigTextChange 함수 호출
-  };
-  const handleInputChange = (e) => {
-    handleChange(e); // handleChange 함수 호출
-    handleTextChange(e); // handleBigTextChange 함수 호출
-  };
-
-  const handleImageClick = () => {
-    const fileInput = document.getElementById(`thumb`);
-    if (fileInput) {
-      fileInput.click();
-    }
-  };
-
+  const om = async () => {};
   return (
     <div>
       <section id="retouchwork">
@@ -357,7 +458,9 @@ function Retouchwork() {
                 <div className="thumbnailspace">
                   <div>리스트 이미지 (16:10 비율)</div>
                   <div className="image-container">
-                    <img src={retouch} className="re-btn" />
+                    <input className="btnaddimg" type="file" id="thumb" onChange={handleReThumbNail} />
+                    <img src={retouch} className="re-btn" draggable="false" onClick={handleThumbImageClick} />
+
                     <img draggable="false" src={delbtn} alt="" className="del-btn" onClick={handleThumbNailDelete} />
                     <img src={workDetail && workDetail.thumbNailUrl} alt="" />
                   </div>
@@ -367,29 +470,32 @@ function Retouchwork() {
               )}
 
               <div>
-                <div className="workpictitle">본문 이미지</div>
-                <div className="workpic">
-                  {workDetail &&
-                    workDetail.fileUrlList &&
-                    workDetail.fileUrlList.map((url, index) => (
-                      <div key={index} className="image-container" onDrop={(e) => handleDrop(e, index)} onDragOver={handleDragOver}>
-                        <input className="btnaddimg" type="file" id="thumb" />
-
-                        <img src={retouch} className="re-btn" onClick={handleImageClick} />
-                        <img onClick={() => handleImageDelete(index)} draggable="false" src={delbtn} alt="" className="del-btn" />
-                        <img
-                          src={movebtn}
-                          alt=""
-                          className="move-btn"
-                          draggable="true"
-                          onDragStart={(e) => {
-                            handleDragStart(e, index);
-                          }}
-                        />
-                        <img className="pic" src={url} alt={`Image ${index}`} draggable="false" />
-                      </div>
-                    ))}
-                </div>
+                {workDetail && workDetail.fileUrlList && workDetail.fileUrlList.length > 0 ? <div className="workpictitle">본문 이미지</div> : ""}
+                {workDetail && workDetail.fileUrlList && workDetail.fileUrlList.length > 0 ? (
+                  <div className="workpic">
+                    {workDetail &&
+                      workDetail.fileUrlList &&
+                      workDetail.fileUrlList.map((url, index) => (
+                        <div key={index} className="image-container" onDrop={(e) => handleDrop(e, index)} onDragOver={handleDragOver}>
+                          <input className="btnaddimg" type="file" id={`reimg-${index}`} onChange={(e) => handleReImg(e, index)} />
+                          <img src={retouch} className="re-btn" draggable="false" onClick={() => handleImageClick(index)} />
+                          <img onClick={() => handleImageDelete(index)} draggable="false" src={delbtn} alt="" className="del-btn" />
+                          <img
+                            src={movebtn}
+                            alt=""
+                            className="move-btn"
+                            draggable="true"
+                            onDragStart={(e) => {
+                              handleDragStart(e, index);
+                            }}
+                          />
+                          <img className="pic" src={url} alt={`Image ${index}`} draggable="false" />
+                        </div>
+                      ))}
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
 
               {workDetail && workDetail.thumbNailUrl && workDetail.thumbNailUrl.length > 0 ? (

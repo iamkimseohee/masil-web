@@ -3,13 +3,15 @@ import about from "../assets/img/logo.png";
 
 import Lottie from "lottie-react";
 import introimg from "..//assets/img/introimg.json";
+import intrologo from "../assets/img/intrologomasil.json";
 
 const Intro = () => {
   return (
     <div>
       <section id="intro">
         <div className="intro__inner">
-          <img src={about} alt="어바웃" className="intrologo" />
+          <Lottie animationData={intrologo} className="intrologo"></Lottie>
+
           <div></div>
           <h1 className="intro__title">
             함께 일할 수 있는 <br />
