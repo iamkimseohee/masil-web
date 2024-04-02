@@ -14,13 +14,7 @@ function Workdetail() {
   const movePage = useNavigate();
 
   const goPort = () => {
-    movePage("/");
-    setTimeout(() => {
-      window.scrollTo({
-        top: 1880,
-        behavior: "smooth", // smooth 스크롤 효과 설정
-      });
-    }, 500);
+    movePage("/?clicked=true");
   };
 
   useEffect(() => {
@@ -45,15 +39,7 @@ function Workdetail() {
       <section id="workdetail">
         <div className="workdetail__top2">
           <div className="workdetail__top2__inner">
-            {" "}
-            <img
-              src={back}
-              alt="뒤로가기"
-              onClick={() => {
-                movePage(-1);
-              }}
-              className="backlogo"
-            />
+            <img src={back} alt="뒤로가기" onClick={goPort} className="backlogo" />
             <div className="workdetail__top2__innertext">작업</div>
           </div>
           <hr className="mobilebar" />
@@ -62,14 +48,7 @@ function Workdetail() {
         <div className="workdetail__inner">
           <div className="workdetail__top">
             {" "}
-            <img
-              src={about}
-              alt="어바웃"
-              onClick={() => {
-                movePage(-1);
-              }}
-              className="intrologo"
-            />
+            <img src={about} alt="어바웃" onClick={goPort} className="intrologo" />
             <img src={close} alt="취소" onClick={goPort} className="canclebtn" />
           </div>
 
@@ -86,12 +65,7 @@ function Workdetail() {
           <div className="workpic">{workDetail && workDetail.fileUrlList && workDetail.fileUrlList.map((url, index) => <img className="pic" key={index} src={url} />)}</div>
           <hr className="bar2" />
 
-          <button
-            className="btngolist"
-            onClick={() => {
-              movePage(-1);
-            }}
-          >
+          <button className="btngolist" onClick={goPort}>
             목록
           </button>
         </div>
