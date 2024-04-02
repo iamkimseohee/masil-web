@@ -320,8 +320,8 @@ function Mailpage() {
                   <input type="checkbox" id={`ch-${index}`} style={{ display: "none" }} className="checkboxs" checked={checkedItems[contact.id] || false} onChange={() => handleCheckboxChange(contact.id, contact.email)} />
                   <label htmlFor={`ch-${index}`}></label>
 
-                  <NavLink to={{ pathname: `/userpage/maildetail/${contact.id}/${index + 1}` }} className="datalist">
-                    <div className="num">{index + 1}</div>
+                  <NavLink to={{ pathname: `/userpage/maildetail/${contact.id}/${(currentPage - 1) * itemsPerPage + index + 1}` }} className="datalist">
+                    <div className="num">{(currentPage - 1) * itemsPerPage + index + 1}</div>
                     <div className="name">{contact.name}</div>
                     <div className="title maintitle">{contact.title}</div>
                     <div className="time">{contact.time}</div>

@@ -60,7 +60,7 @@ function Blockmaildetail() {
       if (error) {
         throw error;
       }
-      setNextId(data[0]);
+      setPrevId(data[0]);
     } catch (error) {
       console.error("Error fetching next id:", error.message);
     }
@@ -70,7 +70,7 @@ function Blockmaildetail() {
       if (error) {
         throw error;
       }
-      setPrevId(data[0]);
+      setNextId(data[0]);
     } catch (error) {
       console.error("Error fetching previous id:", error.message);
     }
@@ -178,6 +178,8 @@ function Blockmaildetail() {
             </NavLink>
           </div>
         )}
+        {prevId && nextId && <hr className="bar1" />}
+        {prevId && !nextId && <hr className="bar2" />}
         {nextId && (
           <div className="nextmail">
             <NavLink to={`/userpage/blockmaildetail/${nextId?.id}/${indexNum + 1}`} className="nextmail__inner">

@@ -118,9 +118,21 @@
     }
   }
 
-  .nextmail {
+  .bar1 {
+    border: 0;
     border-top: 1px solid #efefef;
-    border-bottom: 2px solid #c2c4c4;
+    margin: 0;
+  }
+  .bar2 {
+    border: 0;
+
+    border-bottom: 2px solid #7b808d;
+    margin: 0;
+  }
+
+  .nextmail {
+    // border-top: 1px solid #efefef;
+    border-bottom: 2px solid #7b808d;
 
     height: 60px;
     display: flex;
