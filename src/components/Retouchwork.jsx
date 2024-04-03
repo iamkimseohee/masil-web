@@ -58,8 +58,9 @@ function Retouchwork() {
 
   useEffect(() => {
     if (workDetail) {
-      setIsChecked(workDetail.code);
-      setIsChecked2(workDetail.design);
+      setCodeIsChecked(workDetail.code);
+      setDesignIsChecked(workDetail.design);
+      setVideoIsChecked2(workDetail.video);
     }
   }, [workDetail]);
 
@@ -89,16 +90,23 @@ function Retouchwork() {
   };
 
   //~ 체크박스
-  const [isChecked, setIsChecked] = useState("");
-  const [isChecked2, setIsChecked2] = useState("");
 
-  const handleCheckboxChange1 = () => {
-    setIsChecked((preCheck) => {
+  const [codeIsChecked, setCodeIsChecked] = useState(false);
+  const [designIsChecked, setDesignIsChecked] = useState(false);
+  const [videoIsChecked, setVideoIsChecked2] = useState(false);
+
+  const handleCodeCheckboxChange = () => {
+    setCodeIsChecked((preCheck) => {
       return !preCheck;
     });
   };
-  const handleCheckboxChange2 = () => {
-    setIsChecked2((preCheck) => {
+  const handleDesignCheckboxChange = () => {
+    setDesignIsChecked((preCheck) => {
+      return !preCheck;
+    });
+  };
+  const handleVideoCheckboxChange = () => {
+    setVideoIsChecked2((preCheck) => {
       return !preCheck;
     });
   };
@@ -444,12 +452,16 @@ function Retouchwork() {
                 <div style={{ marginTop: "50px" }}>분야</div>
                 <div className="worktype">
                   <div>
-                    <input type="checkbox" id="code" checked={isChecked} onClick={handleCheckboxChange1} value={isChecked ? "false" : "true"} name="code" onChange={handleChange} />
+                    <input type="checkbox" id="code" checked={codeIsChecked} onClick={handleCodeCheckboxChange} value={codeIsChecked ? "false" : "true"} name="code" onChange={handleChange} />
                     <label htmlFor="code">개발</label>
                   </div>
                   <div>
-                    <input type="checkbox" id="design" name="design" checked={isChecked2} value={isChecked2 ? "false" : "true"} onClick={handleCheckboxChange2} onChange={handleChange} />
+                    <input type="checkbox" id="design" name="design" checked={designIsChecked} value={designIsChecked ? "false" : "true"} onClick={handleDesignCheckboxChange} onChange={handleChange} />
                     <label htmlFor="design">디자인</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" id="video" name="video" checked={videoIsChecked} value={videoIsChecked ? "false" : "true"} onClick={handleVideoCheckboxChange} onChange={handleChange} />
+                    <label htmlFor="video">영상</label>
                   </div>
                 </div>
               </div>

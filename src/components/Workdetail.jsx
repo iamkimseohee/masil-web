@@ -59,6 +59,7 @@ function Workdetail() {
               <>
                 {workDetail.code && <div className="workicon">개발</div>}
                 {workDetail.design && <div className="workicon">디자인</div>}
+                {workDetail.video && <div className="workicon">영상</div>}
               </>
             )}
           </div>

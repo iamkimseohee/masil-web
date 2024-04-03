@@ -57,16 +57,22 @@ function Addwork() {
   };
 
   //~ 체크박스
-  const [isChecked, setIsChecked] = useState(false);
-  const [isChecked2, setIsChecked2] = useState(false);
+  const [codeIsChecked, setCodeIsChecked] = useState(false);
+  const [designIsChecked, setDesignIsChecked] = useState(false);
+  const [videoIsChecked, setVideoIsChecked2] = useState(false);
 
-  const handleCheckboxChange1 = () => {
-    setIsChecked((preCheck) => {
+  const handleCodeCheckboxChange = () => {
+    setCodeIsChecked((preCheck) => {
       return !preCheck;
     });
   };
-  const handleCheckboxChange2 = () => {
-    setIsChecked2((preCheck) => {
+  const handleDesignCheckboxChange = () => {
+    setDesignIsChecked((preCheck) => {
+      return !preCheck;
+    });
+  };
+  const handleVideoCheckboxChange = () => {
+    setVideoIsChecked2((preCheck) => {
       return !preCheck;
     });
   };
@@ -228,12 +234,16 @@ function Addwork() {
                 <div style={{ marginTop: "50px" }}>분야</div>
                 <div className="worktype">
                   <div>
-                    <input type="checkbox" id="code" value={isChecked ? "false" : "true"} name="code" onClick={handleCheckboxChange1} onChange={handleChange} />
+                    <input type="checkbox" id="code" value={codeIsChecked ? "false" : "true"} name="code" onClick={handleCodeCheckboxChange} onChange={handleChange} />
                     <label htmlFor="code">개발</label>
                   </div>
                   <div>
-                    <input type="checkbox" id="design" name="design" value={isChecked2 ? "false" : "true"} onClick={handleCheckboxChange2} onChange={handleChange} />
+                    <input type="checkbox" id="design" name="design" value={designIsChecked ? "false" : "true"} onClick={handleDesignCheckboxChange} onChange={handleChange} />
                     <label htmlFor="design">디자인</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" id="video" name="video" value={videoIsChecked ? "false" : "true"} onClick={handleVideoCheckboxChange} onChange={handleChange} />
+                    <label htmlFor="video">영상</label>
                   </div>
                 </div>
               </div>
