@@ -9,6 +9,9 @@ const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhb
 
 function Workdetail() {
   const [workDetail, setWorkDetail] = useState(null);
+  const [bodyImg, setBodyImg] = useState(false);
+  const [thumbImg, setThumbImg] = useState(false);
+  const [loading, setLoading] = useState(true); // 추가: 데이터 로딩 여부 상태
 
   const { id } = useParams();
   const movePage = useNavigate();
@@ -28,11 +31,21 @@ function Workdetail() {
         throw error;
       }
       setWorkDetail(data);
-      console.log(data);
+
+      let hasThumbNail = data && data.thumbNailUrl && data.thumbNailUrl.length > 0;
+      let hasFileUrlList = data && data.fileUrlList && data.fileUrlList.length > 0;
+      if (hasThumbNail === null) {
+        hasThumbNail = false;
+      }
+      setThumbImg(hasThumbNail);
+      setBodyImg(hasFileUrlList);
+      console.log(data, hasThumbNail, hasFileUrlList);
+      setLoading(false); // 데이터 로딩 완료 후 상태 업데이트
     } catch (error) {
       console.error("Error fetching mail detail:", error.message);
     }
   };
+  console.log("🌮", thumbImg, bodyImg);
 
   return (
     <div>
@@ -63,12 +76,25 @@ function Workdetail() {
               </>
             )}
           </div>
-          <div className="workpic">{workDetail && workDetail.fileUrlList && workDetail.fileUrlList.map((url, index) => <img className="pic" key={index} src={url} />)}</div>
-          <hr className="bar2" />
 
-          <button className="btngolist" onClick={goPort}>
-            목록
-          </button>
+          {loading ? (
+            <div style={{ height: "500px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <div style={{ fontSize: "50px", color: "#7b808d" }}>로딩중...</div>
+            </div>
+          ) : (
+            <div>
+              <div className="workpic">
+                {bodyImg && workDetail.fileUrlList.map((url, index) => <img className="pic" key={index} src={url} />)}
+                {thumbImg && !bodyImg ? <img src={workDetail.thumbNailUrl} alt="" className="thumbimg" /> : ""}
+                {!thumbImg && !bodyImg ? <img src="https://qiwrlvedwhommigwrmcz.supabase.co/storage/v1/object/public/images/pub/logo-eng.png" alt="" className="thumbimg" /> : ""}
+              </div>
+              <hr className="bar2" />
+
+              <button className="btngolist" onClick={goPort}>
+                목록
+              </button>
+            </div>
+          )}
         </div>
       </section>
     </div>

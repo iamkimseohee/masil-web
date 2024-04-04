@@ -67,6 +67,7 @@ function Mailpage() {
 
     fetchTotalItems();
   }, []);
+  console.log(totalItems);
   // 10,20,30개 선택되면 바꾸기
   const handleItemsPerPageChange = (perPage) => {
     setItemsPerPage(perPage);
@@ -320,8 +321,8 @@ function Mailpage() {
                   <input type="checkbox" id={`ch-${index}`} style={{ display: "none" }} className="checkboxs" checked={checkedItems[contact.id] || false} onChange={() => handleCheckboxChange(contact.id, contact.email)} />
                   <label htmlFor={`ch-${index}`}></label>
 
-                  <NavLink to={{ pathname: `/userpage/maildetail/${contact.id}/${(currentPage - 1) * itemsPerPage + index + 1}` }} className="datalist">
-                    <div className="num">{(currentPage - 1) * itemsPerPage + index + 1}</div>
+                  <NavLink to={{ pathname: `/userpage/maildetail/${contact.id}/${totalItems - index - (currentPage - 1) * itemsPerPage}` }} className="datalist">
+                    <div className="num">{totalItems - index - (currentPage - 1) * itemsPerPage}</div>
                     <div className="name">{contact.name}</div>
                     <div className="title maintitle">{contact.title}</div>
                     <div className="time">{contact.time}</div>

@@ -137,7 +137,18 @@
       justify-content: space-between; // 이미지 사이에 간격주기
       width: 100%;
       gap: 12px;
+      .thumbimg {
+        margin-bottom: 21px;
+        border: 1px solid #c2c4c433;
 
+        width: 608px;
+        @media (max-width: 1024px) {
+          width: 257.42px;
+        }
+        @media (max-width: 768px) {
+          width: 100%;
+        }
+      }
       .pic {
         margin-bottom: 21px;
         border: 1px solid #c2c4c433;

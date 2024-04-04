@@ -35,13 +35,13 @@ const Port = () => {
                 <li key={work.id}>
                   <NavLink
                     to={"/workdetail/" + work.id}
-                    onClick={(e) => {
-                      if (work && work.fileUrlList && work.fileUrlList.length === 0) {
-                        e.preventDefault();
-                        console.log(e);
-                      }
-                    }}
-                    className={work && work.fileUrlList && work.fileUrlList.length === 0 ? "nocursor" : ""}
+                    // onClick={(e) => {
+                    //   if (work && work.fileUrlList && work.fileUrlList.length === 0) {
+                    //     e.preventDefault();
+                    //     console.log(e);
+                    //   }
+                    // }}
+                    // className={work && work.fileUrlList && work.fileUrlList.length === 0 ? "nocursor" : ""}
                   >
                     <div className="port__wrapimgs" style={{ backgroundColor: "#F8F8F8", display: "flex", alignItems: "center", justifyContent: "center" }}>
                       {work && work.thumbNailUrl && work.thumbNailUrl.length > 0 ? (

@@ -90,7 +90,7 @@ function Workpage() {
 
   const handleDragStart = (e, id) => {
     console.log("내가 선택한 id", id);
-    // e.dataTransfer.effectAllowed = "move"; // +버튼 생기는거 맞아주기
+    e.dataTransfer.effectAllowed = "move"; // +버튼 생기는거 맞아주기
     setDraggedItemId(id);
   };
 

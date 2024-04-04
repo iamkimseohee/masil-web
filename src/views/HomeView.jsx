@@ -30,7 +30,6 @@ const HomeView = () => {
       <Service />
       <Port />
       <Contact />
-
       <Footer />
     </div>
   );
