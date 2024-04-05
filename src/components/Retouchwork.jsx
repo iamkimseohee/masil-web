@@ -71,14 +71,16 @@ function Retouchwork() {
   useEffect(() => {
     if (workDetail && workDetail.checkItemList) {
       const updatedCheckedList = workDetail.checkItemList.map((item, index) => {
-        const isChecked = checkList.includes(item); // 전역으로 정의된 checkList와 비교하여 값이 포함되는지 확인
-        return { item, isChecked, globalIndex: checkList.indexOf(item) }; // workDetail.checkItemList의 인덱스와 전역 checkList의 인덱스 함께 반환
+        const isChecked = checkList.indexOf(item); // 전역으로 정의된 checkList와 비교하여 값이 포함되는지 확인
+        return { isChecked }; // workDetail.checkItemList의 인덱스와 전역 checkList의 인덱스 함께 반환
       });
       setCheckedList(updatedCheckedList);
     }
   }, [workDetail, checkList]);
 
   console.log(checkedList);
+  const isCheckedArray = checkedList.map((item) => item.isChecked);
+  console.log(isCheckedArray);
 
   //~ 글자 감지
 
