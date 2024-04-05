@@ -55,10 +55,10 @@
           margin-top: 5px;
         }
         .checkboxline {
-          border: 1px solid #c2c4c4;
-          border-width: 0 0 1px;
+          border-bottom: 1px solid #c2c4c4;
+
           height: 82px;
-          margin-bottom: 30px;
+          margin-bottom: 35px;
 
           .worktype {
             font-size: 19px;
@@ -88,6 +88,23 @@
             }
           }
         }
+
+        .checklist {
+          // border: 1px solid red;
+          display: flex;
+          ul {
+            li {
+              float: left;
+              width: 171px;
+              margin-bottom: 25px;
+              label {
+                color: #707070;
+                font-size: 18px;
+              }
+            }
+          }
+        }
+
         .filebox {
           height: 83px;
           display: flex;
@@ -197,61 +214,20 @@
   .btnaddimg {
     display: none;
   }
-  input#code + label:before {
+
+  input.checkboxs + label:before {
     content: "";
     display: inline-block;
     width: 26px;
     height: 26px;
-    border: 1px solid#CBD3D3;
-    border-radius: 4px;
+
+    background: url(../../img/before.png) no-repeat;
+
     vertical-align: middle;
     margin-right: 10px;
     margin-bottom: 4px;
   }
-  input#code:checked + label:before {
-    content: "\2713";
-    border-color: #00b5b5;
-    font-size: 33px; /* 표시할 체크 표시의 크기 */
-    color: #00b5b5; /* 체크 표시의 색상 */
-    display: inline-block; /* 인라인 요소로 설정하여 텍스트와 함께 배치 */
-    line-height: 25px; /* 체크 표시의 세로 정렬을 위해 높이 지정 */
-  }
-  input#design + label:before {
-    content: "";
-    display: inline-block;
-    width: 26px;
-    height: 26px;
-    border: 1px solid#CBD3D3;
-    border-radius: 4px;
-    vertical-align: middle;
-    margin-right: 10px;
-    margin-bottom: 4px;
-  }
-  input#design:checked + label:before {
-    content: "\2713";
-    border-color: #00b5b5;
-    font-size: 33px; /* 표시할 체크 표시의 크기 */
-    color: #00b5b5; /* 체크 표시의 색상 */
-    display: inline-block; /* 인라인 요소로 설정하여 텍스트와 함께 배치 */
-    line-height: 25px; /* 체크 표시의 세로 정렬을 위해 높이 지정 */
-  }
-  input#video + label:before {
-    content: "";
-    display: inline-block;
-    width: 26px;
-    height: 26px;
-    border: 1px solid#CBD3D3;
-    border-radius: 4px;
-    vertical-align: middle;
-    margin-right: 10px;
-    margin-bottom: 4px;
-  }
-  input#video:checked + label:before {
-    content: "\2713";
-    border-color: #00b5b5;
-    font-size: 33px; /* 표시할 체크 표시의 크기 */
-    color: #00b5b5; /* 체크 표시의 색상 */
-    display: inline-block; /* 인라인 요소로 설정하여 텍스트와 함께 배치 */
-    line-height: 25px; /* 체크 표시의 세로 정렬을 위해 높이 지정 */
+  input.checkboxs:checked + label:before {
+    background: url(../../img/check.png) no-repeat;
   }
 }

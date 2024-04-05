@@ -7,10 +7,12 @@ import { useForm } from "react-hook-form";
 import { createClient } from "@supabase/supabase-js";
 import home from "../assets/img/home.png";
 import up from "../assets/img/up.png";
+import { checkList } from "../components/checkList";
 
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 function Addwork() {
+  // console.log(checkList);
   const scroll = () => {
     window.scroll({
       top: 0,
@@ -154,7 +156,7 @@ function Addwork() {
       const imageNames = filteredImages.map((image) => image.imageName);
 
       // 데이터베이스에 삽입할 데이터 준비
-      const formDataWithImages = { ...formData, fileUrlList: imageUrls, fileNameList: imageNames, thumbNailUrl: thumbNailUrl };
+      const formDataWithImages = { ...formData, fileUrlList: imageUrls, fileNameList: imageNames, thumbNailUrl: thumbNailUrl, checkItemList: finalCheckedItems };
 
       // 데이터베이스에 데이터 삽입
       const { data: insertedData, error } = await supabase.from("work").insert([formDataWithImages]);
@@ -181,6 +183,29 @@ function Addwork() {
     handleTextChange(e); // handleBigTextChange 함수 호출
   };
 
+  const [checkedItems, setCheckedItems] = useState({});
+  const [finalCheckedItems, setFinalCheckedItems] = useState([]);
+
+  const handleCheckboxChange = (e, itemName) => {
+    const { id, checked } = e.target;
+    // 체크박스가 체크되었을 때 해당 체크박스의 이름을 상태로 저장
+    setCheckedItems((prevCheckedItems) => {
+      const updatedCheckedItems = { ...prevCheckedItems, [id]: checked ? itemName : "" };
+      // 버튼 클릭 이벤트 핸들러를 호출하여 최종 체크된 항목들을 업데이트
+      handleButtonClick(updatedCheckedItems);
+      return updatedCheckedItems;
+    });
+  };
+
+  const handleButtonClick = (checkedItems) => {
+    // checkedItems 객체에서 값이 true인 키(체크된 체크박스의 id)들만 모아서 배열로 반환
+    const checkedItemsArray = Object.values(checkedItems).filter((value) => value);
+    // 인덱스 순서대로 정렬
+    checkedItemsArray.sort((a, b) => a - b);
+    setFinalCheckedItems(checkedItemsArray);
+  };
+  console.log(finalCheckedItems);
+
   return (
     <div>
       <section id="addwork">
@@ -197,13 +222,13 @@ function Addwork() {
           <div className="addwork__text">
             <form>
               <div style={{ display: "flex" }}>
-                <div>큰 제목</div> <div style={{ marginLeft: "auto" }}>{bigTextLength} / 15</div>
+                <div>큰 제목</div> <div style={{ marginLeft: "auto" }}>{bigTextLength} / 20</div>
               </div>
 
               <input
                 type="text"
                 name="title"
-                maxLength={15}
+                maxLength={20}
                 {...register("title", {
                   required: "제목을 입력하세요",
                   onChange: (e) => {
@@ -213,13 +238,13 @@ function Addwork() {
               />
               {errors.title && <p style={{ color: "red" }}>{errors.title.message}</p>}
               <div style={{ display: "flex", marginTop: "50px" }}>
-                <div>본문 내용</div> <div style={{ marginLeft: "auto" }}>{textLength} / 25</div>
+                <div>본문 내용</div> <div style={{ marginLeft: "auto" }}>{textLength} / 50</div>
               </div>
 
               <input
                 type="text"
                 name="body"
-                maxLength={25}
+                maxLength={50}
                 {...register("body", {
                   required: "내용을 입력하세요",
                   onChange: (e) => {
@@ -234,20 +259,31 @@ function Addwork() {
                 <div style={{ marginTop: "50px" }}>분야</div>
                 <div className="worktype">
                   <div>
-                    <input type="checkbox" id="code" value={codeIsChecked ? "false" : "true"} name="code" onClick={handleCodeCheckboxChange} onChange={handleChange} />
+                    <input type="checkbox" className="checkboxs" id="code" value={codeIsChecked ? "false" : "true"} name="code" onClick={handleCodeCheckboxChange} onChange={handleChange} />
                     <label htmlFor="code">개발</label>
                   </div>
                   <div>
-                    <input type="checkbox" id="design" name="design" value={designIsChecked ? "false" : "true"} onClick={handleDesignCheckboxChange} onChange={handleChange} />
+                    <input type="checkbox" className="checkboxs" id="design" name="design" value={designIsChecked ? "false" : "true"} onClick={handleDesignCheckboxChange} onChange={handleChange} />
                     <label htmlFor="design">디자인</label>
                   </div>
                   <div>
-                    <input type="checkbox" id="video" name="video" value={videoIsChecked ? "false" : "true"} onClick={handleVideoCheckboxChange} onChange={handleChange} />
+                    <input type="checkbox" className="checkboxs" id="video" name="video" value={videoIsChecked ? "false" : "true"} onClick={handleVideoCheckboxChange} onChange={handleChange} />
                     <label htmlFor="video">영상</label>
                   </div>
                 </div>
               </div>
-              <div>리스트 이미지 (16:10 비율)</div>
+              <div style={{ marginBottom: "24px" }}>체크</div>
+              <div className="checklist">
+                <ul>
+                  {checkList.map((item, index) => (
+                    <li key={index}>
+                      <input type="checkbox" id={`checkbox-${index}`} className="checkboxs" style={{ display: "none" }} onChange={(e) => handleCheckboxChange(e, item)} checked={checkedItems[`checkbox-${index}`] === item} />
+                      <label htmlFor={`checkbox-${index}`}>{item}</label>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div style={{ marginTop: "50px" }}>리스트 이미지 (16:10 비율)</div>
               <div className="filebox">
                 <input type="text" className="upload-name" value={thumbNail ? thumbNail.fileName : ""} readOnly />
                 <label htmlFor={`file`} className="btn-upload">

@@ -173,7 +173,7 @@
         display: flex;
         text-align: center;
         .num {
-          width: 48px;
+          width: 50px;
           margin-right: 30px;
         }
         .name {
@@ -237,37 +237,23 @@
     display: inline-block;
     width: 26px;
     height: 26px;
-    border: 1px solid#CBD3D3;
-    border-radius: 4px;
+    background: url(../../img/before.png) no-repeat;
     vertical-align: middle;
     margin-right: 30px;
   }
   input#ch:checked + label:before {
-    content: "\2713";
-    border-color: #00b5b5;
-    font-size: 33px; /* 표시할 체크 표시의 크기 */
-    color: #00b5b5; /* 체크 표시의 색상 */
-
-    display: inline-block; /* 인라인 요소로 설정하여 텍스트와 함께 배치 */
-    line-height: 25px; /* 체크 표시의 세로 정렬을 위해 높이 지정 */
+    background: url(../../img/check.png) no-repeat;
   }
   input.checkboxs + label:before {
     content: "";
     display: inline-block;
     width: 26px;
     height: 26px;
-    border: 1px solid#CBD3D3;
-    border-radius: 4px;
+    background: url(../../img/before.png) no-repeat;
     vertical-align: middle;
     margin-right: 30px;
   }
   input.checkboxs:checked + label:before {
-    content: "\2713";
-    border-color: #00b5b5;
-    font-size: 33px; /* 표시할 체크 표시의 크기 */
-    color: #00b5b5; /* 체크 표시의 색상 */
-
-    display: inline-block; /* 인라인 요소로 설정하여 텍스트와 함께 배치 */
-    line-height: 25px; /* 체크 표시의 세로 정렬을 위해 높이 지정 */
+    background: url(../../img/check.png) no-repeat;
   }
 }

@@ -8,6 +8,7 @@ import delbtn from "../assets/img/delbtn.png";
 import home from "../assets/img/home.png";
 import up from "../assets/img/up.png";
 import retouch from "../assets/img/retouch.png";
+import { checkList } from "../components/checkList";
 
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
@@ -37,6 +38,7 @@ function Retouchwork() {
       console.error("Error fetching mail detail:", error.message);
     }
   };
+  console.log(workDetail);
   console.log(workDetail && workDetail.fileUrlList);
   const maxArr = 8 - (workDetail && workDetail.fileUrlList.length);
 
@@ -62,6 +64,21 @@ function Retouchwork() {
       setVideoIsChecked2(workDetail.video);
     }
   }, [workDetail]);
+
+  //~
+  const [checkedList, setCheckedList] = useState([]);
+
+  useEffect(() => {
+    if (workDetail && workDetail.checkItemList) {
+      const updatedCheckedList = workDetail.checkItemList.map((item, index) => {
+        const isChecked = checkList.includes(item); // 전역으로 정의된 checkList와 비교하여 값이 포함되는지 확인
+        return { item, isChecked, globalIndex: checkList.indexOf(item) }; // workDetail.checkItemList의 인덱스와 전역 checkList의 인덱스 함께 반환
+      });
+      setCheckedList(updatedCheckedList);
+    }
+  }, [workDetail, checkList]);
+
+  console.log(checkedList);
 
   //~ 글자 감지
 
@@ -415,12 +432,12 @@ function Retouchwork() {
           <div className="retouchwork__body">
             <form>
               <div style={{ display: "flex" }}>
-                <div>큰 제목</div> <div style={{ marginLeft: "auto" }}>{bigTextLength} / 15</div>
+                <div>큰 제목</div> <div style={{ marginLeft: "auto" }}>{bigTextLength} / 20</div>
               </div>
               <input
                 type="text"
                 name="title"
-                maxLength={15}
+                maxLength={20}
                 {...register("title", {
                   required: "제목을 입력하세요",
                   onChange: (e) => {
@@ -431,12 +448,12 @@ function Retouchwork() {
               {errors.title && <p style={{ color: "red" }}>{errors.title.message}</p>}
 
               <div style={{ display: "flex", marginTop: "50px" }}>
-                <div>본문 내용</div> <div style={{ marginLeft: "auto" }}>{textLength} / 25</div>{" "}
+                <div>본문 내용</div> <div style={{ marginLeft: "auto" }}>{textLength} / 50</div>{" "}
               </div>
               <input
                 type="text"
                 name="body"
-                maxLength={25}
+                maxLength={50}
                 {...register("body", {
                   required: "내용을 입력하세요",
 
@@ -452,23 +469,35 @@ function Retouchwork() {
                 <div style={{ marginTop: "50px" }}>분야</div>
                 <div className="worktype">
                   <div>
-                    <input type="checkbox" id="code" checked={codeIsChecked} onClick={handleCodeCheckboxChange} value={codeIsChecked ? "false" : "true"} name="code" onChange={handleChange} />
+                    <input className="checkboxs" type="checkbox" id="code" checked={codeIsChecked} onClick={handleCodeCheckboxChange} value={codeIsChecked ? "false" : "true"} name="code" onChange={handleChange} />
                     <label htmlFor="code">개발</label>
                   </div>
                   <div>
-                    <input type="checkbox" id="design" name="design" checked={designIsChecked} value={designIsChecked ? "false" : "true"} onClick={handleDesignCheckboxChange} onChange={handleChange} />
+                    <input className="checkboxs" type="checkbox" id="design" name="design" checked={designIsChecked} value={designIsChecked ? "false" : "true"} onClick={handleDesignCheckboxChange} onChange={handleChange} />
                     <label htmlFor="design">디자인</label>
                   </div>
                   <div>
-                    <input type="checkbox" id="video" name="video" checked={videoIsChecked} value={videoIsChecked ? "false" : "true"} onClick={handleVideoCheckboxChange} onChange={handleChange} />
+                    <input className="checkboxs" type="checkbox" id="video" name="video" checked={videoIsChecked} value={videoIsChecked ? "false" : "true"} onClick={handleVideoCheckboxChange} onChange={handleChange} />
                     <label htmlFor="video">영상</label>
                   </div>
                 </div>
               </div>
+              <div style={{ marginBottom: "24px" }}>체크</div>
+              <div className="checklist">
+                <ul>
+                  {checkList.map((item, index) => (
+                    <li key={index}>
+                      <input type="checkbox" id={`checkbox-${index}`} className="checkboxs" style={{ display: "none" }} />
+                      <label htmlFor={`checkbox-${index}`}>{item}</label>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
               {workDetail && workDetail.thumbNailUrl && workDetail.thumbNailUrl.length > 0 ? (
                 <div className="thumbnailspace">
-                  <div>리스트 이미지 (16:10 비율)</div>
+                  <div style={{ marginTop: "50px" }}>리스트 이미지 (16:10 비율)</div>
+
                   <div className="image-container">
                     <input className="btnaddimg" type="file" id="thumb" onChange={handleReThumbNail} />
                     <img src={retouch} className="re-btn" draggable="false" onClick={handleThumbImageClick} />
