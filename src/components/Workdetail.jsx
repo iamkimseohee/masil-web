@@ -77,6 +77,19 @@ function Workdetail() {
             )}
           </div>
 
+          {workDetail && workDetail.checkItemList ? (
+            <div className="checkitem">
+              {workDetail.checkItemList.map((item, index) => (
+                <span key={index}>
+                  {item}
+                  {index !== workDetail.checkItemList.length - 1 && ","}
+                </span>
+              ))}
+            </div>
+          ) : (
+            ""
+          )}
+
           {loading ? (
             <div style={{ height: "500px", display: "flex", justifyContent: "center", alignItems: "center" }}>
               <div style={{ fontSize: "50px", color: "#7b808d" }}>로딩중...</div>
@@ -86,7 +99,7 @@ function Workdetail() {
               <div className="workpic">
                 {bodyImg && workDetail.fileUrlList.map((url, index) => <img className="pic" key={index} src={url} />)}
                 {thumbImg && !bodyImg ? <img src={workDetail.thumbNailUrl} alt="" className="thumbimg" /> : ""}
-                {!thumbImg && !bodyImg ? <img src="https://qiwrlvedwhommigwrmcz.supabase.co/storage/v1/object/public/images/pub/logo-eng.png" alt="" className="thumbimg" /> : ""}
+                {!thumbImg && !bodyImg ? <img src="https://qiwrlvedwhommigwrmcz.supabase.co/storage/v1/object/public/images/pub/none.jpeg" alt="" className="thumbimg" /> : ""}
               </div>
               <hr className="bar2" />
 

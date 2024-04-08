@@ -39,7 +39,7 @@ function Retouchwork() {
     }
   };
   console.log(workDetail);
-  console.log(workDetail && workDetail.fileUrlList);
+  // console.log(workDetail && workDetail.fileUrlList);
   const maxArr = 8 - (workDetail && workDetail.fileUrlList.length);
 
   useEffect(() => {
@@ -65,22 +65,43 @@ function Retouchwork() {
     }
   }, [workDetail]);
 
-  //~
+  // //~
   const [checkedList, setCheckedList] = useState([]);
+  const [checkedItems, setCheckedItems] = useState({});
+  const [finalCheckedItems, setFinalCheckedItems] = useState([]);
 
   useEffect(() => {
     if (workDetail && workDetail.checkItemList) {
-      const updatedCheckedList = workDetail.checkItemList.map((item, index) => {
-        const isChecked = checkList.indexOf(item); // 전역으로 정의된 checkList와 비교하여 값이 포함되는지 확인
-        return { isChecked }; // workDetail.checkItemList의 인덱스와 전역 checkList의 인덱스 함께 반환
-      });
-      setCheckedList(updatedCheckedList);
+      setFinalCheckedItems(workDetail.checkItemList);
     }
   }, [workDetail, checkList]);
+  console.log(finalCheckedItems);
 
-  console.log(checkedList);
-  const isCheckedArray = checkedList.map((item) => item.isChecked);
-  console.log(isCheckedArray);
+  // const isCheckedArray = checkedList.map((item) => item.isChecked);
+  // console.log("인덱스번호 합친거", isCheckedArray);
+
+  //~
+
+  const handleCheckboxChange = (e, itemName, index) => {
+    const { checked } = e.target;
+
+    const updatedCheckItemList = checked ? [...finalCheckedItems, itemName] : finalCheckedItems.filter((item) => item !== itemName);
+
+    // 정렬
+    updatedCheckItemList.sort((a, b) => {
+      const indexA = checkList.indexOf(a);
+      const indexB = checkList.indexOf(b);
+      return indexA - indexB;
+    });
+
+    // workDetail 상태를 업데이트하여 체크박스 상태 반영
+    setWorkDetail((prevWorkDetail) => {
+      return { ...prevWorkDetail, checkItemList: updatedCheckItemList };
+    });
+    setFinalCheckedItems(updatedCheckItemList);
+  };
+
+  console.log(finalCheckedItems);
 
   //~ 글자 감지
 
@@ -215,7 +236,7 @@ function Retouchwork() {
       reader.readAsDataURL(file); // 파일을 읽기 시작
     }
   };
-  console.log(reImg);
+  // console.log(reImg);
 
   //~사진 삭제
   const [delName, setDelName] = useState([]);
@@ -393,7 +414,7 @@ function Retouchwork() {
       const allImageNames = [...existingImageNamses, ...imageNames];
 
       // 데이터베이스에 삽입할 데이터 준비
-      const formDataWithImages = { ...formData, fileUrlList: allImageUrls, fileNameList: allImageNames, thumbNailUrl: thumbNailUrl };
+      const formDataWithImages = { ...formData, fileUrlList: allImageUrls, fileNameList: allImageNames, thumbNailUrl: thumbNailUrl, checkItemList: finalCheckedItems };
 
       // 데이터베이스에 데이터 삽입
       const { data: updatedData, error } = await supabase.from("work").update(formDataWithImages).eq("id", id);
@@ -489,7 +510,8 @@ function Retouchwork() {
                 <ul>
                   {checkList.map((item, index) => (
                     <li key={index}>
-                      <input type="checkbox" id={`checkbox-${index}`} className="checkboxs" style={{ display: "none" }} />
+                      <input type="checkbox" id={`checkbox-${index}`} className="checkboxs" style={{ display: "none" }} checked={(workDetail && workDetail.checkItemList && workDetail.checkItemList.includes(item)) || ""} onChange={(e) => handleCheckboxChange(e, item, index)} />
+
                       <label htmlFor={`checkbox-${index}`}>{item}</label>
                     </li>
                   ))}
@@ -545,7 +567,7 @@ function Retouchwork() {
                 ""
               ) : (
                 <div>
-                  <div>리스트 이미지 (16:10 비율)</div>
+                  <div style={{ marginTop: "50px" }}>리스트 이미지 (16:10 비율)</div>
                   <div className="filebox">
                     <input type="text" className="upload-name" value={thumbNail ? thumbNail.fileName : ""} readOnly />
                     <label htmlFor="thumbnail" className="btn-upload">

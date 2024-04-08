@@ -111,7 +111,7 @@
       }
     }
     .worketail__icon {
-      margin-bottom: 46px;
+      margin-bottom: 20px;
       display: flex;
       @media (max-width: 768px) {
         font-size: 28px;
@@ -129,6 +129,15 @@
         margin-right: 10px;
         font-family: "Pretendard-Regular";
       }
+    }
+
+    .checkitem {
+      font-family: "Pretendard-Regular";
+      font-size: 13px;
+      color: #7b808d;
+      margin-bottom: 75px;
+      border-bottom: 1px solid #eeeeee;
+      padding-bottom: 20px;
     }
 
     .workpic {

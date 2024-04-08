@@ -14,6 +14,7 @@ const Contact = () => {
     register,
     handleSubmit,
     formState: { errors },
+    clearErrors,
   } = useForm();
 
   const onSubmit = async (data) => {
@@ -87,8 +88,10 @@ const Contact = () => {
   const handleTitleChange = (e) => {
     setTitleLength(e.target.value.length);
     console.log(e.target.value.length);
-
-    if (titleLength > 1000) {
+    if (e.target.value.length > 0) {
+      clearErrors("body"); // 입력값이 유효하면 오류 메시지를 숨깁니다.
+    }
+    if (e.target.value.length > 1000) {
       alert("1000자까지만 적을수 있습니다 ");
     }
   };

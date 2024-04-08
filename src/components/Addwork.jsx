@@ -12,6 +12,26 @@ import { checkList } from "../components/checkList";
 const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
 
 function Addwork() {
+  const [workData, setworkData] = useState([]);
+
+  useEffect(() => {
+    fetchWorkData();
+  }, []);
+
+  const fetchWorkData = async () => {
+    try {
+      const { data, error } = await supabase.from("work").select("number").order("number", { ascending: false });
+
+      if (error) {
+        throw error;
+      }
+      setworkData(data);
+    } catch (error) {
+      console.error("Error fetching contact data:", error.message);
+    }
+  };
+  console.log(workData);
+
   // console.log(checkList);
   const scroll = () => {
     window.scroll({
@@ -154,9 +174,12 @@ function Addwork() {
 
       const imageUrls = filteredImages.map((image) => image.imageUrl);
       const imageNames = filteredImages.map((image) => image.imageName);
-
+      const lastWorkNumber = workData.length > 0 ? workData[0].number : 0; // 가장 마지막 작업의 number 값
+      console.log(lastWorkNumber);
+      const newWorkNumber = lastWorkNumber + 1; // 새로운 작업의 number 값
       // 데이터베이스에 삽입할 데이터 준비
-      const formDataWithImages = { ...formData, fileUrlList: imageUrls, fileNameList: imageNames, thumbNailUrl: thumbNailUrl, checkItemList: finalCheckedItems };
+      const formDataWithImages = { ...formData, fileUrlList: imageUrls, fileNameList: imageNames, thumbNailUrl: thumbNailUrl, checkItemList: finalCheckedItems, number: newWorkNumber };
+      // workData 배열의 가장 마지막 항목의 number 값을 찾아서 1을 더하여 새로운 데이터의 number 값으로 설정
 
       // 데이터베이스에 데이터 삽입
       const { data: insertedData, error } = await supabase.from("work").insert([formDataWithImages]);
@@ -183,14 +206,16 @@ function Addwork() {
     handleTextChange(e); // handleBigTextChange 함수 호출
   };
 
+  //~ 체크 리스트
   const [checkedItems, setCheckedItems] = useState({});
   const [finalCheckedItems, setFinalCheckedItems] = useState([]);
 
-  const handleCheckboxChange = (e, itemName) => {
+  const handleCheckboxChange = (e, itemName, index) => {
     const { id, checked } = e.target;
+    console.log(e, itemName, index);
     // 체크박스가 체크되었을 때 해당 체크박스의 이름을 상태로 저장
     setCheckedItems((prevCheckedItems) => {
-      const updatedCheckedItems = { ...prevCheckedItems, [id]: checked ? itemName : "" };
+      const updatedCheckedItems = { ...prevCheckedItems, [index]: checked ? itemName : "" };
       // 버튼 클릭 이벤트 핸들러를 호출하여 최종 체크된 항목들을 업데이트
       handleButtonClick(updatedCheckedItems);
       return updatedCheckedItems;
@@ -198,8 +223,10 @@ function Addwork() {
   };
 
   const handleButtonClick = (checkedItems) => {
+    console.log(checkedItems);
     // checkedItems 객체에서 값이 true인 키(체크된 체크박스의 id)들만 모아서 배열로 반환
     const checkedItemsArray = Object.values(checkedItems).filter((value) => value);
+    console.log(checkedItemsArray);
     // 인덱스 순서대로 정렬
     checkedItemsArray.sort((a, b) => a - b);
     setFinalCheckedItems(checkedItemsArray);
@@ -277,7 +304,8 @@ function Addwork() {
                 <ul>
                   {checkList.map((item, index) => (
                     <li key={index}>
-                      <input type="checkbox" id={`checkbox-${index}`} className="checkboxs" style={{ display: "none" }} onChange={(e) => handleCheckboxChange(e, item)} checked={checkedItems[`checkbox-${index}`] === item} />
+                      <input type="checkbox" id={`checkbox-${index}`} className="checkboxs" style={{ display: "none" }} onChange={(e) => handleCheckboxChange(e, item, index)} />
+                      {/* <input type="checkbox" id={`checkbox-${index}`} className="checkboxs" style={{ display: "none" }} onChange={(e) => handleCheckboxChange(e, item)} checked={checkedItems[`checkbox-${index}`] === item} /> */}
                       <label htmlFor={`checkbox-${index}`}>{item}</label>
                     </li>
                   ))}

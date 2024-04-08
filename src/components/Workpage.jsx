@@ -47,7 +47,8 @@ function Workpage() {
 
   const fetchWorkData = async () => {
     try {
-      const { data, error } = await supabase.from("work").select("*");
+      const { data, error } = await supabase.from("work").select("*").order("id", { ascending: false });
+
       if (error) {
         throw error;
       }
@@ -56,6 +57,8 @@ function Workpage() {
       console.error("Error fetching contact data:", error.message);
     }
   };
+
+  console.log(workData);
   const handleDelete = async () => {
     //체크된 애들만 가져오기
     const idsToDelete = Object.keys(checkedItems).filter((key) => checkedItems[key]);
@@ -88,31 +91,48 @@ function Workpage() {
   //~드래그 기능
   const [draggedItemId, setDraggedItemId] = useState(null);
 
-  const handleDragStart = (e, id) => {
+  const handleDragStart = (e, id, number) => {
     console.log("내가 선택한 id", id);
+    console.log("내가 선택한 number", number);
     e.dataTransfer.effectAllowed = "move"; // +버튼 생기는거 맞아주기
-    setDraggedItemId(id);
+    setDraggedItemId(number);
   };
 
   const handleDragOver = (e) => {
     e.preventDefault();
   };
 
-  const handleDrop = (e, dropZoneId) => {
+  const handleDrop = (e, dropZoneId, dropZoneNumber) => {
     e.preventDefault();
-
+    console.log(dropZoneId);
     // 드롭된 요소의 인덱스를 찾습니다.
-    const dropIndex = workData.findIndex((work) => work.id === dropZoneId);
+    const dropIndex = workData.findIndex((work) => work.number === dropZoneNumber);
+    console.log("드롭된 인덱스", dropIndex);
 
     // 드래그된 요소의 인덱스를 찾습니다.
-    const draggedIndex = workData.findIndex((work) => work.id === draggedItemId);
+    const draggedIndex = workData.findIndex((work) => work.number === draggedItemId);
+    console.log("드래그된 요소의 원래 인덱스", draggedIndex);
+
+    // 드래그된 요소와 드롭된 요소의 number를 서로 교환합니다.
+    // 드래그된 요소와 드롭된 요소의 number를 서로 교환합니다.
+    const updatedWorkData2 = workData.map((work, index) => {
+      if (index === dropIndex) {
+        return { ...work, number: workData[draggedIndex].number };
+      } else if (index === draggedIndex) {
+        return { ...work, number: dropZoneNumber };
+      } else {
+        return work;
+      }
+    });
 
     // 드래그된 요소를 배열에서 제거합니다.
-    const draggedWork = workData[draggedIndex];
-    const newWorkData = workData.filter((_, index) => index !== draggedIndex);
+    const draggedWork = updatedWorkData2[draggedIndex];
+    console.log(draggedWork);
+    const newWorkData = updatedWorkData2.filter((_, index) => index !== draggedIndex);
 
     // 드롭된 위치에 드래그된 요소를 삽입합니다.
     const updatedWorkData = [...newWorkData.slice(0, dropIndex), draggedWork, ...newWorkData.slice(dropIndex)];
+    console.log("최종", updatedWorkData);
 
     // 변경된 배열을 상태에 설정합니다.
     setworkData(updatedWorkData);
@@ -128,7 +148,7 @@ function Workpage() {
         throw deleteError;
       }
       console.log("Data deleted from work successfully:", deleteResponse);
-
+      const newData = workData.reverse().map((item, index) => ({ ...item, number: index + 1 }));
       // 새로운 데이터 삽입
       const { data, error: insertError } = await supabase.from("work").insert(workData);
       if (insertError) {
@@ -137,7 +157,7 @@ function Workpage() {
       console.log("New data inserted into work successfully:", data);
 
       // 삭제 후 추가 작업이 필요한 경우 여기에 추가합니다.
-      // window.location.reload();
+      window.location.reload();
       movePage("/userpage");
     } catch (error) {
       console.error("Error updating data:", error.message);
@@ -157,12 +177,12 @@ function Workpage() {
       <div>
         <ul>
           {workData.map((work, index) => (
-            <li key={work.id} onDrop={(e) => handleDrop(e, work.id)} onDragOver={handleDragOver}>
+            <li key={work.id} onDrop={(e) => handleDrop(e, work.id, work.number)} onDragOver={handleDragOver}>
               <div className="workpageitem">
                 <input type="checkbox" id={`ch-${index}`} style={{ display: "none" }} className="workinput" checked={checkedItems[work.id] || false} onChange={() => handleCheckboxChange(work.id)} />
                 <label htmlFor={`ch-${index}`}></label>
 
-                <img src={movebtn} alt="" className="move-btn" onDragStart={(e) => handleDragStart(e, work.id)} />
+                <img src={movebtn} alt="" className="move-btn" onDragStart={(e) => handleDragStart(e, work.id, work.number)} />
                 <NavLink to={"/retouchwork/" + work.id} draggable="false">
                   {" "}
                   <img src={retouch} alt="" className="retouch-btn" draggable="false" />

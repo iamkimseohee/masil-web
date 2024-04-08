@@ -1,1 +1,1 @@
-export const checkList = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+export const checkList = ["PHP", "ASP", "ASP.NET", "C#", "JAVA", "Android", "iOS", "Javascript", "HTML5", "React", "Nextjs", "Typescript", "Vite", "UI/UX", "Web", "App", "Interaction", "Motion", "Illustration", "Typography", "Data Visualization", "Infographic", "Animation", "Graphic"];
