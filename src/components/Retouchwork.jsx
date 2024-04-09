@@ -10,7 +10,10 @@ import up from "../assets/img/up.png";
 import retouch from "../assets/img/retouch.png";
 import { checkList } from "../components/checkList";
 
-const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
+const supabase = createClient(
+  "https://qiwrlvedwhommigwrmcz.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY"
+);
 
 function Retouchwork() {
   const scroll = () => {
@@ -26,6 +29,9 @@ function Retouchwork() {
 
   //~ 정보 가져오기
   const [workDetail, setWorkDetail] = useState(null);
+  const [codeIsChecked, setCodeIsChecked] = useState(false);
+  const [designIsChecked, setDesignIsChecked] = useState(false);
+  const [videoIsChecked, setVideoIsChecked] = useState(false);
 
   const fetchWorkDetail = async (id) => {
     try {
@@ -34,11 +40,14 @@ function Retouchwork() {
         throw error;
       }
       setWorkDetail(data);
+      setCodeIsChecked(data && data.code ? data.code : "");
+      setDesignIsChecked(data && data.design ? data.design : "");
+      setVideoIsChecked(data && data.video ? data.video : "");
     } catch (error) {
       console.error("Error fetching mail detail:", error.message);
     }
   };
-  console.log(workDetail);
+  console.log(workDetail && workDetail.code, workDetail && workDetail.design, workDetail && workDetail.video);
   // console.log(workDetail && workDetail.fileUrlList);
   const maxArr = 8 - (workDetail && workDetail.fileUrlList.length);
 
@@ -56,14 +65,6 @@ function Retouchwork() {
       body: workDetail && workDetail.body,
     },
   });
-
-  useEffect(() => {
-    if (workDetail) {
-      setCodeIsChecked(workDetail.code);
-      setDesignIsChecked(workDetail.design);
-      setVideoIsChecked2(workDetail.video);
-    }
-  }, [workDetail]);
 
   // //~
   const [checkedList, setCheckedList] = useState([]);
@@ -130,25 +131,28 @@ function Retouchwork() {
 
   //~ 체크박스
 
-  const [codeIsChecked, setCodeIsChecked] = useState(false);
-  const [designIsChecked, setDesignIsChecked] = useState(false);
-  const [videoIsChecked, setVideoIsChecked2] = useState(false);
+  // useEffect(() => {
+  //   if (workDetail) {
+  //     setCodeIsChecked(workDetail.code);
+  //     setDesignIsChecked(workDetail.design);
+  //     setVideoIsChecked(workDetail.video);
+  //   }
+  // }, [workDetail]);
 
+  console.log(workDetail ? workDetail.code : false, workDetail && workDetail.video ? workDetail.video : false);
   const handleCodeCheckboxChange = () => {
-    setCodeIsChecked((preCheck) => {
-      return !preCheck;
-    });
+    setCodeIsChecked((prevCodeIsChecked) => !prevCodeIsChecked);
   };
+
   const handleDesignCheckboxChange = () => {
-    setDesignIsChecked((preCheck) => {
-      return !preCheck;
-    });
+    setDesignIsChecked((prevDesignIsChecked) => !prevDesignIsChecked);
   };
+
   const handleVideoCheckboxChange = () => {
-    setVideoIsChecked2((preCheck) => {
-      return !preCheck;
-    });
+    setVideoIsChecked((prevVideoIsChecked) => !prevVideoIsChecked);
   };
+
+  console.log(codeIsChecked, designIsChecked, videoIsChecked);
 
   //~ form에 적은 값들 업데이트
   const [formData, setFormData] = useState({});
@@ -324,6 +328,10 @@ function Retouchwork() {
   const { v4: uuidv4 } = require("uuid"); // uuid 모듈을 불러옵니다.
   const onSubmit = async () => {
     try {
+      if (!workDetail || !workDetail.checkItemList || workDetail.checkItemList.length === 0) {
+        alert("프로그램 언어 또는 디자인 기술을 체크해 주세요."); // 하나도 선택되지 않았을 때 얼랏창 띄우기
+        return;
+      }
       // 기존 이미지 URL들을 가져옵니다.
       const existingImageUrls = workDetail.fileUrlList || [];
       const existingImageNamses = workDetail.fileNameList || [];
@@ -510,7 +518,14 @@ function Retouchwork() {
                 <ul>
                   {checkList.map((item, index) => (
                     <li key={index}>
-                      <input type="checkbox" id={`checkbox-${index}`} className="checkboxs" style={{ display: "none" }} checked={(workDetail && workDetail.checkItemList && workDetail.checkItemList.includes(item)) || ""} onChange={(e) => handleCheckboxChange(e, item, index)} />
+                      <input
+                        type="checkbox"
+                        id={`checkbox-${index}`}
+                        className="checkboxs"
+                        style={{ display: "none" }}
+                        checked={(workDetail && workDetail.checkItemList && workDetail.checkItemList.includes(item)) || ""}
+                        onChange={(e) => handleCheckboxChange(e, item, index)}
+                      />
 
                       <label htmlFor={`checkbox-${index}`}>{item}</label>
                     </li>

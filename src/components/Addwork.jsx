@@ -141,6 +141,11 @@ function Addwork() {
 
   const onSubmit = async (data) => {
     try {
+      const anyChecked = Object.values(checkedItems).some((checked) => checked); // 어떤 체크박스가 선택되었는지 확인
+      if (!anyChecked) {
+        alert("프로그램 언어 또는 디자인 기술을 체크해 주세요."); // 하나도 선택되지 않았을 때 얼랏창 띄우기
+        return;
+      }
       console.log("클릭");
       setIsSubmitting(true);
       let thumbNailUrl = null; // 썸네일 이미지 URL 초기값 설정
@@ -304,7 +309,7 @@ function Addwork() {
                 <ul>
                   {checkList.map((item, index) => (
                     <li key={index}>
-                      <input type="checkbox" id={`checkbox-${index}`} className="checkboxs" style={{ display: "none" }} onChange={(e) => handleCheckboxChange(e, item, index)} />
+                      <input type="checkbox" id={`checkbox-${index}`} className="checkboxs" style={{ display: "none" }} onChange={(e) => handleCheckboxChange(e, item, index)} {...register} />
                       {/* <input type="checkbox" id={`checkbox-${index}`} className="checkboxs" style={{ display: "none" }} onChange={(e) => handleCheckboxChange(e, item)} checked={checkedItems[`checkbox-${index}`] === item} /> */}
                       <label htmlFor={`checkbox-${index}`}>{item}</label>
                     </li>

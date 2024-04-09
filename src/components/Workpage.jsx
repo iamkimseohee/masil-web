@@ -6,7 +6,10 @@ import movebtn from "../assets/img/move.png";
 import retouch from "../assets/img/retouch.png";
 import up from "../assets/img/up.png";
 
-const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
+const supabase = createClient(
+  "https://qiwrlvedwhommigwrmcz.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY"
+);
 
 function Workpage() {
   const [workData, setworkData] = useState([]);
@@ -47,7 +50,7 @@ function Workpage() {
 
   const fetchWorkData = async () => {
     try {
-      const { data, error } = await supabase.from("work").select("*").order("id", { ascending: false });
+      const { data, error } = await supabase.from("work").select("*").order("number", { ascending: false });
 
       if (error) {
         throw error;
@@ -92,7 +95,7 @@ function Workpage() {
   const [draggedItemId, setDraggedItemId] = useState(null);
 
   const handleDragStart = (e, id, number) => {
-    console.log("내가 선택한 id", id);
+    // console.log("내가 선택한 id", id);
     console.log("내가 선택한 number", number);
     e.dataTransfer.effectAllowed = "move"; // +버튼 생기는거 맞아주기
     setDraggedItemId(number);
@@ -105,20 +108,17 @@ function Workpage() {
   const handleDrop = (e, dropZoneId, dropZoneNumber) => {
     e.preventDefault();
     console.log(dropZoneId);
+    console.log("내가 놓은 number", dropZoneNumber);
     // 드롭된 요소의 인덱스를 찾습니다.
     const dropIndex = workData.findIndex((work) => work.number === dropZoneNumber);
-    console.log("드롭된 인덱스", dropIndex);
+    // console.log("드롭된 인덱스", dropIndex);
 
     // 드래그된 요소의 인덱스를 찾습니다.
     const draggedIndex = workData.findIndex((work) => work.number === draggedItemId);
-    console.log("드래그된 요소의 원래 인덱스", draggedIndex);
+    // console.log("드래그된 요소의 원래 인덱스", draggedIndex);
 
-    // 드래그된 요소와 드롭된 요소의 number를 서로 교환합니다.
-    // 드래그된 요소와 드롭된 요소의 number를 서로 교환합니다.
     const updatedWorkData2 = workData.map((work, index) => {
-      if (index === dropIndex) {
-        return { ...work, number: workData[draggedIndex].number };
-      } else if (index === draggedIndex) {
+      if (index === draggedIndex) {
         return { ...work, number: dropZoneNumber };
       } else {
         return work;
@@ -127,15 +127,33 @@ function Workpage() {
 
     // 드래그된 요소를 배열에서 제거합니다.
     const draggedWork = updatedWorkData2[draggedIndex];
-    console.log(draggedWork);
+    // console.log(draggedWork);
     const newWorkData = updatedWorkData2.filter((_, index) => index !== draggedIndex);
 
     // 드롭된 위치에 드래그된 요소를 삽입합니다.
     const updatedWorkData = [...newWorkData.slice(0, dropIndex), draggedWork, ...newWorkData.slice(dropIndex)];
-    console.log("최종", updatedWorkData);
+    // console.log([...newWorkData.slice(0, dropIndex)], draggedWork, [...newWorkData.slice(dropIndex)]);
+    // console.log("최종", updatedWorkData);
+
+    const finalUpdatedWorkData = updatedWorkData.map((work, index) => {
+      console.log(work.number);
+
+      // 드래그된 요소가 드롭된 위치보다 뒤에 있을 때, 순서를 1 증가시킵니다.
+      if (index < dropIndex) {
+        return { ...work, number: work.number + 1 };
+      }
+
+      if (dropIndex < index && index <= draggedIndex) {
+        console.log("드롭과 드래그 사이");
+        return { ...work, number: work.number - 1 };
+      }
+
+      return work;
+    });
+    console.log("🍿🍿🍿🍿🍿🍿🍿🍿", finalUpdatedWorkData);
 
     // 변경된 배열을 상태에 설정합니다.
-    setworkData(updatedWorkData);
+    setworkData(finalUpdatedWorkData);
     setDraggedItemId(null);
   };
 
@@ -157,6 +175,7 @@ function Workpage() {
       console.log("New data inserted into work successfully:", data);
 
       // 삭제 후 추가 작업이 필요한 경우 여기에 추가합니다.
+      alert("반영되었습니다.");
       window.location.reload();
       movePage("/userpage");
     } catch (error) {
