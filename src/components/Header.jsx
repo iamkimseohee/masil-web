@@ -82,7 +82,7 @@ const Header = () => {
                   <a
                     href={nav.url}
                     onClick={(e) => {
-                      e.preventDefault(); //이벤트 없애기
+                      e.preventDefault(); //이벤트 해제
                       smoothScroll(nav.url.substring(1));
                     }}
                   >
