@@ -13,6 +13,8 @@ export const checkList = [
   "Nextjs",
   "Typescript",
   "Vite",
+  "Vue",
+  "JSP",
   "UI/UX",
   "Web",
   "App",

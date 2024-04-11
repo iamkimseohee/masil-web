@@ -65,6 +65,7 @@ function Workpage() {
   const handleDelete = async () => {
     //체크된 애들만 가져오기
     const idsToDelete = Object.keys(checkedItems).filter((key) => checkedItems[key]);
+
     if (idsToDelete.length === 0) return;
 
     try {
@@ -96,7 +97,7 @@ function Workpage() {
 
   const handleDragStart = (e, id, number) => {
     // console.log("내가 선택한 id", id);
-    console.log("내가 선택한 number", number);
+    // console.log("내가 선택한 number", number);
     e.dataTransfer.effectAllowed = "move"; // +버튼 생기는거 맞아주기
     setDraggedItemId(number);
   };
@@ -107,8 +108,8 @@ function Workpage() {
 
   const handleDrop = (e, dropZoneId, dropZoneNumber) => {
     e.preventDefault();
-    console.log(dropZoneId);
-    console.log("내가 놓은 number", dropZoneNumber);
+    // console.log(dropZoneId);
+    // console.log("내가 놓은 number", dropZoneNumber);
     // 드롭된 요소의 인덱스를 찾습니다.
     const dropIndex = workData.findIndex((work) => work.number === dropZoneNumber);
     // console.log("드롭된 인덱스", dropIndex);
@@ -136,7 +137,7 @@ function Workpage() {
     // console.log("최종", updatedWorkData);
 
     const finalUpdatedWorkData = updatedWorkData.map((work, index) => {
-      console.log(work.number);
+      // console.log(work.number);
 
       // 드래그된 요소가 드롭된 위치보다 뒤에 있을 때, 순서를 1 증가시킵니다.
       if (index < dropIndex) {
@@ -144,13 +145,13 @@ function Workpage() {
       }
 
       if (dropIndex < index && index <= draggedIndex) {
-        console.log("드롭과 드래그 사이");
+        // console.log("드롭과 드래그 사이");
         return { ...work, number: work.number - 1 };
       }
 
       return work;
     });
-    console.log("🍿🍿🍿🍿🍿🍿🍿🍿", finalUpdatedWorkData);
+    // console.log("🍿🍿🍿🍿🍿🍿🍿🍿", finalUpdatedWorkData);
 
     // 변경된 배열을 상태에 설정합니다.
     setworkData(finalUpdatedWorkData);
@@ -177,7 +178,7 @@ function Workpage() {
       // 삭제 후 추가 작업이 필요한 경우 여기에 추가합니다.
       alert("반영되었습니다.");
       window.location.reload();
-      movePage("/userpage");
+      // movePage("/userpage");
     } catch (error) {
       console.error("Error updating data:", error.message);
     }

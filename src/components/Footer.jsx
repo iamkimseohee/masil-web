@@ -6,9 +6,6 @@ import { BrowserView, MobileView } from "react-device-detect";
 const Footer = () => {
   const movePage = useNavigate();
 
-  const login = () => {
-    movePage("/login");
-  };
   return (
     <div>
       <section id="footer">
@@ -16,7 +13,14 @@ const Footer = () => {
           <div className="text">
             <div className="text1">"A friendly and comfortable IT partner to work with"</div>
             <BrowserView>
-              <img src={underLogo} alt="under logo" className="underlogo" onClick={login} />
+              <img
+                src={underLogo}
+                alt="under logo"
+                className="underlogo"
+                onClick={() => {
+                  movePage("/login");
+                }}
+              />
             </BrowserView>
             <MobileView className="hi">
               <img src={underLogo} alt="under logo" className="underlogo" />

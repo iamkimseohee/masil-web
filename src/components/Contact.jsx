@@ -6,7 +6,10 @@ import { createClient } from "@supabase/supabase-js";
 import moment from "moment";
 import { useState } from "react";
 
-const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
+const supabase = createClient(
+  "https://qiwrlvedwhommigwrmcz.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY"
+);
 
 const Contact = () => {
   const movePage = useNavigate();
@@ -46,16 +49,17 @@ const Contact = () => {
             throw insertError;
           }
           if (isMobile) {
+            // 모바일
             movePage("/success");
           } else {
             alert("마실에 제안 및 문의 주셔서 감사합니다. 보내주신 내용은 담당자가 검토하여 필요시 회신 드리도록 하겠습니다.");
             // 제출 후에 각 input 요소의 값을 초기화
-            document.getElementsByName("name")[0].value = ""; // 이름 입력란 초기화
-            document.getElementsByName("email")[0].value = ""; // 이메일 입력란 초기화
-            document.getElementsByName("title")[0].value = ""; // 제목 입력란 초기화
-            document.getElementsByName("body")[0].value = ""; // 내용 입력란 초기화
+            document.getElementsByName("name")[0].value = "";
+            document.getElementsByName("email")[0].value = "";
+            document.getElementsByName("title")[0].value = "";
+            document.getElementsByName("body")[0].value = "";
 
-            setTitleLength(0); // 내용 입력란 길이 초기화
+            setTitleLength(0); // 내용 입력 길이 초기화
           }
           console.log("Data inserted into table A:", insertData);
         } else {

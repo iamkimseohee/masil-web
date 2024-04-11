@@ -15,7 +15,7 @@ function Userpage() {
 
   const movePage = useNavigate();
   useEffect(() => {
-    console.log(locatioin.pathname);
+    // console.log(locatioin.pathname);
   });
 
   return (
