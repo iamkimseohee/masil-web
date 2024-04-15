@@ -132,12 +132,20 @@
     }
 
     .checkitem {
-      font-family: "Pretendard-Regular";
-      font-size: 13px;
-      color: #7b808d;
-      margin-bottom: 75px;
-      border-bottom: 1px solid #eeeeee;
-      padding-bottom: 20px;
+      display: flex;
+      ul {
+        // border: 1px solid brown;
+        font-family: "Pretendard-Regular";
+        font-size: 13px;
+        color: #7b808d;
+        margin-bottom: 75px;
+        border-bottom: 1px solid #eeeeee;
+        padding-bottom: 20px;
+
+        li {
+          float: left;
+        }
+      }
     }
 
     .workpic {

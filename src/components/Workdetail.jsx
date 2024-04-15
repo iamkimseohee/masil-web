@@ -5,7 +5,10 @@ import about from "../assets/img/logo.png";
 import close from "../assets/img/btn-close.png";
 import back from "../assets/img/btn-back.png";
 
-const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
+const supabase = createClient(
+  "https://qiwrlvedwhommigwrmcz.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY"
+);
 
 function Workdetail() {
   const [workDetail, setWorkDetail] = useState(null);
@@ -77,18 +80,18 @@ function Workdetail() {
             )}
           </div>
 
-          {workDetail && workDetail.checkItemList ? (
-            <div className="checkitem">
-              {workDetail.checkItemList.map((item, index) => (
-                <span key={index}>
-                  {item}
-                  {index !== workDetail.checkItemList.length - 1 && ","}
-                </span>
-              ))}
-            </div>
-          ) : (
-            ""
-          )}
+          <div className="checkitem">
+            <ul>
+              {workDetail &&
+                workDetail.checkItemList &&
+                workDetail.checkItemList.map((item, index) => (
+                  <li key={index}>
+                    {item}
+                    {index !== workDetail.checkItemList.length - 1 && ",\u00A0"}
+                  </li>
+                ))}
+            </ul>
+          </div>
 
           {loading ? (
             <div style={{ height: "500px", display: "flex", justifyContent: "center", alignItems: "center" }}>
