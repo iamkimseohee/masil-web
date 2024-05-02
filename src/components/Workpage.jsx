@@ -61,7 +61,6 @@ function Workpage() {
     }
   };
 
-  console.log(workData);
   const handleDelete = async () => {
     //체크된 애들만 가져오기
     const idsToDelete = Object.keys(checkedItems).filter((key) => checkedItems[key]);

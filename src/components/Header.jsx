@@ -38,7 +38,6 @@ const smoothScroll = (targetId) => {
       behavior: "smooth", // smooth 스크롤 효과 설정
     });
     if (targetId == "header") {
-      // console.log("hi");
       window.scrollTo({
         top: 0,
         behavior: "smooth",

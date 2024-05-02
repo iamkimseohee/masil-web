@@ -34,9 +34,7 @@ function Addwork() {
       console.error("Error fetching contact data:", error.message);
     }
   };
-  console.log(workData);
 
-  // console.log(checkList);
   const scroll = () => {
     window.scroll({
       top: 0,
@@ -75,12 +73,10 @@ function Addwork() {
   const [bigTextLength, setBigTextLength] = useState(0);
   const handleBigTextChange = (e) => {
     setBigTextLength(e.target.value.length);
-    console.log(e.target.value);
   };
   const [textLength, setTextLength] = useState(0);
   const handleTextChange = (e) => {
     setTextLength(e.target.value.length);
-    console.log(e.target.value);
   };
 
   //~ 체크박스
@@ -106,7 +102,6 @@ function Addwork() {
 
   //~ form에 적은 값들 업데이트
   const [formData, setFormData] = useState({});
-  console.log("supabase에 입력될 값", formData);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -138,7 +133,6 @@ function Addwork() {
     const selectedThumbNail = { fileName: selectedThumbNailFile ? selectedThumbNailFile.name : "", file: selectedThumbNailFile };
     setThumbNail(selectedThumbNail);
   };
-  console.log(thumbNail);
 
   //~ supabase로 보내요
   const { v4: uuidv4 } = require("uuid"); // uuid 모듈을 불러옵니다.
@@ -151,7 +145,6 @@ function Addwork() {
         alert("프로그램 언어 또는 디자인 기술을 체크해 주세요."); // 하나도 선택되지 않았을 때 얼랏창 띄우기
         return;
       }
-      console.log("클릭");
       setIsSubmitting(true);
       let thumbNailUrl = null; // 썸네일 이미지 URL 초기값 설정
 
@@ -185,7 +178,6 @@ function Addwork() {
       const imageUrls = filteredImages.map((image) => image.imageUrl);
       const imageNames = filteredImages.map((image) => image.imageName);
       const lastWorkNumber = workData.length > 0 ? workData[0].number : 0; // 가장 마지막 작업의 number 값
-      console.log(lastWorkNumber);
       const newWorkNumber = lastWorkNumber + 1; // 새로운 작업의 number 값
       // 데이터베이스에 삽입할 데이터 준비
       const formDataWithImages = { ...formData, fileUrlList: imageUrls, fileNameList: imageNames, thumbNailUrl: thumbNailUrl, checkItemList: finalCheckedItems, number: newWorkNumber };
@@ -210,7 +202,6 @@ function Addwork() {
     handleChange(e); // handleChange 함수 호출
     handleBigTextChange(e); // handleBigTextChange 함수 호출
   };
-  console.log(bigTextLength, textLength);
   const handleInputChange = (e) => {
     handleChange(e); // handleChange 함수 호출
     handleTextChange(e); // handleBigTextChange 함수 호출
@@ -222,7 +213,6 @@ function Addwork() {
 
   const handleCheckboxChange = (e, itemName, index) => {
     const { id, checked } = e.target;
-    console.log(e, itemName, index);
     // 체크박스가 체크되었을 때 해당 체크박스의 이름을 상태로 저장
     setCheckedItems((prevCheckedItems) => {
       const updatedCheckedItems = { ...prevCheckedItems, [index]: checked ? itemName : "" };
@@ -233,15 +223,12 @@ function Addwork() {
   };
 
   const handleButtonClick = (checkedItems) => {
-    console.log(checkedItems);
     // checkedItems 객체에서 값이 true인 키(체크된 체크박스의 id)들만 모아서 배열로 반환
     const checkedItemsArray = Object.values(checkedItems).filter((value) => value);
-    console.log(checkedItemsArray);
     // 인덱스 순서대로 정렬
     checkedItemsArray.sort((a, b) => a - b);
     setFinalCheckedItems(checkedItemsArray);
   };
-  console.log(finalCheckedItems);
 
   return (
     <div>

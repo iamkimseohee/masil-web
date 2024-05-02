@@ -1,6 +1,4 @@
 import React from "react";
-import about from "../assets/img/logo.png";
-
 import Lottie from "lottie-react";
 import introimg from "..//assets/img/introimg.json";
 import intrologo from "../assets/img/intrologomasil.json";

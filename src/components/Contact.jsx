@@ -34,13 +34,10 @@ const Contact = () => {
       if (blockListData) {
         // blocklist에서 이메일 주소 배열 가져오기
         const blocklistEmails = blockListData.map((item) => item.maillist);
-        console.log(blocklistEmails);
 
         // data의 email이 blocklistEmails에 있는지 알아보기
         // blocklistEmails 배열에 데이터의 이메일이 포함되어 있는지 확인하고 필터링
         const isBlocked = blocklistEmails.includes(data.email);
-
-        console.log("Is email blocked?", isBlocked);
 
         // 조건에 따라 테이블 선택하여 데이터 삽입
         if (isBlocked) {
@@ -91,7 +88,6 @@ const Contact = () => {
   const [titleLength, setTitleLength] = useState(0);
   const handleTitleChange = (e) => {
     setTitleLength(e.target.value.length);
-    console.log(e.target.value.length);
     if (e.target.value.length > 0) {
       clearErrors("body"); // 입력값이 유효하면 오류 메시지를 숨깁니다.
     }

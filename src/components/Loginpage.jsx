@@ -2,7 +2,10 @@ import React, { useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
+const supabase = createClient(
+  "https://qiwrlvedwhommigwrmcz.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY"
+);
 const Loginpage = () => {
   const movePage = useNavigate();
   const cancle = () => {
@@ -41,7 +44,7 @@ const Loginpage = () => {
         throw error;
       }
       console.log("회원가입 성공:", user);
-      // 회원가입 후에 필요한 작업 수행
+      // 회원가입 후에 필요한 작업 수행해요
     } catch (error) {
       console.error("회원가입 오류:", error.message);
       // 오류 처리
@@ -82,7 +85,7 @@ const Loginpage = () => {
           </form>
           <div className="login__img">
             <button onClick={cancle}>취소</button>
-
+            {/* <button onClick={handleSubmit(signupHandler)}>회원가입</button> */}
             <button onClick={handleSubmit(signIn)}>확인</button>
           </div>
         </div>

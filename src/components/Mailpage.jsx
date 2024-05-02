@@ -6,7 +6,10 @@ import listnum from "../assets/img/btnlistnum.png";
 import { useNavigate } from "react-router-dom";
 import up from "../assets/img/up.png";
 
-const supabase = createClient("https://qiwrlvedwhommigwrmcz.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY");
+const supabase = createClient(
+  "https://qiwrlvedwhommigwrmcz.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpd3JsdmVkd2hvbW1pZ3dybWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNjk1OTUsImV4cCI6MjAyMjg0NTU5NX0.4YTF03D5i5u8bOXZypUjiIou2iNk9w_iZ8R_XWd-MTY"
+);
 
 const ITEMS_PER_PAGE = 10;
 
@@ -67,7 +70,6 @@ function Mailpage() {
 
     fetchTotalItems();
   }, []);
-  console.log(totalItems);
   // 10,20,30개 선택되면 바꾸기
   const handleItemsPerPageChange = (perPage) => {
     setItemsPerPage(perPage);
@@ -203,8 +205,6 @@ function Mailpage() {
     console.log(checkedMails);
     const idsToBlock = Object.keys(checkedMails).filter((key) => checkedMails[key]);
 
-    console.log(idsToBlock);
-
     if (idsToBlock.length === 0) return;
 
     try {
@@ -255,7 +255,6 @@ function Mailpage() {
 
   //~ 체크박스 상태 업데이트
   const handleCheckboxChange = (id, email) => {
-    console.log(email);
     setcheckedMails((prevState) => ({
       ...prevState,
       [id]: !prevState[id],

@@ -138,12 +138,43 @@
         font-family: "Pretendard-Regular";
         font-size: 13px;
         color: #7b808d;
-        margin-bottom: 75px;
-        border-bottom: 1px solid #eeeeee;
+        // margin-bottom: 75px;
         padding-bottom: 20px;
 
+        // border-bottom: 1px solid #eeeeee;
         li {
           float: left;
+        }
+      }
+    }
+    hr {
+      // border: 0;
+
+      margin-top: 0;
+      margin-bottom: 0;
+      border: 0;
+      border-bottom: 1px solid #eeeeee;
+      margin-bottom: 75px;
+    }
+
+    .loading {
+      margin-top: 89px;
+      .loading_inner {
+        display: flex;
+        flex-direction: column;
+        // justify-content: center;
+        align-items: center;
+        .loadingimg {
+          width: 294px;
+          height: 62px;
+        }
+        .loadingani {
+          width: 130px;
+          height: 30px;
+        }
+        .loadingtext {
+          width: 294px;
+          height: 15px;
         }
       }
     }

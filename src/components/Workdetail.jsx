@@ -4,6 +4,10 @@ import { createClient } from "@supabase/supabase-js";
 import about from "../assets/img/logo.png";
 import close from "../assets/img/btn-close.png";
 import back from "../assets/img/btn-back.png";
+import loadingImg from "../assets/img/loadingImg.png";
+import loadingText from "../assets/img/loadingText.png";
+import loadingAni from "../assets/img/loading.json";
+import Lottie from "lottie-react";
 
 const supabase = createClient(
   "https://qiwrlvedwhommigwrmcz.supabase.co",
@@ -42,13 +46,13 @@ function Workdetail() {
       }
       setThumbImg(hasThumbNail);
       setBodyImg(hasFileUrlList);
-      console.log(data, hasThumbNail, hasFileUrlList);
+      // console.log(data, hasThumbNail, hasFileUrlList);
       setLoading(false); // 데이터 로딩 완료 후 상태 업데이트
     } catch (error) {
       console.error("Error fetching mail detail:", error.message);
     }
   };
-  console.log("🌮", thumbImg, bodyImg);
+  // console.log("🌮", thumbImg, bodyImg);
 
   return (
     <div>
@@ -92,10 +96,15 @@ function Workdetail() {
                 ))}
             </ul>
           </div>
+          <hr className="checkitem_under" />
 
           {loading ? (
-            <div style={{ height: "500px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-              <div style={{ fontSize: "50px", color: "#7b808d" }}>로딩중...</div>
+            <div className="loading">
+              <div className="loading_inner">
+                <img src={loadingImg} alt="" className="loadingimg" />
+                <Lottie animationData={loadingAni} className="loadingani"></Lottie>
+                <img src={loadingText} alt="" className="loadingtext" />
+              </div>
             </div>
           ) : (
             <div>

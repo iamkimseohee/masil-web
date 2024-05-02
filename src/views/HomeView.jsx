@@ -17,7 +17,6 @@ const HomeView = () => {
 
   useEffect(() => {
     if (clicked === "true") {
-      console.log("hi");
       // 페이지 이동 후 스크롤 위치 조정
       window.scrollTo({ top: document.getElementById("port").offsetTop });
       navigate({ search: "" });

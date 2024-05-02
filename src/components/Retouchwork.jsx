@@ -76,7 +76,6 @@ function Retouchwork() {
       setFinalCheckedItems(workDetail.checkItemList);
     }
   }, [workDetail, checkList]);
-  console.log(finalCheckedItems);
 
   // const isCheckedArray = checkedList.map((item) => item.isChecked);
   // console.log("인덱스번호 합친거", isCheckedArray);
@@ -101,8 +100,6 @@ function Retouchwork() {
     });
     setFinalCheckedItems(updatedCheckItemList);
   };
-
-  console.log(finalCheckedItems);
 
   //~ 글자 감지
 
@@ -139,7 +136,6 @@ function Retouchwork() {
   //   }
   // }, [workDetail]);
 
-  console.log(workDetail ? workDetail.code : false, workDetail && workDetail.video ? workDetail.video : false);
   const handleCodeCheckboxChange = () => {
     setCodeIsChecked((prevCodeIsChecked) => !prevCodeIsChecked);
   };
@@ -151,8 +147,6 @@ function Retouchwork() {
   const handleVideoCheckboxChange = () => {
     setVideoIsChecked((prevVideoIsChecked) => !prevVideoIsChecked);
   };
-
-  console.log(codeIsChecked, designIsChecked, videoIsChecked);
 
   //~ form에 적은 값들 업데이트
   const [formData, setFormData] = useState({});
@@ -194,17 +188,14 @@ function Retouchwork() {
 
   const handleReThumbNail = (e) => {
     const file = e.target.files[0]; // 선택된 파일 가져오기
-    console.log(file);
 
     const reSelectedThumbNail = { fileName: file ? file.name : "", file: file };
-    console.log(reSelectedThumbNail);
     setReThumbNail(reSelectedThumbNail);
     if (file) {
       const reader = new FileReader(); // 파일을 읽을 FileReader 객체 생성
       reader.onload = () => {
         // 이미지를 읽은 후 실행되는 콜백 함수
         const imageDataUrl = reader.result; // 이미지 데이터 URL 가져오기
-        console.log(imageDataUrl);
         // 썸네일 이미지 교체
         setWorkDetail({ ...workDetail, thumbNailUrl: imageDataUrl }); // 이미지 URL 목록 업데이트
       };
@@ -221,19 +212,15 @@ function Retouchwork() {
     updatedFileUrlList[index] = { fileName: file ? file.name : "", file: file }; // 선택한 파일을 새로운 URL 리스트에 저장
 
     // const reSelectedImg =
-    console.log(updatedFileUrlList);
     setReImg(updatedFileUrlList);
-    console.log(reImg);
 
     if (file) {
       const reader = new FileReader(); // 파일을 읽을 FileReader 객체 생성
       reader.onload = () => {
         // 이미지를 읽은 후 실행되는 콜백 함수
         const imageDataUrl = reader.result; // 이미지 데이터 URL 가져오기
-        console.log(imageDataUrl);
         // 썸네일 이미지 교체
         const updatedFileUrlList = [...workDetail.fileUrlList]; // 기존 파일 URL 리스트 복사
-        console.log(updatedFileUrlList);
         updatedFileUrlList[index] = imageDataUrl; // 선택한 파일을 새로운 URL 리스트에 저장
         setWorkDetail({ ...workDetail, fileUrlList: updatedFileUrlList }); // 이미지 URL 목록 업데이트
       };
@@ -382,7 +369,6 @@ function Retouchwork() {
           if (!input.file) {
             return null; // 이미지가 선택되지 않은 경우 null 반환
           }
-          console.log(index);
           const selectedFile = input.file;
 
           const imageName = `${uuidv4()}`;
